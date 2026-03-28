@@ -1,0 +1,369 @@
+/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── 4-Way Theme Matrix ────────────────────────────────────────────────────── */
+/*
+ * Axis 1: .dark / (no class) → global Dark / Light
+ * Axis 2: [data-mode="hw"] / [data-mode="sw"] → Hardware / Software
+ * Result: 4 combinations, each with a complete color token set
+ */
+
+/* ── LIGHT + SOFTWARE (default) ─────────────────────────────────────────────── */
+:root,
+[data-mode="sw"] {
+  --color-bg:           #F7F9F7;
+  --color-bg-alt:       #EEFAF2;
+  --color-bg-card:      #FFFFFF;
+  --color-surface:      #E8F5EE;
+  --color-border:       rgba(34, 197, 94, 0.18);
+  --color-text:         #111B14;
+  --color-text-muted:   #4A6454;
+  --color-text-faint:   #89A892;
+  --color-accent:       #16A34A;
+  --color-accent-dim:   #4ADE80;
+  --color-accent-glow:  rgba(34, 197, 94, 0.22);
+  --color-secondary:    #0D9488;
+  --color-terminal:     #0F1F12;
+  --color-term-text:    #22C55E;
+  --pcb-grid-image:     none;
+  --transition-curve:   cubic-bezier(0.16, 1, 0.3, 1);
+  --glitch-offset:      0px;
+}
+
+/* ── LIGHT + HARDWARE ───────────────────────────────────────────────────────── */
+[data-mode="hw"] {
+  --color-bg:           #EEF2F7;
+  --color-bg-alt:       #E2EBF6;
+  --color-bg-card:      #F5F8FD;
+  --color-surface:      #D6E4F7;
+  --color-border:       rgba(59, 130, 246, 0.22);
+  --color-text:         #0D1B2E;
+  --color-text-muted:   #3B567A;
+  --color-text-faint:   #7A99BB;
+  --color-accent:       #2563EB;
+  --color-accent-dim:   #60A5FA;
+  --color-accent-glow:  rgba(59, 130, 246, 0.28);
+  --color-secondary:    #7C3AED;
+  --color-terminal:     #080E18;
+  --color-term-text:    #60A5FA;
+  --pcb-grid-image:     repeating-linear-gradient(
+    0deg, transparent, transparent 39px,
+    rgba(59, 130, 246, 0.08) 39px, rgba(59, 130, 246, 0.08) 40px
+  ),
+  repeating-linear-gradient(
+    90deg, transparent, transparent 39px,
+    rgba(59, 130, 246, 0.08) 39px, rgba(59, 130, 246, 0.08) 40px
+  );
+  --transition-curve:   cubic-bezier(0, 0, 1, 1);
+}
+
+/* ── DARK + SOFTWARE ────────────────────────────────────────────────────────── */
+.dark [data-mode="sw"],
+.dark:root {
+  --color-bg:           #0C1210;
+  --color-bg-alt:       #111A14;
+  --color-bg-card:      #162018;
+  --color-surface:      #1C2E20;
+  --color-border:       rgba(74, 222, 128, 0.14);
+  --color-text:         #D4EDD8;
+  --color-text-muted:   #7AAF82;
+  --color-text-faint:   #3D6645;
+  --color-accent:       #4ADE80;
+  --color-accent-dim:   #22C55E;
+  --color-accent-glow:  rgba(74, 222, 128, 0.20);
+  --color-secondary:    #2DD4BF;
+  --color-terminal:     #040A05;
+  --color-term-text:    #4ADE80;
+  --transition-curve:   cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── DARK + HARDWARE (the marquee mode — PCB Glow) ──────────────────────────── */
+.dark [data-mode="hw"] {
+  --color-bg:           #080B0A;
+  --color-bg-alt:       #0D1210;
+  --color-bg-card:      #0F1610;
+  --color-surface:      #141F15;
+  --color-border:       rgba(34, 255, 107, 0.20);
+  --color-text:         #CCFFDD;
+  --color-text-muted:   #4ADE80;
+  --color-text-faint:   #1A4024;
+  --color-accent:       #22FF6B;
+  --color-accent-dim:   #16A34A;
+  --color-accent-glow:  rgba(34, 255, 107, 0.35);
+  --color-secondary:    #38BDF8;
+  --color-terminal:     #02050A;
+  --color-term-text:    #22FF6B;
+  --pcb-grid-image:     repeating-linear-gradient(
+    0deg, transparent, transparent 39px,
+    rgba(34, 255, 107, 0.07) 39px, rgba(34, 255, 107, 0.07) 40px
+  ),
+  repeating-linear-gradient(
+    90deg, transparent, transparent 39px,
+    rgba(34, 255, 107, 0.07) 39px, rgba(34, 255, 107, 0.07) 40px
+  );
+  --transition-curve:   cubic-bezier(0, 0, 1, 1);
+  --glitch-offset:      2px;
+}
+
+/* ─── Base Resets ───────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition: background-color 0.5s var(--transition-curve),
+                color 0.4s var(--transition-curve);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-accent-dim);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+}
+
+/* ─── Utility Layer ─────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Theme-aware utilities */
+  .bg-theme           { background-color: var(--color-bg); }
+  .bg-theme-alt       { background-color: var(--color-bg-alt); }
+  .bg-theme-card      { background-color: var(--color-bg-card); }
+  .bg-theme-surface   { background-color: var(--color-surface); }
+  .text-theme         { color: var(--color-text); }
+  .text-theme-muted   { color: var(--color-text-muted); }
+  .text-theme-faint   { color: var(--color-text-faint); }
+  .text-accent        { color: var(--color-accent); }
+  .border-theme       { border-color: var(--color-border); }
+  .border-accent      { border-color: var(--color-accent); }
+
+  /* PCB background (hw modes only) */
+  .pcb-bg {
+    background-image: var(--pcb-grid-image);
+  }
+
+  /* Glow utilities */
+  .glow-accent        { box-shadow: 0 0 24px var(--color-accent-glow); }
+  .glow-accent-lg     { box-shadow: 0 0 56px var(--color-accent-glow); }
+  .text-glow          { text-shadow: 0 0 32px var(--color-accent-glow); }
+
+  /* Transition using theme curve */
+  .transition-theme {
+    transition-timing-function: var(--transition-curve);
+  }
+
+  /* Hardware mode glitch pseudo-element */
+  .glitch-layer::before,
+  .glitch-layer::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .glitch-layer::before {
+    color: var(--color-secondary);
+    clip-path: inset(40% 0 50% 0);
+    transform: translate(calc(-1 * var(--glitch-offset)), 0);
+    opacity: 0.7;
+  }
+  .glitch-layer::after {
+    color: var(--color-accent-dim);
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(var(--glitch-offset), 0);
+    opacity: 0.7;
+  }
+
+  /* Scanline overlay for HW mode */
+  .scanline-overlay::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Mono font for terminal/code elements */
+  .font-mono-all * { font-family: 'JetBrains Mono', monospace; }
+
+  /* Fade-up stagger helpers */
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.12s; }
+  .stagger-3 { animation-delay: 0.20s; }
+  .stagger-4 { animation-delay: 0.30s; }
+  .stagger-5 { animation-delay: 0.42s; }
+  .stagger-6 { animation-delay: 0.56s; }
+}
+
+/* ─── Component Layer ───────────────────────────────────────────────────────── */
+@layer components {
+  /* Terminal window chrome */
+  .terminal-chrome {
+    background: var(--color-terminal);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  .terminal-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: color-mix(in srgb, var(--color-terminal) 80%, var(--color-text-faint) 20%);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  /* Card base */
+  .card-base {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    transition: border-color 0.3s var(--transition-curve),
+                box-shadow 0.3s var(--transition-curve);
+  }
+  .card-base:hover {
+    border-color: var(--color-accent-dim);
+    box-shadow: 0 0 32px var(--color-accent-glow);
+  }
+
+  /* Section label */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+
+  /* Accent underline decoration */
+  .accent-line {
+    display: block;
+    width: 48px;
+    height: 2px;
+    background: var(--color-accent);
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 8px var(--color-accent-glow);
+  }
+
+  /* Tag / badge */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+    color: var(--color-accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Nav link */
+  .nav-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--color-accent); }
+
+  /* CTA button */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s var(--transition-curve);
+  }
+  .btn-primary:hover {
+    background: var(--color-accent-dim);
+    box-shadow: 0 0 24px var(--color-accent-glow);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 27px;
+    background: transparent;
+    color: var(--color-accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    border-radius: 4px;
+    border: 1.5px solid var(--color-accent);
+    cursor: pointer;
+    transition: all 0.25s var(--transition-curve);
+  }
+  .btn-outline:hover {
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    box-shadow: 0 0 16px var(--color-accent-glow);
+  }
+}
+
+/* ─── Hardware mode global overlays ────────────────────────────────────────── */
+[data-mode="hw"] body,
+.dark [data-mode="hw"] body {
+  background-image: var(--pcb-grid-image);
+}
+
+/* ─── Cursor hide (custom cursor handles it) ───────────────────────────────── */
+* { cursor: none !important; }
+a, button, [role="button"] { cursor: none !important; }

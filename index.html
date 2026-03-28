@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-mode="hw">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>Arpan Kundu — Full Stack & ECE Engineer</title>
+    <meta name="description" content="Arpan Kundu — Full Stack Developer (Java, Spring Boot, React) & ECE Engineer with IoT & Embedded Systems expertise. Portfolio with dual Software/Hardware modes." />
+    <meta name="keywords" content="Arpan Kundu, Full Stack Developer, ECE Engineer, React, Spring Boot, IoT, ESP32, Portfolio" />
+    <meta name="author" content="Arpan Kundu" />
+
+    <!-- Open Graph -->
+    <meta property="og:title"       content="Arpan Kundu — Portfolio" />
+    <meta property="og:description" content="Full Stack Developer & ECE Engineer. Java · React · IoT · Embedded Systems." />
+    <meta property="og:type"        content="website" />
+
+    <!-- Preconnect for Google Fonts (loaded in CSS) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Prevent FOUC: set dark class immediately from localStorage -->
+    <script>
+      (function() {
+        try {
+          var dark = localStorage.getItem('ak-dark');
+          var mode = localStorage.getItem('ak-engine') || 'hw';
+          if (dark !== 'false') document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-mode', mode);
+        } catch(e) {
+          // Default: dark + hw
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-mode', 'hw');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
