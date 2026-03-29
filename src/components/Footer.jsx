@@ -1,20 +1,27 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { PERSONAL } from '../data/portfolio';
+import { fadeIn, mobileFadeIn, staggerContainer, useIsMobile } from '../hooks/animations';
 
 export default function Footer() {
   const { isHardware } = useTheme();
 
+  const isMobile = useIsMobile();
   return (
-    <footer id="contact" className="border-t pt-20 pb-12 px-6" style={{ borderColor: 'var(--color-border)' }}>
+    <motion.footer
+      id="contact"
+      className="border-t pt-24 pb-12 px-6"
+      style={{ borderColor: 'var(--color-border)' }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.3, once: false }}
+      variants={staggerContainer}
+    >
       <div className="max-w-7xl mx-auto">
 
         {/* Big closing statement */}
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          variants={isMobile ? mobileFadeIn : fadeIn}
           className="text-center mb-16"
         >
           <div className="section-label mb-4">06 / CONTACT</div>
@@ -60,6 +67,6 @@ export default function Footer() {
         </div>
 
       </div>
-    </footer>
+    </motion.footer>
   );
 }

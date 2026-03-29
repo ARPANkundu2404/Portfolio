@@ -1,25 +1,32 @@
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import { PERSONAL, EDUCATION, FOOTBALL } from "../data/portfolio";
+import {
+  staggerContainer,
+  slideInLeft,
+  slideInRight,
+  useIsMobile,
+  mobileFadeIn,
+  mobileSlideInLeft,
+  mobileSlideInRight,
+  useParallax,
+  fadeIn,
+  slideUp,
+  mobileSlideUp,
+} from "../hooks/animations";
 
 function EducationCard({ item, index }) {
   const { isHardware } = useTheme();
+  const isMobile = useIsMobile();
 
-  const slideRight = {
-    hidden: { opacity: 0, x: 40 },
-    show: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.6 },
-    },
-  };
+  const slideRight = isMobile ? mobileSlideInRight : slideInRight;
 
   return (
     <motion.div
       initial="hidden"
-      whileInView="show"
+      whileInView="visible"
       whileHover={{ scale: 1.02 }}
-      viewport={{ once: true }}
+      viewport={{ amount: 0.3, once: false }}
       variants={slideRight}
       transition={{
         delay: index * 0.08,
@@ -79,11 +86,14 @@ function EducationCard({ item, index }) {
 }
 
 function FootballSection() {
+  const isMobile = useIsMobile();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.3, once: false }}
+      variants={isMobile ? mobileFadeIn : fadeIn}
       transition={{ duration: 0.6, delay: 0.3 }}
       className="p-5 rounded-xl border relative overflow-hidden"
       style={{
@@ -139,54 +149,33 @@ function FootballSection() {
 
 export default function AboutSection() {
   const { isHardware } = useTheme();
-
-  const container = {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 30 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
-
-  const slideLeft = {
-    hidden: { opacity: 0, x: -40 },
-    show: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.6 },
-    },
-  };
-
-  
+  const isMobile = useIsMobile();
+  const y = useParallax([-20, 20]);
 
   return (
-    <section id="about" className="py-24 px-6">
+    <motion.section
+      id="about"
+      className="py-24 px-6"
+      style={{ y: isMobile ? 0 : y }} // Reduce parallax on mobile
+    >
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          variants={container}
+          whileInView="visible"
+          viewport={{ amount: 0.3, once: false }}
+          variants={staggerContainer}
           className="mb-12 overflow-hidden"
         >
-          <motion.div variants={item} className="section-label">
+          <motion.div
+            variants={isMobile ? mobileFadeIn : fadeIn}
+            className="section-label"
+          >
             02 / ABOUT
           </motion.div>
 
           <motion.h2
-            variants={item}
+            variants={isMobile ? mobileSlideUp : slideUp}
             className="font-display text-hero-sm text-theme leading-none mt-2"
-            style={{ y: scrollY * 0.05 }}
           >
             DUAL-CORE
             <br />
@@ -198,15 +187,15 @@ export default function AboutSection() {
           {/* ── Left: Bio + contact ─────────────────────────────────── */}
           <div>
             <motion.div
-              variants={container}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
+              whileInView="visible"
+              viewport={{ amount: 0.3, once: false }}
+              variants={staggerContainer}
             >
               {PERSONAL.bio.map((para, i) => (
                 <motion.p
                   key={i}
-                  variants={item}
+                  variants={isMobile ? mobileFadeIn : fadeIn}
                   className="text-sm text-theme-muted leading-relaxed mb-4"
                 >
                   {para}
@@ -216,10 +205,10 @@ export default function AboutSection() {
 
             {/* Contact info */}
             <motion.div
-              variants={slideLeft}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
+              whileInView="visible"
+              viewport={{ amount: 0.3, once: false }}
+              variants={isMobile ? mobileSlideInLeft : slideInLeft}
               className="mt-6 space-y-2"
             >
               {[
@@ -272,10 +261,10 @@ export default function AboutSection() {
           <div>
             <div className="section-label mb-4">EDUCATION</div>
             <motion.div
-              variants={container}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
+              whileInView="visible"
+              viewport={{ amount: 0.3, once: false }}
+              variants={staggerContainer}
             >
               <div className="space-y-4">
                 {EDUCATION.map((item, i) => (
@@ -286,9 +275,10 @@ export default function AboutSection() {
 
             {/* Coursework chips */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.3, once: false }}
+              variants={isMobile ? mobileFadeIn : fadeIn}
               transition={{ duration: 0.5, delay: 0.4 }}
               className="mt-6 p-4 rounded-xl border"
               style={{
@@ -317,6 +307,6 @@ export default function AboutSection() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

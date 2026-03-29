@@ -5,9 +5,20 @@ import {
   useTransform,
   useSpring,
   AnimatePresence,
+  useScroll,
 } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import { PERSONAL, FOOTBALL } from "../data/portfolio";
+import {
+  fadeIn,
+  slideUp,
+  scaleIn,
+  useIsMobile,
+  mobileFadeIn,
+  mobileSlideUp,
+  useParallax,
+  staggerContainer,
+} from "../hooks/animations";
 
 /* ─── Football micro-animation ──────────────────────────────────────────────
    A small soccer ball that bounces in the corner and reveals a tooltip       */
@@ -141,6 +152,9 @@ function Ticker({ items }) {
 /* ─── Main Hero Component ────────────────────────────────────────────────── */
 export default function Hero() {
   const { isHardware, engineMode } = useTheme();
+  const isMobile = useIsMobile();
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, -50]); // Subtle parallax
 
   // 3D parallax on mouse
   const mouseX = useMotionValue(0);
@@ -154,6 +168,7 @@ export default function Hero() {
   const parallaxB = useTransform(smoothY, [-300, 300], [-10, 10]);
 
   const handleMouseMove = (e) => {
+    if (isMobile) return; // Disable on mobile
     const rect = e.currentTarget.getBoundingClientRect();
     mouseX.set(e.clientX - rect.width / 2);
     mouseY.set(e.clientY - rect.height / 2);
@@ -164,20 +179,7 @@ export default function Hero() {
   };
 
   // Hardware mode: HW-specific text reveals with staccato timing
-  const textVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * (isHardware ? 0.12 : 0.08),
-        duration: isHardware ? 0.3 : 0.75,
-        ease: isHardware
-          ? [0, 0, 1, 1] // linear/staccato
-          : [0.16, 1, 0.3, 1], // smooth spring
-      },
-    }),
-  };
+  const textVariants = isMobile ? mobileSlideUp : slideUp;
 
   const tickerItems = isHardware
     ? [
@@ -203,11 +205,16 @@ export default function Hero() {
       ];
 
   return (
-    <section
+    <motion.section
       id="hero"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-20"
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24"
+      style={{ zIndex: 1 }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.3, once: false }}
+      variants={isMobile ? mobileFadeIn : fadeIn}
     >
       {/* ── Hardware background grid ────────────────────────────────────── */}
       {isHardware && (
@@ -216,7 +223,7 @@ export default function Hero() {
 
       {/* ── Radial accent glow ──────────────────────────────────────────── */}
       <motion.div
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none z-0"
         style={{
           width: "60vw",
           height: "60vw",
@@ -238,17 +245,18 @@ export default function Hero() {
       />
 
       {/* ── Main content ─────────────────────────────────────────────────── */}
-      <div className="relative max-w-7xl mx-auto px-6 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
         <motion.div
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           className="will-change-transform"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.3 }}
+          variants={staggerContainer}
         >
           {/* Top label row */}
           <motion.div
             variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            custom={0}
             className="flex items-center gap-4 mb-10"
           >
             <span className="section-label">
@@ -265,13 +273,10 @@ export default function Hero() {
           <div className="overflow-hidden">
             <motion.h1
               variants={textVariants}
-              initial="hidden"
-              animate="visible"
-              custom={1}
               className="font-display text-hero-xl leading-none"
               style={{
                 color: "var(--color-text)",
-                x: parallaxA,
+                x: isMobile ? 0 : parallaxA, // Reduce parallax on mobile
               }}
               data-text="ARPAN"
             >
@@ -282,14 +287,11 @@ export default function Hero() {
           <div className="overflow-hidden">
             <motion.h1
               variants={textVariants}
-              initial="hidden"
-              animate="visible"
-              custom={2}
               className="font-display text-hero-xl leading-none"
               style={{
                 WebkitTextStroke: "2px var(--color-text)",
                 color: "transparent",
-                x: useTransform(parallaxA, (v) => v * -0.7),
+                x: isMobile ? 0 : useTransform(parallaxA, (v) => v * -0.7),
               }}
             >
               KUNDU
@@ -299,11 +301,8 @@ export default function Hero() {
           {/* Subtitle strip */}
           <motion.div
             variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            custom={3}
             className="flex flex-wrap items-center gap-3 mt-6"
-            style={{ y: parallaxB }}
+            style={{ y: isMobile ? 0 : parallaxB }}
           >
             <div
               className="h-px flex-1 max-w-12"
@@ -326,9 +325,6 @@ export default function Hero() {
           {/* Description paragraph */}
           <motion.p
             variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            custom={4}
             className="mt-6 max-w-xl text-sm md:text-base leading-relaxed text-theme-muted"
           >
             {isHardware
@@ -339,9 +335,6 @@ export default function Hero() {
           {/* CTA buttons */}
           <motion.div
             variants={textVariants}
-            initial="hidden"
-            animate="visible"
-            custom={5}
             className="flex flex-wrap gap-3 mt-8"
           >
             <a href="#projects" className="btn-primary">
@@ -364,9 +357,10 @@ export default function Hero() {
 
         {/* ── Stats row ────────────────────────────────────────────────── */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.3 }}
+          variants={isMobile ? mobileFadeIn : fadeIn}
           className="grid grid-cols-3 md:grid-cols-6 gap-6 mt-16 pt-8 border-t border-theme"
         >
           <StatCounter value="2" label="Years Dev" />
@@ -380,9 +374,11 @@ export default function Hero() {
 
       {/* ── Scrolling ticker tape ────────────────────────────────────────── */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.3 }}
+        variants={isMobile ? mobileFadeIn : fadeIn}
+        transition={{ delay: 0.2 }}
         className="mt-12 border-y border-theme py-2 overflow-hidden"
         style={{ background: "var(--color-surface)" }}
       >
@@ -409,6 +405,6 @@ export default function Hero() {
           }}
         />
       </motion.div> */}
-    </section>
+    </motion.section>
   );
 }

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { PROJECTS } from '../data/portfolio';
 import XRayCard from './XRayCard';
+import { staggerContainer, fadeIn, slideInLeft, slideInRight, mobileFadeIn, mobileSlideInLeft, mobileSlideInRight, useIsMobile } from '../hooks/animations';
 
 const FILTERS = [
   { id: 'all',      label: 'All'      },
@@ -18,16 +19,21 @@ export default function ProjectsSection() {
     ? PROJECTS
     : PROJECTS.filter(p => p.mode === filter);
 
+  const isMobile = useIsMobile();
   return (
-    <section id="projects" className="py-24 px-6">
+    <motion.section
+      id="projects"
+      className="py-24 px-6"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.3, once: false }}
+      variants={staggerContainer}
+    >
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          variants={isMobile ? mobileFadeIn : fadeIn}
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10"
         >
           <div>
@@ -69,21 +75,24 @@ export default function ProjectsSection() {
         <AnimatePresence mode="wait">
           <motion.div
             key={filter}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{    opacity: 0 }}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={staggerContainer}
             transition={{ duration: 0.25 }}
             className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6"
           >
             {filtered.map((project, i) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0  }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ amount: 0.3, once: false }}
+                variants={isMobile ? mobileFadeIn : (i % 2 === 0 ? slideInLeft : slideInRight)}
                 transition={{
-                  delay:    i * (isHardware ? 0.08 : 0.1),
+                  delay: i * (isHardware ? 0.08 : 0.1),
                   duration: isHardware ? 0.25 : 0.5,
-                  ease:     isHardware ? [0,0,1,1] : [0.16,1,0.3,1],
+                  ease: isHardware ? [0,0,1,1] : [0.16,1,0.3,1],
                 }}
               >
                 <XRayCard project={project} />
@@ -93,6 +102,6 @@ export default function ProjectsSection() {
         </AnimatePresence>
 
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -2,6 +2,14 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import { ACHIEVEMENTS } from "../data/portfolio";
+import {
+  staggerContainer,
+  fadeIn,
+  slideUp,
+  mobileFadeIn,
+  mobileSlideUp,
+  useIsMobile,
+} from "../hooks/animations";
 
 /* ─── Format timestamp for terminal display ─────────────────────────────── */
 function formatTime(isoString) {
@@ -180,15 +188,20 @@ export default function AchievementTerminal() {
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
 
+  const isMobile = useIsMobile();
   return (
-    <section id="achievements" className="py-24 px-6">
+    <motion.section
+      id="achievements"
+      className="py-24 px-6"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.3, once: false }}
+      variants={staggerContainer}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          variants={isMobile ? mobileFadeIn : fadeIn}
           className="mb-10"
         >
           <div className="section-label">04 / ACHIEVEMENT LOG</div>
@@ -211,9 +224,9 @@ export default function AchievementTerminal() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={isMobile ? mobileFadeIn : fadeIn}
+          whileInView="visible"
+          viewport={{ amount: 0.3, once: false }}
           transition={{ duration: 0.7, delay: 0.1 }}
           onMouseEnter={printAchievements}
           className="terminal-chrome max-w-3xl"
@@ -432,6 +445,6 @@ export default function AchievementTerminal() {
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

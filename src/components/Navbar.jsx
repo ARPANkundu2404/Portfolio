@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import ModeToggle from "./ModeToggle";
+import { fadeIn, useIsMobile, mobileFadeIn } from "../hooks/animations";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -16,6 +22,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("");
+  const isMobile = useIsMobile();
+  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     const handleScrollSpy = () => {
@@ -44,18 +52,20 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.3 }}
+        variants={isMobile ? mobileFadeIn : fadeIn}
         className={`
-          fixed top-0 left-0 right-0 z-50
+          fixed top-0 left-0 right-0 z-[100]
           transition-all duration-300
-          ${scrolled ? "py-3 border-b border-theme backdrop-blur-md" : "py-5"}
+          ${scrolled ? "py-3 border-b border-theme backdrop-blur-md bg-theme/80" : "py-5 bg-transparent"}
         `}
         style={{
           background: scrolled
-            ? `color-mix(in srgb, var(--color-bg) 88%, transparent)`
+            ? `color-mix(in srgb, var(--color-bg) 88%, rgba(12,18,16,0.72))`
             : "transparent",
+          opacity: 1,
         }}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">

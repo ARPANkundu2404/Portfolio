@@ -2,19 +2,23 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { SKILL_GATES } from '../data/portfolio';
+import { staggerContainer, fadeIn, slideInLeft, slideInRight, mobileFadeIn, mobileSlideInLeft, mobileSlideInRight, useIsMobile } from '../hooks/animations';
 
 /* ─── Individual skill bar ──────────────────────────────────────────────── */
 function SkillBar({ name, level, color, isHardware, index }) {
   const [hovered, setHovered] = useState(false);
+  const isMobile = useIsMobile();
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0  }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.3, once: false }}
+      variants={isMobile ? mobileSlideInLeft : slideInLeft}
       transition={{
-        delay:    index * (isHardware ? 0.06 : 0.04),
+        delay: index * (isHardware ? 0.06 : 0.04),
         duration: isHardware ? 0.2 : 0.45,
-        ease:     isHardware ? [0,0,1,1] : [0.16,1,0.3,1],
+        ease: isHardware ? [0, 0, 1, 1] : [0.16, 1, 0.3, 1],
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -197,17 +201,22 @@ export default function SkillsBus() {
   const [activeGate, setActiveGate] = useState(defaultGate);
 
   const gate = SKILL_GATES.find(g => g.id === activeGate);
+  const isMobile = useIsMobile();
 
   return (
-    <section id="skills" className="py-24 px-6">
+    <motion.section
+      id="skills"
+      className="py-24 px-6"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.3, once: false }}
+      variants={staggerContainer}
+    >
       <div className="max-w-7xl mx-auto">
 
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          variants={isMobile ? mobileFadeIn : fadeIn}
           className="mb-12"
         >
           <div className="section-label">05 / SYSTEM BUS</div>
@@ -356,6 +365,6 @@ export default function SkillsBus() {
         </motion.div>
 
       </div>
-    </section>
+    </motion.section>
   );
 }

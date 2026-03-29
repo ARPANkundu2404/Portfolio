@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { fadeIn, useIsMobile, mobileFadeIn } from "../hooks/animations";
 
 export default function FloatingScroll() {
   const [scrollY, setScrollY] = useState(0);
   const [isBottom, setIsBottom] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
+  const isMobile = useIsMobile();
 
   const scrollTimeout = useRef(null);
 
@@ -46,9 +48,10 @@ export default function FloatingScroll() {
         {showScroll && (
           <motion.div
             key="scroll"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.3 }}
+            variants={isMobile ? mobileFadeIn : fadeIn}
             className="flex flex-col items-center gap-1"
           >
             <motion.div
@@ -72,9 +75,10 @@ export default function FloatingScroll() {
           <motion.div
             key="top"
             onClick={scrollToTop}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.3 }}
+            variants={isMobile ? mobileFadeIn : fadeIn}
             className="flex flex-col items-center gap-1 cursor-pointer"
           >
             <span className="font-mono text-[10px] tracking-widest text-theme-faint">
