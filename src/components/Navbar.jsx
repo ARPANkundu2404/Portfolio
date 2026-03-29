@@ -81,7 +81,7 @@ export default function Navbar() {
             >
               AK
             </div>
-            <span className="font-mono text-[11px] tracking-[0.2em] text-theme-muted group-hover:text-accent transition-colors">
+            <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] whitespace-nowrap text-theme-muted group-hover:text-accent transition-colors">
               {isHardware ? "ECE·ENGINEER" : "DEV·PORTFOLIO"}
             </span>
           </a>
@@ -111,13 +111,13 @@ export default function Navbar() {
           </nav>
 
           {/* ── Right controls ───────────────────────────────────────── */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ModeToggle />
 
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileOpen((o) => !o)}
-              className="md:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5 text-theme-muted"
+              className="md:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 text-theme-muted"
               aria-label="Toggle mobile menu"
             >
               <motion.span
@@ -149,13 +149,13 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-x-0 top-[60px] z-40 border-b border-theme backdrop-blur-md md:hidden"
+            className="relative inset-x-0 top-full z-40 border-b border-theme backdrop-blur-md md:hidden"
             style={{
               background:
                 "color-mix(in srgb, var(--color-bg) 95%, transparent)",
             }}
           >
-            <nav className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4">
+            <nav className="max-w-7xl mx-auto px-4 sm:px-6 py-6 items-center justify-between overflow-hidden flex flex-col gap-4">
               {NAV_LINKS.map(({ label, href }, i) => (
                 <motion.a
                   key={href}

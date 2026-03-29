@@ -22,7 +22,7 @@ import {
 
 /* ─── Football micro-animation ──────────────────────────────────────────────
    A small soccer ball that bounces in the corner and reveals a tooltip       */
-function FootballEasterEgg() {
+function FootballEasterEgg({ isMobile }) {
   const [kicked, setKicked] = useState(false);
   const [showQuote, setShowQuote] = useState(false);
 
@@ -34,7 +34,7 @@ function FootballEasterEgg() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative shrink-0">
       <motion.button
         onClick={handleKick}
         title="Click to kick!"
@@ -48,7 +48,7 @@ function FootballEasterEgg() {
             ? { duration: 0.6, ease: "easeInOut" }
             : { duration: 2, repeat: Infinity, ease: "easeInOut" }
         }
-        className="text-2xl select-none"
+        className="text-xl sm:text-2xl select-none"
         aria-label="Football easter egg — click to kick!"
       >
         ⚽
@@ -60,18 +60,25 @@ function FootballEasterEgg() {
             initial={{ opacity: 0, y: 8, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.9 }}
-            className="absolute top-full left-1/2 -translate-x-1/2 mb-2 w-52 p-2.5 rounded-lg text-center pointer-events-none"
+            className={`absolute top-full mb-2 p-2.5 rounded-lg pointer-events-none ${
+              isMobile
+                ? "right-0 w-[180px] text-left"
+                : "left-1/2 -translate-x-1/2 w-52 text-center"
+            }`}
             style={{
               background: "var(--color-bg-card)",
               border: "1px solid var(--color-border)",
               boxShadow: "0 8px 24px var(--color-accent-glow)",
+              maxWidth: "90vw",
             }}
           >
             <p className="text-[10px] font-mono text-theme-muted leading-relaxed">
               {FOOTBALL.quote}
             </p>
             <div
-              className="absolute bottom-full left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 -mt-[-4px]"
+              className={`absolute bottom-full w-2 h-2 rotate-45 -mt-[-4px] ${
+                isMobile ? "right-4" : "left-1/2 -translate-x-1/2"
+              }`}
               style={{
                 background: "var(--color-bg-card)",
                 borderBottom: "1px solid var(--color-border)",
@@ -149,7 +156,6 @@ function Ticker({ items }) {
   );
 }
 
-/* ─── Main Hero Component ────────────────────────────────────────────────── */
 export default function Hero() {
   const { isHardware, engineMode } = useTheme();
   const isMobile = useIsMobile();
@@ -166,6 +172,15 @@ export default function Hero() {
   const rotateY = useTransform(smoothX, [-600, 600], [-6, 6]);
   const parallaxA = useTransform(smoothX, [-600, 600], [-18, 18]);
   const parallaxB = useTransform(smoothY, [-300, 300], [-10, 10]);
+  const parallaxAInverse = useTransform(parallaxA, (v) => v * -0.7);
+
+  // Safe values for mobile
+  const safeY = isMobile ? 0 : y;
+  const safeRotateX = isMobile ? 0 : rotateX;
+  const safeRotateY = isMobile ? 0 : rotateY;
+  const safeParallaxA = isMobile ? 0 : parallaxA;
+  const safeParallaxAInverse = isMobile ? 0 : parallaxAInverse;
+  const safeParallaxB = isMobile ? 0 : parallaxB;
 
   const handleMouseMove = (e) => {
     if (isMobile) return; // Disable on mobile
@@ -210,7 +225,7 @@ export default function Hero() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24"
-      style={{ zIndex: 1 }}
+      style={{ zIndex: 1, y: safeY }}
       initial="hidden"
       whileInView="visible"
       viewport={{ amount: 0.3, once: false }}
@@ -247,7 +262,7 @@ export default function Hero() {
       {/* ── Main content ─────────────────────────────────────────────────── */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
         <motion.div
-          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+          style={{ rotateX: safeRotateX, rotateY: safeRotateY, transformStyle: "preserve-3d" }}
           className="will-change-transform"
           initial="hidden"
           whileInView="visible"
@@ -257,16 +272,16 @@ export default function Hero() {
           {/* Top label row */}
           <motion.div
             variants={textVariants}
-            className="flex items-center gap-4 mb-10"
+            className="flex flex-wrap items-center gap-4 mb-10"
           >
             <span className="section-label">
               {isHardware ? "// ECE ENGINEER" : "// FULL STACK DEVELOPER"}
             </span>
             <div
-              className="flex-1 h-px max-w-16"
+              className="hidden sm:block flex-1 h-px max-w-16"
               style={{ background: "var(--color-border)" }}
             />
-            <FootballEasterEgg />
+            <FootballEasterEgg isMobile={isMobile} />
           </motion.div>
 
           {/* ── Hero typography ────────────────────────────────────────── */}
@@ -276,7 +291,7 @@ export default function Hero() {
               className="font-display text-hero-xl leading-none"
               style={{
                 color: "var(--color-text)",
-                x: isMobile ? 0 : parallaxA, // Reduce parallax on mobile
+                x: safeParallaxA,
               }}
               data-text="ARPAN"
             >
@@ -291,7 +306,7 @@ export default function Hero() {
               style={{
                 WebkitTextStroke: "2px var(--color-text)",
                 color: "transparent",
-                x: isMobile ? 0 : useTransform(parallaxA, (v) => v * -0.7),
+                x: safeParallaxAInverse,
               }}
             >
               KUNDU
@@ -302,7 +317,7 @@ export default function Hero() {
           <motion.div
             variants={textVariants}
             className="flex flex-wrap items-center gap-3 mt-6"
-            style={{ y: isMobile ? 0 : parallaxB }}
+            style={{ y: safeParallaxB }}
           >
             <div
               className="h-px flex-1 max-w-12"
