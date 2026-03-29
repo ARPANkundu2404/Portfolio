@@ -390,7 +390,7 @@ export default function Hero() {
       </motion.div>
 
       {/* ── Scroll cue ───────────────────────────────────────────────────── */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
@@ -408,7 +408,7 @@ export default function Hero() {
               "linear-gradient(to bottom, var(--color-accent), transparent)",
           }}
         />
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }

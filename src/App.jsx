@@ -11,6 +11,7 @@ import ProjectsSection from "./components/ProjectsSection";
 import SkillsBus from "./components/SkillsBus";
 import AchievementTerminal from "./components/AchievementTerminal";
 import Footer from "./components/Footer";
+import FloatingScroll from "./components/FloatingScroll";
 
 /* ─── Page transition wrapper ───────────────────────────────────────────── */
 function PageWrapper({ children }) {
@@ -53,6 +54,7 @@ export default function App() {
       <CustomCursor />
       <ScrollProgress />
       <Navbar />
+      <FloatingScroll />
 
       {/* Main page */}
       <PageWrapper>
