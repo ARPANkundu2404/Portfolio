@@ -5,6 +5,50 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Background Animation Keyframes ────────────────────────────────────────── */
+@keyframes bg-float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(10px, -10px); }
+}
+
+@keyframes opacity-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+@keyframes grid-shift {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+@keyframes scanline {
+  0% { top: -100%; }
+  100% { top: 100%; }
+}
+
+/* Mobile-reduced animations */
+@media (max-width: 768px) {
+  @keyframes bg-float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(3px, -3px); }
+  }
+
+  @keyframes opacity-pulse {
+    0%, 100% { opacity: 0.9; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes grid-shift {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 20px; }
+  }
+
+  @keyframes scanline {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+}
+
 /* ─── 4-Way Theme Matrix ────────────────────────────────────────────────────── */
 /*
  * Axis 1: .dark / (no class) → global Dark / Light
@@ -62,27 +106,26 @@
 }
 
 /* ── DARK + SOFTWARE ────────────────────────────────────────────────────────── */
-.dark [data-mode="sw"],
-.dark:root {
+.dark[data-mode="sw"] {
   --color-bg:           #0C1210;
   --color-bg-alt:       #111A14;
   --color-bg-card:      #162018;
   --color-surface:      #1C2E20;
-  --color-border:       rgba(74, 222, 128, 0.14);
+  --color-border:       rgba(20, 184, 166, 0.14);
   --color-text:         #D4EDD8;
   --color-text-muted:   #7AAF82;
   --color-text-faint:   #3D6645;
-  --color-accent:       #4ADE80;
-  --color-accent-dim:   #22C55E;
-  --color-accent-glow:  rgba(74, 222, 128, 0.20);
-  --color-secondary:    #2DD4BF;
+  --color-accent:       #14B8A6;
+  --color-accent-dim:   #06B6D4;
+  --color-accent-glow:  rgba(20, 184, 166, 0.20);
+  --color-secondary:    #06B6D4;
   --color-terminal:     #040A05;
-  --color-term-text:    #4ADE80;
+  --color-term-text:    #14B8A6;
   --transition-curve:   cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ── DARK + HARDWARE (the marquee mode — PCB Glow) ──────────────────────────── */
-.dark [data-mode="hw"] {
+.dark[data-mode="hw"] {
   --color-bg:           #080B0A;
   --color-bg-alt:       #0D1210;
   --color-bg-card:      #0F1610;
@@ -198,6 +241,37 @@
     opacity: 0.7;
   }
 
+  /* Animated background utilities */
+  .bg-animated-sw {
+    position: relative;
+    animation: bg-float 20s ease-in-out infinite, opacity-pulse 8s ease-in-out infinite;
+  }
+  .bg-animated-sw::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, var(--color-accent-glow), transparent 70%);
+    animation: bg-float 15s ease-in-out infinite reverse, opacity-pulse 10s ease-in-out infinite;
+    pointer-events: none;
+    filter: blur(1px);
+  }
+
+  .bg-animated-hw {
+    position: relative;
+    background-image: var(--pcb-grid-image);
+    animation: grid-shift 30s linear infinite, opacity-pulse 12s ease-in-out infinite;
+  }
+  .bg-animated-hw::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to bottom, transparent, var(--color-accent-glow), transparent);
+    animation: scanline 4s linear infinite;
+    pointer-events: none;
+  }
+
   /* Scanline overlay for HW mode */
   .scanline-overlay::after {
     content: '';
@@ -224,6 +298,24 @@
   .stagger-4 { animation-delay: 0.30s; }
   .stagger-5 { animation-delay: 0.42s; }
   .stagger-6 { animation-delay: 0.56s; }
+}
+
+/* Mobile optimizations for animated backgrounds */
+@media (max-width: 768px) {
+  .bg-animated-sw {
+    animation: opacity-pulse 8s ease-in-out infinite; /* Remove transform animation */
+  }
+  .bg-animated-sw::before {
+    animation: opacity-pulse 10s ease-in-out infinite; /* Remove transform, keep opacity */
+    filter: none; /* Disable blur */
+  }
+
+  .bg-animated-hw {
+    animation: opacity-pulse 12s ease-in-out infinite; /* Remove grid shift */
+  }
+  .bg-animated-hw::after {
+    animation: scanline 8s linear infinite; /* Slower scanline */
+  }
 }
 
 /* ─── Component Layer ───────────────────────────────────────────────────────── */
@@ -360,7 +452,7 @@
 
 /* ─── Hardware mode global overlays ────────────────────────────────────────── */
 [data-mode="hw"] body,
-.dark [data-mode="hw"] body {
+.dark[data-mode="hw"] body {
   background-image: var(--pcb-grid-image);
 }
 
