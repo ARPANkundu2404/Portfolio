@@ -12,6 +12,7 @@ import SkillsBus from "./components/SkillsBus";
 import AchievementGallery from "./components/AchievementGallery";
 import Footer from "./components/Footer";
 import FloatingScroll from "./components/FloatingScroll";
+import FloatingTerminal from "./components/FloatingTerminal";
 
 /* ─── Page transition wrapper ───────────────────────────────────────────── */
 function PageWrapper({ children }) {
@@ -55,6 +56,7 @@ export default function App() {
       <ScrollProgress />
       <Navbar />
       <FloatingScroll />
+      <FloatingTerminal />
 
       {/* Main page */}
       <PageWrapper>
