@@ -1,8 +1,20 @@
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
+import { useEffect } from "react";
 
 export default function AchievementModal({ achievement, onClose }) {
   const { isHardware, isDark } = useTheme();
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
 
   const backdropVariants = {
     hidden: { opacity: 0 },
@@ -44,8 +56,17 @@ export default function AchievementModal({ achievement, onClose }) {
       initial="hidden"
       animate="visible"
       exit="exit"
-      onClick={onClose}
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 flex items-center justify-center p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+      className="fixed inset-0 backdrop-blur-sm z-40 flex items-start justify-center pt-16 px-4"
+      style={{
+        backgroundColor: isDark ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.3)",
+        pointerEvents: "auto",
+        cursor: "pointer",
+      }}
     >
       {/* Hardware scanline effect */}
       {isHardware && isDark && (
@@ -70,24 +91,31 @@ export default function AchievementModal({ achievement, onClose }) {
         exit="exit"
         onClick={(e) => e.stopPropagation()}
         style={{
+          backgroundColor: isDark ? "rgba(10, 10, 10, 0.95)" : "#FFFFFF",
           borderColor: isHardware
             ? "rgba(34, 197, 94, 0.6)"
-            : "rgba(20, 184, 166, 0.6)",
+            : isDark
+              ? "rgba(20, 184, 166, 0.6)"
+              : "rgba(0, 0, 0, 0.1)",
           boxShadow: isHardware
             ? "0 20px 64px rgba(34, 197, 94, 0.3)"
-            : "0 20px 64px rgba(20, 184, 166, 0.3)",
+            : isDark
+              ? "0 20px 64px rgba(20, 184, 166, 0.3)"
+              : "0 20px 64px rgba(0, 0, 0, 0.1)",
         }}
-        className="relative w-full max-w-2xl max-h-[90vh] rounded-lg overflow-hidden border-2 bg-black/60"
+        className="relative w-full max-w-2xl max-h-[calc(100vh-6rem)] rounded-lg overflow-hidden border-2"
       >
         {/* Close Button */}
         <motion.button
           onClick={onClose}
-          className="absolute top-4 right-4 z-50 p-2 rounded-lg transition-all"
+          className="absolute top-3 right-3 md:top-4 md:right-4 z-[100] p-2 rounded-lg transition-all"
           style={{
             backgroundColor: isHardware
               ? "rgba(34, 197, 94, 0.1)"
-              : "rgba(20, 184, 166, 0.1)",
-            color: isHardware ? "#22C55E" : "#14B8A6",
+              : isDark
+                ? "rgba(20, 184, 166, 0.1)"
+                : "rgba(0, 0, 0, 0.05)",
+            color: isHardware ? "#22C55E" : isDark ? "#14B8A6" : "#111827",
           }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -112,7 +140,7 @@ export default function AchievementModal({ achievement, onClose }) {
           variants={contentVariants}
           initial="hidden"
           animate="visible"
-          className="p-8 overflow-y-auto max-h-[90vh]"
+          className="p-8 overflow-y-auto max-h-[calc(100vh-6rem)]"
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="mb-6">
@@ -123,28 +151,40 @@ export default function AchievementModal({ achievement, onClose }) {
                   style={{
                     backgroundColor:
                       achievement.role === "Winner"
-                        ? isHardware
-                          ? "rgba(34, 197, 94, 0.3)"
-                          : "rgba(20, 184, 166, 0.3)"
-                        : isHardware
-                          ? "rgba(34, 197, 94, 0.2)"
-                          : "rgba(20, 184, 166, 0.2)",
+                        ? isDark
+                          ? isHardware
+                            ? "rgba(34, 197, 94, 0.3)"
+                            : "rgba(20, 184, 166, 0.3)"
+                          : "rgba(22, 163, 74, 0.1)"
+                        : isDark
+                          ? isHardware
+                            ? "rgba(34, 197, 94, 0.2)"
+                            : "rgba(20, 184, 166, 0.2)"
+                          : "rgba(0, 0, 0, 0.05)",
                     borderColor:
                       achievement.role === "Winner"
-                        ? isHardware
-                          ? "#22C55E"
-                          : "#14B8A6"
-                        : isHardware
-                          ? "rgba(34, 197, 94, 0.4)"
-                          : "rgba(20, 184, 166, 0.4)",
+                        ? isDark
+                          ? isHardware
+                            ? "#22C55E"
+                            : "#14B8A6"
+                          : "#16A34A"
+                        : isDark
+                          ? isHardware
+                            ? "rgba(34, 197, 94, 0.4)"
+                            : "rgba(20, 184, 166, 0.4)"
+                          : "rgba(0, 0, 0, 0.08)",
                     color:
                       achievement.role === "Winner"
-                        ? isHardware
-                          ? "#4ADE80"
-                          : "#06B6D4"
-                        : isHardware
-                          ? "#4ADE80"
-                          : "#06B6D4",
+                        ? isDark
+                          ? isHardware
+                            ? "#4ADE80"
+                            : "#06B6D4"
+                          : "#16A34A"
+                        : isDark
+                          ? isHardware
+                            ? "#4ADE80"
+                            : "#06B6D4"
+                          : "#111827",
                   }}
                 >
                   {achievement.role === "Winner" && "★"} {achievement.role}
@@ -154,10 +194,16 @@ export default function AchievementModal({ achievement, onClose }) {
                 </h2>
                 <p className="text-lg text-theme-muted">{achievement.event}</p>
               </div>
-              <div className="text-right">
+              <div className="text-right pr-10">
                 <div
                   className="text-3xl font-bold"
-                  style={{ color: isHardware ? "#22C55E" : "#14B8A6" }}
+                  style={{
+                    color: isHardware
+                      ? "#22C55E"
+                      : isDark
+                        ? "#14B8A6"
+                        : "#111827",
+                  }}
                 >
                   {achievement.year}
                 </div>
@@ -173,27 +219,53 @@ export default function AchievementModal({ achievement, onClose }) {
             {achievement.badges.map((badge) => {
               let bgColor, borderColor, textColor;
               if (badge === "WINNER") {
-                bgColor = isHardware
-                  ? "rgba(34, 197, 94, 0.25)"
-                  : "rgba(20, 184, 166, 0.25)";
-                borderColor = isHardware ? "#22C55E" : "#14B8A6";
-                textColor = isHardware ? "#4ADE80" : "#06B6D4";
+                bgColor = isDark
+                  ? isHardware
+                    ? "rgba(34, 197, 94, 0.25)"
+                    : "rgba(20, 184, 166, 0.25)"
+                  : "rgba(22, 163, 74, 0.1)";
+                borderColor = isDark
+                  ? isHardware
+                    ? "#22C55E"
+                    : "#14B8A6"
+                  : "#16A34A";
+                textColor = isDark
+                  ? isHardware
+                    ? "#4ADE80"
+                    : "#06B6D4"
+                  : "#16A34A";
               } else if (badge === "FINALIST" || badge === "TOP 3") {
-                bgColor = isHardware
-                  ? "rgba(59, 130, 246, 0.2)"
-                  : "rgba(34, 211, 238, 0.2)";
-                borderColor = isHardware
-                  ? "rgba(59, 130, 246, 0.6)"
-                  : "rgba(34, 211, 238, 0.6)";
-                textColor = isHardware ? "#60A5FA" : "#22D3EE";
+                bgColor = isDark
+                  ? isHardware
+                    ? "rgba(59, 130, 246, 0.2)"
+                    : "rgba(34, 211, 238, 0.2)"
+                  : "rgba(37, 99, 235, 0.1)";
+                borderColor = isDark
+                  ? isHardware
+                    ? "rgba(59, 130, 246, 0.6)"
+                    : "rgba(34, 211, 238, 0.6)"
+                  : "rgba(37, 99, 235, 0.3)";
+                textColor = isDark
+                  ? isHardware
+                    ? "#60A5FA"
+                    : "#22D3EE"
+                  : "#2563EB";
               } else {
-                bgColor = isHardware
-                  ? "rgba(34, 197, 94, 0.15)"
-                  : "rgba(20, 184, 166, 0.15)";
-                borderColor = isHardware
-                  ? "rgba(34, 197, 94, 0.3)"
-                  : "rgba(20, 184, 166, 0.3)";
-                textColor = isHardware ? "#4ADE80" : "#06B6D4";
+                bgColor = isDark
+                  ? isHardware
+                    ? "rgba(34, 197, 94, 0.15)"
+                    : "rgba(20, 184, 166, 0.15)"
+                  : "rgba(0, 0, 0, 0.05)";
+                borderColor = isDark
+                  ? isHardware
+                    ? "rgba(34, 197, 94, 0.3)"
+                    : "rgba(20, 184, 166, 0.3)"
+                  : "rgba(0, 0, 0, 0.08)";
+                textColor = isDark
+                  ? isHardware
+                    ? "#4ADE80"
+                    : "#06B6D4"
+                  : "#111827";
               }
               return (
                 <span
@@ -235,13 +307,21 @@ export default function AchievementModal({ achievement, onClose }) {
                   transition={{ delay: idx * 0.05 }}
                   className="px-3 py-2 rounded-lg border text-sm font-semibold"
                   style={{
-                    backgroundColor: isHardware
-                      ? "rgba(34, 197, 94, 0.15)"
-                      : "rgba(20, 184, 166, 0.15)",
-                    borderColor: isHardware
-                      ? "rgba(34, 197, 94, 0.4)"
-                      : "rgba(20, 184, 166, 0.4)",
-                    color: isHardware ? "#4ADE80" : "#06B6D4",
+                    backgroundColor: isDark
+                      ? isHardware
+                        ? "rgba(34, 197, 94, 0.15)"
+                        : "rgba(20, 184, 166, 0.15)"
+                      : "rgba(0, 0, 0, 0.05)",
+                    borderColor: isDark
+                      ? isHardware
+                        ? "rgba(34, 197, 94, 0.4)"
+                        : "rgba(20, 184, 166, 0.4)"
+                      : "rgba(0, 0, 0, 0.08)",
+                    color: isDark
+                      ? isHardware
+                        ? "#4ADE80"
+                        : "#06B6D4"
+                      : "#111827",
                   }}
                 >
                   {tech}
@@ -269,13 +349,21 @@ export default function AchievementModal({ achievement, onClose }) {
                     style={{
                       borderColor: isHardware
                         ? "rgba(34, 197, 94, 0.6)"
-                        : "rgba(20, 184, 166, 0.6)",
-                      color: isHardware ? "#4ADE80" : "#06B6D4",
+                        : isDark
+                          ? "rgba(20, 184, 166, 0.6)"
+                          : "rgba(0, 0, 0, 0.1)",
+                      color: isHardware
+                        ? "#4ADE80"
+                        : isDark
+                          ? "#06B6D4"
+                          : "#111827",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = isHardware
                         ? "rgba(34, 197, 94, 0.2)"
-                        : "rgba(20, 184, 166, 0.2)";
+                        : isDark
+                          ? "rgba(20, 184, 166, 0.2)"
+                          : "rgba(0, 0, 0, 0.05)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = "transparent";
@@ -295,10 +383,14 @@ export default function AchievementModal({ achievement, onClose }) {
             style={{
               borderColor: isHardware
                 ? "rgba(34, 197, 94, 0.2)"
-                : "rgba(20, 184, 166, 0.2)",
+                : isDark
+                  ? "rgba(20, 184, 166, 0.2)"
+                  : "rgba(0, 0, 0, 0.08)",
               backgroundColor: isHardware
                 ? "rgba(34, 197, 94, 0.05)"
-                : "rgba(20, 184, 166, 0.05)",
+                : isDark
+                  ? "rgba(20, 184, 166, 0.05)"
+                  : "rgba(0, 0, 0, 0.02)",
             }}
           >
             <p className="text-xs text-theme-faint">

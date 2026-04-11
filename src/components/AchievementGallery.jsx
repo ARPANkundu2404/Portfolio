@@ -6,7 +6,7 @@ import AchievementModal from "./AchievementModal";
 
 /* ─── Timeline Component ────────────────────────────────────────────────── */
 function TimelineSection({ selectedYear, setSelectedYear }) {
-  const { isHardware } = useTheme();
+  const { isHardware, isDark } = useTheme();
   const years = [2023, 2024, 2025];
   const lineRef = useRef(null);
   const [lineWidth, setLineWidth] = useState(0);
@@ -24,16 +24,20 @@ function TimelineSection({ selectedYear, setSelectedYear }) {
       <div className="flex items-center gap-3 mb-8">
         <h3
           className="text-sm font-bold uppercase tracking-wider"
-          style={{ color: isHardware ? "#22C55E" : "#10B981" }}
+          style={{
+            color: isDark ? (isHardware ? "#22C55E" : "#10B981") : "#111827",
+          }}
         >
           ▶ Growth Timeline
         </h3>
         <div
           className="h-px flex-1"
           style={{
-            background: isHardware
-              ? "linear-gradient(to right, rgba(34, 197, 94, 0.5), transparent)"
-              : "linear-gradient(to right, rgba(16, 185, 129, 0.3), transparent)",
+            background: isDark
+              ? isHardware
+                ? "linear-gradient(to right, rgba(34, 197, 94, 0.5), transparent)"
+                : "linear-gradient(to right, rgba(16, 185, 129, 0.3), transparent)"
+              : "linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent)",
           }}
         />
       </div>
@@ -44,10 +48,13 @@ function TimelineSection({ selectedYear, setSelectedYear }) {
         <motion.div
           ref={lineRef}
           className="h-0.5"
-          style={{originX: 0,
-            background: isHardware
-              ? "linear-gradient(to right, #22C55E, #4ADE80, rgba(34, 197, 94, 0.3))"
-              : "linear-gradient(to right, #14B8A6, #06B6D4, rgba(20, 184, 166, 0.3))",
+          style={{
+            originX: 0,
+            background: isDark
+              ? isHardware
+                ? "linear-gradient(to right, #22C55E, #4ADE80, rgba(34, 197, 94, 0.3))"
+                : "linear-gradient(to right, #14B8A6, #06B6D4, rgba(20, 184, 166, 0.3))"
+              : "linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05))",
           }}
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
@@ -67,31 +74,43 @@ function TimelineSection({ selectedYear, setSelectedYear }) {
               style={{
                 backgroundColor:
                   selectedYear === year
-                    ? isHardware
-                      ? "rgba(34, 197, 94, 0.2)"
-                      : "rgba(20, 184, 166, 0.2)"
+                    ? isDark
+                      ? isHardware
+                        ? "rgba(34, 197, 94, 0.2)"
+                        : "rgba(20, 184, 166, 0.2)"
+                      : "rgba(0, 0, 0, 0.05)"
                     : "transparent",
                 borderColor:
                   selectedYear === year
-                    ? isHardware
-                      ? "#22C55E"
-                      : "#14B8A6"
-                    : isHardware
-                      ? "rgba(34, 197, 94, 0.2)"
-                      : "rgba(20, 184, 166, 0.2)",
+                    ? isDark
+                      ? isHardware
+                        ? "#22C55E"
+                        : "#14B8A6"
+                      : "rgba(0, 0, 0, 0.2)"
+                    : isDark
+                      ? isHardware
+                        ? "rgba(34, 197, 94, 0.2)"
+                        : "rgba(20, 184, 166, 0.2)"
+                      : "rgba(0, 0, 0, 0.08)",
                 color:
                   selectedYear === year
-                    ? isHardware
-                      ? "#4ADE80"
-                      : "#06B6D4"
-                    : isHardware
-                      ? "rgba(34, 197, 94, 0.5)"
-                      : "rgba(20, 184, 166, 0.5)",
+                    ? isDark
+                      ? isHardware
+                        ? "#4ADE80"
+                        : "#06B6D4"
+                      : "#111827"
+                    : isDark
+                      ? isHardware
+                        ? "rgba(34, 197, 94, 0.5)"
+                        : "rgba(20, 184, 166, 0.5)"
+                      : "rgba(0, 0, 0, 0.5)",
                 boxShadow:
                   selectedYear === year
-                    ? isHardware
-                      ? "0 10px 24px rgba(34, 197, 94, 0.3)"
-                      : "0 10px 24px rgba(20, 184, 166, 0.3)"
+                    ? isDark
+                      ? isHardware
+                        ? "0 10px 24px rgba(34, 197, 94, 0.3)"
+                        : "0 10px 24px rgba(20, 184, 166, 0.3)"
+                      : "none"
                     : "none",
               }}
               initial={{ opacity: 0, y: -10 }}
@@ -120,7 +139,7 @@ function TimelineSection({ selectedYear, setSelectedYear }) {
 }
 
 /* ─── Achievement Card with 3D Tilt ────────────────────────────────────── */
-function AchievementCard({ achievement, onClick, isHardware }) {
+function AchievementCard({ achievement, onClick, isHardware, isDark }) {
   const cardRef = useRef(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
@@ -169,53 +188,67 @@ function AchievementCard({ achievement, onClick, isHardware }) {
         className="relative h-full p-5 rounded-lg border-2 transition-all duration-300 group"
         style={{
           transformStyle: "preserve-3d",
-          borderColor:
-            isWinner || isFavorite
+          backgroundColor: isDark
+            ? isWinner || isFavorite
+              ? isHardware
+                ? "rgba(0, 0, 0, 0.4)"
+                : "rgba(0, 0, 0, 0.2)"
+              : "rgba(0, 0, 0, 0.2)"
+            : "#FFFFFF",
+          borderColor: isDark
+            ? isWinner || isFavorite
               ? isHardware
                 ? "rgba(34, 197, 94, 0.6)"
                 : "rgba(20, 184, 166, 0.6)"
               : isHardware
                 ? "rgba(34, 197, 94, 0.2)"
-                : "rgba(20, 184, 166, 0.2)",
-          backgroundColor:
-            isWinner || isFavorite
-              ? isHardware
-                ? "rgba(0, 0, 0, 0.4)"
-                : "rgba(0, 0, 0, 0.2)"
-              : "rgba(0, 0, 0, 0.2)",
+                : "rgba(20, 184, 166, 0.2)"
+            : isWinner || isFavorite
+              ? "#16A34A"
+              : "rgba(0, 0, 0, 0.08)",
           boxShadow:
             isWinner || isFavorite
-              ? isHardware
-                ? "0 10px 24px rgba(34, 197, 94, 0.2)"
-                : "0 10px 24px rgba(20, 184, 166, 0.2)"
+              ? isDark
+                ? isHardware
+                  ? "0 10px 24px rgba(34, 197, 94, 0.2)"
+                  : "0 10px 24px rgba(20, 184, 166, 0.2)"
+                : "0 4px 12px rgba(0, 0, 0, 0.1)"
               : "none",
         }}
         onMouseEnter={(e) => {
           if (e.currentTarget) {
-            e.currentTarget.style.borderColor = isHardware
-              ? "#4ADE80"
-              : "#06B6D4";
-            e.currentTarget.style.backgroundColor = isHardware
-              ? "rgba(34, 197, 94, 0.1)"
-              : "rgba(20, 184, 166, 0.1)";
+            e.currentTarget.style.borderColor = isDark
+              ? isHardware
+                ? "#4ADE80"
+                : "#06B6D4"
+              : "#16A34A";
+            e.currentTarget.style.backgroundColor = isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.1)"
+                : "rgba(20, 184, 166, 0.1)"
+              : "rgba(0, 0, 0, 0.02)";
           }
         }}
         onMouseLeave={(e) => {
           if (e.currentTarget) {
-            e.currentTarget.style.borderColor =
-              isWinner || isFavorite
+            e.currentTarget.style.borderColor = isDark
+              ? isWinner || isFavorite
                 ? isHardware
                   ? "rgba(34, 197, 94, 0.6)"
                   : "rgba(20, 184, 166, 0.6)"
                 : isHardware
                   ? "rgba(34, 197, 94, 0.2)"
-                  : "rgba(20, 184, 166, 0.2)";
-            e.currentTarget.style.backgroundColor =
-              isWinner || isFavorite
+                  : "rgba(20, 184, 166, 0.2)"
+              : isWinner || isFavorite
+                ? "#16A34A"
+                : "rgba(0, 0, 0, 0.08)";
+            e.currentTarget.style.backgroundColor = isDark
+              ? isWinner || isFavorite
                 ? isHardware
                   ? "rgba(0, 0, 0, 0.4)"
                   : "rgba(0, 0, 0, 0.2)"
-                : "rgba(0, 0, 0, 0.2)";
+                : "rgba(0, 0, 0, 0.2)"
+              : "#FFFFFF";
           }
         }}
       >
@@ -224,14 +257,22 @@ function AchievementCard({ achievement, onClick, isHardware }) {
           <motion.div
             className="absolute -top-3 right-4 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full border"
             style={{
-              backgroundColor: isHardware
-                ? "rgba(34, 197, 94, 0.3)"
-                : "rgba(20, 184, 166, 0.3)",
-              borderColor: isHardware ? "#22C55E" : "#14B8A6",
-              color: isHardware ? "#4ADE80" : "#06B6D4",
-              boxShadow: isHardware
-                ? "0 10px 24px rgba(34, 197, 94, 0.4)"
-                : "0 10px 24px rgba(20, 184, 166, 0.4)",
+              backgroundColor: isDark
+                ? isHardware
+                  ? "rgba(34, 197, 94, 0.3)"
+                  : "rgba(20, 184, 166, 0.3)"
+                : "rgba(22, 163, 74, 0.1)",
+              borderColor: isDark
+                ? isHardware
+                  ? "#22C55E"
+                  : "#14B8A6"
+                : "#16A34A",
+              color: isDark ? (isHardware ? "#4ADE80" : "#06B6D4") : "#16A34A",
+              boxShadow: isDark
+                ? isHardware
+                  ? "0 10px 24px rgba(34, 197, 94, 0.4)"
+                  : "0 10px 24px rgba(20, 184, 166, 0.4)"
+                : "none",
             }}
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
@@ -245,13 +286,17 @@ function AchievementCard({ achievement, onClick, isHardware }) {
         <div
           className="inline-block px-2 py-1 text-xs font-mono mb-3 rounded border"
           style={{
-            backgroundColor: isHardware
-              ? "rgba(34, 197, 94, 0.15)"
-              : "rgba(20, 184, 166, 0.15)",
-            color: isHardware ? "#4ADE80" : "#06B6D4",
-            borderColor: isHardware
-              ? "rgba(34, 197, 94, 0.3)"
-              : "rgba(20, 184, 166, 0.3)",
+            backgroundColor: isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.15)"
+                : "rgba(20, 184, 166, 0.15)"
+              : "rgba(0, 0, 0, 0.05)",
+            color: isDark ? (isHardware ? "#4ADE80" : "#06B6D4") : "#111827",
+            borderColor: isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.3)"
+                : "rgba(20, 184, 166, 0.3)"
+              : "rgba(0, 0, 0, 0.08)",
           }}
         >
           {achievement.year}
@@ -270,22 +315,38 @@ function AchievementCard({ achievement, onClick, isHardware }) {
           {achievement.badges.map((badge) => {
             let bgColor, textColor;
             if (badge === "WINNER") {
-              bgColor = isHardware
-                ? "rgba(34, 197, 94, 0.2)"
-                : "rgba(20, 184, 166, 0.2)";
-              textColor = isHardware ? "#4ADE80" : "#06B6D4";
+              bgColor = isDark
+                ? isHardware
+                  ? "rgba(34, 197, 94, 0.2)"
+                  : "rgba(20, 184, 166, 0.2)"
+                : "rgba(22, 163, 74, 0.1)";
+              textColor = isDark
+                ? isHardware
+                  ? "#4ADE80"
+                  : "#06B6D4"
+                : "#16A34A";
             } else if (badge === "FINALIST" || badge === "TOP 3") {
-              bgColor = isHardware
-                ? "rgba(59, 130, 246, 0.2)"
-                : "rgba(34, 211, 238, 0.2)";
-              textColor = isHardware ? "#60A5FA" : "#22D3EE";
+              bgColor = isDark
+                ? isHardware
+                  ? "rgba(59, 130, 246, 0.2)"
+                  : "rgba(34, 211, 238, 0.2)"
+                : "rgba(37, 99, 235, 0.1)";
+              textColor = isDark
+                ? isHardware
+                  ? "#60A5FA"
+                  : "#22D3EE"
+                : "#2563EB";
             } else {
-              bgColor = isHardware
-                ? "rgba(34, 197, 94, 0.1)"
-                : "rgba(20, 184, 166, 0.1)";
-              textColor = isHardware
-                ? "rgba(74, 222, 128, 0.6)"
-                : "rgba(6, 182, 212, 0.6)";
+              bgColor = isDark
+                ? isHardware
+                  ? "rgba(34, 197, 94, 0.1)"
+                  : "rgba(20, 184, 166, 0.1)"
+                : "rgba(0, 0, 0, 0.05)";
+              textColor = isDark
+                ? isHardware
+                  ? "rgba(74, 222, 128, 0.6)"
+                  : "rgba(6, 182, 212, 0.6)"
+                : "#111827";
             }
             return (
               <span
@@ -296,9 +357,11 @@ function AchievementCard({ achievement, onClick, isHardware }) {
                   color: textColor,
                   boxShadow:
                     badge === "WINNER"
-                      ? isHardware
-                        ? "0 0 12px rgba(34, 197, 94, 0.3)"
-                        : "0 0 12px rgba(20, 184, 166, 0.3)"
+                      ? isDark
+                        ? isHardware
+                          ? "0 0 12px rgba(34, 197, 94, 0.3)"
+                          : "0 0 12px rgba(20, 184, 166, 0.3)"
+                        : "none"
                       : "none",
                 }}
               >
@@ -348,9 +411,11 @@ function AchievementCard({ achievement, onClick, isHardware }) {
         <div
           className="text-xs font-mono uppercase tracking-wider transition-all"
           style={{
-            color: isHardware
-              ? "rgba(34, 197, 94, 0.6)"
-              : "rgba(20, 184, 166, 0.6)",
+            color: isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.6)"
+                : "rgba(20, 184, 166, 0.6)"
+              : "#111827",
           }}
         >
           ▶ View Details
@@ -362,7 +427,7 @@ function AchievementCard({ achievement, onClick, isHardware }) {
 
 /* ─── Main Gallery Component ────────────────────────────────────────────── */
 export default function AchievementGallery() {
-  const { isHardware } = useTheme();
+  const { isHardware, isDark } = useTheme();
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedAchievement, setSelectedAchievement] = useState(null);
 
@@ -387,7 +452,9 @@ export default function AchievementGallery() {
       >
         <h2
           className="text-4xl md:text-5xl font-bold mb-3"
-          style={{ color: isHardware ? "#22C55E" : "#10B981" }}
+          style={{
+            color: isDark ? (isHardware ? "#22C55E" : "#10B981") : "#111827",
+          }}
         >
           Wall of
           <span className="" style={{ color: "var(--color-accent)" }}>
@@ -419,6 +486,7 @@ export default function AchievementGallery() {
               achievement={achievement}
               onClick={() => setSelectedAchievement(achievement)}
               isHardware={isHardware}
+              isDark={isDark}
             />
           ))}
         </AnimatePresence>
@@ -445,12 +513,16 @@ export default function AchievementGallery() {
         <div
           className="px-4 py-3 rounded border"
           style={{
-            borderColor: isHardware
-              ? "rgba(34, 197, 94, 0.2)"
-              : "rgba(20, 184, 166, 0.2)",
-            backgroundColor: isHardware
-              ? "rgba(34, 197, 94, 0.05)"
-              : "rgba(20, 184, 166, 0.05)",
+            borderColor: isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.2)"
+                : "rgba(20, 184, 166, 0.2)"
+              : "rgba(0, 0, 0, 0.08)",
+            backgroundColor: isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.05)"
+                : "rgba(20, 184, 166, 0.05)"
+              : "rgba(0, 0, 0, 0.02)",
           }}
         >
           <div className="text-accent font-bold text-lg">
@@ -461,12 +533,16 @@ export default function AchievementGallery() {
         <div
           className="px-4 py-3 rounded border"
           style={{
-            borderColor: isHardware
-              ? "rgba(34, 197, 94, 0.2)"
-              : "rgba(20, 184, 166, 0.2)",
-            backgroundColor: isHardware
-              ? "rgba(34, 197, 94, 0.05)"
-              : "rgba(20, 184, 166, 0.05)",
+            borderColor: isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.2)"
+                : "rgba(20, 184, 166, 0.2)"
+              : "rgba(0, 0, 0, 0.08)",
+            backgroundColor: isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.05)"
+                : "rgba(20, 184, 166, 0.05)"
+              : "rgba(0, 0, 0, 0.02)",
           }}
         >
           <div className="text-accent font-bold text-lg">
@@ -477,12 +553,16 @@ export default function AchievementGallery() {
         <div
           className="px-4 py-3 rounded border"
           style={{
-            borderColor: isHardware
-              ? "rgba(34, 197, 94, 0.2)"
-              : "rgba(20, 184, 166, 0.2)",
-            backgroundColor: isHardware
-              ? "rgba(34, 197, 94, 0.05)"
-              : "rgba(20, 184, 166, 0.05)",
+            borderColor: isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.2)"
+                : "rgba(20, 184, 166, 0.2)"
+              : "rgba(0, 0, 0, 0.08)",
+            backgroundColor: isDark
+              ? isHardware
+                ? "rgba(34, 197, 94, 0.05)"
+                : "rgba(20, 184, 166, 0.05)"
+              : "rgba(0, 0, 0, 0.02)",
           }}
         >
           <div className="text-accent font-bold text-lg">
