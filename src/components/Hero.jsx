@@ -8,7 +8,13 @@ import {
   useScroll,
 } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
-import { PERSONAL, FOOTBALL, HERO } from "../data/portfolio";
+import {
+  PERSONAL,
+  FOOTBALL,
+  HERO,
+  HERO_STATS,
+  TICKER_ITEMS,
+} from "../data/portfolio";
 import {
   fadeIn,
   slideUp,
@@ -196,28 +202,7 @@ export default function Hero() {
   // Hardware mode: HW-specific text reveals with staccato timing
   const textVariants = isMobile ? mobileSlideUp : slideUp;
 
-  const tickerItems = isHardware
-    ? [
-        "ESP32",
-        "IoT Systems",
-        "DHT11",
-        "Firebase",
-        "Next.js",
-        "Python",
-        "C",
-        "MatLab",
-        "Embedded Systems",
-      ]
-    : [
-        "React.js",
-        "Spring Boot",
-        "Next.js",
-        "PostgreSQL",
-        "Docker",
-        "JWT Auth",
-        "MySQL",
-        "Tailwind CSS",
-      ];
+  const tickerItems = TICKER_ITEMS?.[isHardware ? "hw" : "sw"] || [];
 
   return (
     <motion.section
@@ -279,7 +264,8 @@ export default function Hero() {
             className="flex flex-wrap items-center gap-4 mb-10"
           >
             <span className="section-label">
-              {isHardware ? "// ECE ENGINEER" : "// FULL STACK DEVELOPER"}
+              {HERO?.modeLabels?.[isHardware ? "hw" : "sw"] ||
+                (isHardware ? "// ECE ENGINEER" : "// FULL STACK DEVELOPER")}
             </span>
             <div
               className="hidden sm:block flex-1 h-px max-w-16"
@@ -297,9 +283,9 @@ export default function Hero() {
                 color: "var(--color-text)",
                 x: safeParallaxA,
               }}
-              data-text="ARPAN"
+              data-text={PERSONAL?.name?.split(" ")[0]?.toUpperCase()}
             >
-              ARPAN
+              {PERSONAL?.name?.split(" ")[0]?.toUpperCase()}
             </motion.h1>
           </div>
 
@@ -313,7 +299,7 @@ export default function Hero() {
                 x: safeParallaxAInverse,
               }}
             >
-              KUNDU
+              {PERSONAL?.name?.split(" ")[1]?.toUpperCase()}
             </motion.h1>
           </div>
 
@@ -331,9 +317,7 @@ export default function Hero() {
               className="font-mono text-xs tracking-[0.2em] uppercase"
               style={{ color: "var(--color-text-muted)" }}
             >
-              {isHardware
-                ? "Hardware · IoT · Embedded Systems · ECE"
-                : "Java · Spring Boot · React · Docker · Full Stack"}
+              {PERSONAL?.subtitle}
             </span>
             <div
               className="h-px flex-1 max-w-12"
@@ -346,9 +330,7 @@ export default function Hero() {
             variants={textVariants}
             className="mt-6 max-w-xl text-sm md:text-base leading-relaxed text-theme-muted"
           >
-            {isHardware
-              ? "ECE student at Academy of Technology. Building IoT systems that bridge the gap between physical sensors and real-time web interfaces."
-              : "Full-stack developer specializing in Java + Spring Boot backends, React frontends, and containerized deployments. Currently building IoT-integrated applications."}
+            {PERSONAL?.bio?.[isHardware ? 1 : 0]}
           </motion.p>
 
           {/* CTA buttons */}
@@ -377,12 +359,9 @@ export default function Hero() {
           variants={isMobile ? mobileFadeIn : fadeIn}
           className="grid grid-cols-3 md:grid-cols-6 gap-6 mt-16 pt-8 border-t border-theme"
         >
-          <StatCounter value="2" label="Years Dev" />
-          <StatCounter value="4" label="Projects" />
-          <StatCounter value="7" label="Hackathons" />
-          <StatCounter value="2" label="Wins" />
-          <StatCounter value="95" label="Academics %" />
-          <StatCounter value="200" label="Football hrs" />
+          {HERO_STATS?.map((stat, index) => (
+            <StatCounter key={index} value={stat.value} label={stat.label} />
+          ))}
         </motion.div>
       </div>
 

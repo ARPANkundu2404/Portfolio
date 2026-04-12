@@ -5,6 +5,8 @@ import {
   EDUCATION,
   EDUCATION_SECTION,
   FOOTBALL,
+  PERSONAL_INTERESTS_SECTION,
+  COURSEWORK,
 } from "../data/portfolio";
 import {
   staggerContainer,
@@ -254,7 +256,7 @@ export default function AboutSection() {
             {/* Football easter egg */}
             <div className="mt-8">
               <div className="section-label text-[9px] mb-3">
-                OUTSIDE THE IDE
+                {PERSONAL_INTERESTS_SECTION?.heading || "OUTSIDE THE IDE"}
               </div>
               <FootballSection />
             </div>
@@ -293,14 +295,7 @@ export default function AboutSection() {
                 RELEVANT COURSEWORK
               </div>
               <div className="flex flex-wrap gap-2">
-                {[
-                  "Digital Electronics",
-                  "Microprocessors",
-                  "Network Theory",
-                  "Signals & Systems",
-                  "Internet of Things",
-                  "VLSI Design",
-                ].map((c) => (
+                {COURSEWORK?.map((c) => (
                   <span key={c} className="tag text-[10px]">
                     {c}
                   </span>

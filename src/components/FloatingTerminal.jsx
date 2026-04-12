@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
-import { PERSONAL, SKILL_GATES, FOOTBALL } from "../data/portfolio";
+import {
+  PERSONAL,
+  SKILL_GATES,
+  FOOTBALL,
+  TERMINAL_CONFIG,
+} from "../data/portfolio";
 
 /* ─── Cursor Component ─────────────────────────────────────────────────── */
 function Cursor({ active }) {
@@ -59,7 +64,9 @@ export default function FloatingTerminal() {
   const [commandLog, setCommandLog] = useState([
     {
       command: null,
-      response: `Welcome to Terminal FAQ! Type "help" for available commands.`,
+      response:
+        TERMINAL_CONFIG?.welcomeMessage ||
+        `Welcome to Terminal FAQ! Type "help" for available commands.`,
       prompt: "> ",
     },
   ]);
@@ -131,7 +138,9 @@ export default function FloatingTerminal() {
 
       // Parse command
       if (cmd === "help") {
-        response = `Available Commands:
+        response =
+          TERMINAL_CONFIG?.commands?.help?.response ||
+          `Available Commands:
   whoami    - Display profile information
   skills    - Show technical skills by category
   football  - Football passion & stats
@@ -163,7 +172,9 @@ Location: ${PERSONAL.location}`;
         setCommandLog([
           {
             command: null,
-            response: `Welcome to Terminal FAQ! Type "help" for available commands.`,
+            response:
+              TERMINAL_CONFIG?.welcomeMessage ||
+              `Welcome to Terminal FAQ! Type "help" for available commands.`,
             prompt: "> ",
           },
         ]);

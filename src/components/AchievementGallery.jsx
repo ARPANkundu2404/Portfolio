@@ -1,6 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ACHIEVEMENTS, ACHIEVEMENTS_SECTION } from "../data/portfolio";
+import {
+  ACHIEVEMENTS,
+  ACHIEVEMENTS_SECTION,
+  ACHIEVEMENT_FEATURED_ROLES,
+} from "../data/portfolio";
 import { useTheme } from "../context/ThemeContext";
 import AchievementModal from "./AchievementModal";
 
@@ -165,7 +169,7 @@ function AchievementCard({ achievement, onClick, isHardware, isDark }) {
 
   const isWinner = achievement.role === "Winner";
   const isFavorite =
-    achievement.role === "Winner" || achievement.role === "Top 3 Finalist";
+    ACHIEVEMENT_FEATURED_ROLES?.includes(achievement.role) || false;
 
   return (
     <motion.div

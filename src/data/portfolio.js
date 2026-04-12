@@ -43,10 +43,49 @@ export const HERO = {
   headline: "I BUILD",
   headlineOutline: "SYSTEMS.",
   subtitle: "Full-stack software engineer & IoT enthusiast.",
+  modeLabels: {
+    sw: "// FULL STACK DEVELOPER",
+    hw: "// ECE ENGINEER",
+  },
   cta: {
     primary: { label: "View Work →", href: "#projects" },
     secondary: { label: "Get in Touch →", href: "#contact" },
   },
+};
+
+// ─── HERO STATS (Counter values) ──────────────────────────────────────────
+export const HERO_STATS = [
+  { value: "2", label: "YEARS BUILDING" },
+  { value: "4", label: "PROJECTS SHIPPED" },
+  { value: "7", label: "WINS + FINALS" },
+  { value: "2", label: "HACKATHON RINGS" },
+  { value: "95", label: "% SCORE AVG" },
+  { value: "200+", label: "MATCHES PLAYED" },
+];
+
+// ─── TICKER ITEMS (Scrolling tech stack by mode) ────────────────────────────
+export const TICKER_ITEMS = {
+  sw: [
+    "React.js",
+    "Spring Boot",
+    "Next.js",
+    "PostgreSQL",
+    "Docker",
+    "JWT Auth",
+    "MySQL",
+    "Tailwind CSS",
+  ],
+  hw: [
+    "ESP32",
+    "IoT Systems",
+    "DHT11",
+    "Firebase",
+    "Next.js",
+    "Python",
+    "C",
+    "MatLab",
+    "Embedded Systems",
+  ],
 };
 
 // ─── ABOUT SECTION ───────────────────────────────────────────────────────────
@@ -487,9 +526,48 @@ export const ACHIEVEMENTS = [
   },
 ];
 
+// ─── PERSONAL INTERESTS SECTION (About→Outside the IDE) ──────────────────────
+export const PERSONAL_INTERESTS_SECTION = {
+  heading: "OUTSIDE THE IDE",
+};
+
+// ─── COURSEWORK ──────────────────────────────────────────────────────────────
+export const COURSEWORK = [
+  "Digital Electronics",
+  "Microprocessors",
+  "Signal Processing",
+  "Network Security",
+  "Database Systems",
+  "Operating Systems",
+  "Web Development",
+  "Data Structures",
+  "Algorithm Design",
+  "Embedded Systems",
+];
+
+// ─── TERMINAL CONFIGURATION ──────────────────────────────────────────────────
+export const TERMINAL_CONFIG = {
+  welcomeMessage:
+    'Welcome to Terminal FAQ! Type "help" for available commands.',
+  commands: {
+    help: {
+      response: `Available Commands:
+  whoami    - Display profile information
+  skills    - Show technical skills by category
+  football  - Football passion & stats
+  contact   - Get contact information
+  clear     - Clear terminal
+  help      - Display this help message`,
+    },
+  },
+};
+
+// ─── ACHIEVEMENT FEATURED ROLES (for highlighting featured achievements) ─────
+export const ACHIEVEMENT_FEATURED_ROLES = ["Winner", "Top 3 Finalist"];
+
 // ─── EDUCATION SECTION ───────────────────────────────────────────────────────
 export const EDUCATION_SECTION = {
-  sectionLabel: "05 / EDUCATION",
+  sectionLabel: "02 / EDUCATION",
   heading: "ACADEMIC BACKGROUND",
 };
 
@@ -545,14 +623,6 @@ export const FOOTER = {
 export const CONTACT_FORM = {
   fields: [
     {
-      id: "user_title",
-      name: "user_title",
-      type: "text",
-      label: "Subject",
-      placeholder: "What is this about?",
-      required: true,
-    },
-    {
       id: "user_name",
       name: "user_name",
       type: "text",
@@ -566,6 +636,14 @@ export const CONTACT_FORM = {
       type: "email",
       label: "Email",
       placeholder: "your.email@example.com",
+      required: true,
+    },
+    {
+      id: "user_title",
+      name: "user_title",
+      type: "text",
+      label: "Subject",
+      placeholder: "What is this about?",
       required: true,
     },
     {
