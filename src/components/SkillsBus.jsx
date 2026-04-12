@@ -1,8 +1,17 @@
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
-import { SKILL_GATES } from '../data/portfolio';
-import { staggerContainer, fadeIn, slideInLeft, slideInRight, mobileFadeIn, mobileSlideInLeft, mobileSlideInRight, useIsMobile } from '../hooks/animations';
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "../context/ThemeContext";
+import { SKILL_GATES, SKILLS_SECTION } from "../data/portfolio";
+import {
+  staggerContainer,
+  fadeIn,
+  slideInLeft,
+  slideInRight,
+  mobileFadeIn,
+  mobileSlideInLeft,
+  mobileSlideInRight,
+  useIsMobile,
+} from "../hooks/animations";
 
 /* ─── Individual skill bar ──────────────────────────────────────────────── */
 function SkillBar({ name, level, color, isHardware, index }) {
@@ -43,17 +52,17 @@ function SkillBar({ name, level, color, isHardware, index }) {
           initial={{ width: 0 }}
           animate={{ width: `${level}%` }}
           transition={{
-            delay:    0.3 + index * 0.04,
+            delay: 0.3 + index * 0.04,
             duration: isHardware ? 0.3 : 0.8,
-            ease:     isHardware ? 'linear' : [0.16, 1, 0.3, 1],
+            ease: isHardware ? "linear" : [0.16, 1, 0.3, 1],
           }}
           className="h-full rounded-full"
           style={{
             background: hovered
               ? `linear-gradient(90deg, ${color}, ${color}88)`
               : color,
-            boxShadow: hovered ? `0 0 8px ${color}66` : 'none',
-            transition: 'box-shadow 0.2s',
+            boxShadow: hovered ? `0 0 8px ${color}66` : "none",
+            transition: "box-shadow 0.2s",
           }}
         />
       </div>
@@ -63,7 +72,9 @@ function SkillBar({ name, level, color, isHardware, index }) {
 
 /* ─── Gate header with icon and label ───────────────────────────────────── */
 function GateHeader({ gate, isActive, isHardware, onClick }) {
-  const isAvailable = gate.mode === 'both' || (isHardware ? gate.mode === 'hw' : gate.mode === 'sw');
+  const isAvailable =
+    gate.mode === "both" ||
+    (isHardware ? gate.mode === "hw" : gate.mode === "sw");
 
   return (
     <motion.button
@@ -72,27 +83,31 @@ function GateHeader({ gate, isActive, isHardware, onClick }) {
       className={`
         relative flex items-center gap-3 px-4 py-3 rounded-lg border w-full text-left
         transition-all duration-300
-        ${isActive ? '' : 'opacity-50 hover:opacity-75'}
-        ${!isAvailable ? 'cursor-not-allowed opacity-30' : ''}
+        ${isActive ? "" : "opacity-50 hover:opacity-75"}
+        ${!isAvailable ? "cursor-not-allowed opacity-30" : ""}
       `}
       style={{
-        background:  isActive ? `${gate.color}12` : 'var(--color-surface)',
-        borderColor: isActive ? gate.color : 'var(--color-border)',
-        boxShadow:   isActive && isHardware ? `0 0 16px ${gate.color}33` : 'none',
+        background: isActive ? `${gate.color}12` : "var(--color-surface)",
+        borderColor: isActive ? gate.color : "var(--color-border)",
+        boxShadow: isActive && isHardware ? `0 0 16px ${gate.color}33` : "none",
       }}
     >
       {/* Indicator dot */}
       <motion.div
         animate={{ opacity: isActive ? [0.6, 1, 0.6] : 0.3 }}
-        transition={{ duration: 1.2, repeat: isActive ? Infinity : 0, ease: 'easeInOut' }}
+        transition={{
+          duration: 1.2,
+          repeat: isActive ? Infinity : 0,
+          ease: "easeInOut",
+        }}
         className="w-2 h-2 rounded-full shrink-0"
-        style={{ background: isActive ? gate.color : 'var(--color-border)' }}
+        style={{ background: isActive ? gate.color : "var(--color-border)" }}
       />
 
       {/* Icon */}
       <span
         className="text-lg font-mono leading-none"
-        style={{ color: isActive ? gate.color : 'var(--color-text-faint)' }}
+        style={{ color: isActive ? gate.color : "var(--color-text-faint)" }}
       >
         {gate.icon}
       </span>
@@ -100,7 +115,7 @@ function GateHeader({ gate, isActive, isHardware, onClick }) {
       <div className="flex-1 min-w-0">
         <div
           className="text-xs font-mono tracking-widest"
-          style={{ color: isActive ? gate.color : 'var(--color-text-muted)' }}
+          style={{ color: isActive ? gate.color : "var(--color-text-muted)" }}
         >
           {gate.label.toUpperCase()}
         </div>
@@ -113,7 +128,7 @@ function GateHeader({ gate, isActive, isHardware, onClick }) {
       {isActive && (
         <motion.span
           initial={{ opacity: 0, x: -4 }}
-          animate={{ opacity: 1, x: 0   }}
+          animate={{ opacity: 1, x: 0 }}
           className="text-xs font-mono"
           style={{ color: gate.color }}
         >
@@ -123,7 +138,9 @@ function GateHeader({ gate, isActive, isHardware, onClick }) {
 
       {/* Disabled label */}
       {!isAvailable && (
-        <span className="text-[9px] font-mono text-theme-faint">[{isHardware ? 'SW' : 'HW'} ONLY]</span>
+        <span className="text-[9px] font-mono text-theme-faint">
+          [{isHardware ? "SW" : "HW"} ONLY]
+        </span>
       )}
     </motion.button>
   );
@@ -131,7 +148,7 @@ function GateHeader({ gate, isActive, isHardware, onClick }) {
 
 /* ─── PCB Bus line visualization ─────────────────────────────────────────── */
 function BusVisualization({ activeGateId, isHardware }) {
-  const gate = SKILL_GATES.find(g => g.id === activeGateId);
+  const gate = SKILL_GATES.find((g) => g.id === activeGateId);
   if (!gate) return null;
 
   return (
@@ -141,17 +158,27 @@ function BusVisualization({ activeGateId, isHardware }) {
           <marker
             id="bus-arrow"
             viewBox="0 0 10 10"
-            refX="8" refY="5"
-            markerWidth="4" markerHeight="4"
+            refX="8"
+            refY="5"
+            markerWidth="4"
+            markerHeight="4"
             orient="auto"
           >
-            <path d="M1 1 L8 5 L1 9" fill="none" stroke={gate.color} strokeWidth="2" />
+            <path
+              d="M1 1 L8 5 L1 9"
+              fill="none"
+              stroke={gate.color}
+              strokeWidth="2"
+            />
           </marker>
         </defs>
 
         {/* Main bus line */}
         <motion.line
-          x1="0" y1="16" x2="100%" y2="16"
+          x1="0"
+          y1="16"
+          x2="100%"
+          y2="16"
           stroke={gate.color}
           strokeWidth="1.5"
           strokeOpacity="0.4"
@@ -168,12 +195,12 @@ function BusVisualization({ activeGateId, isHardware }) {
                 key={i}
                 r="3"
                 fill={gate.color}
-                animate={{ cx: ['0%', '100%'] }}
+                animate={{ cx: ["0%", "100%"] }}
                 transition={{
                   duration: 2,
-                  delay:    i * 0.35,
-                  repeat:   Infinity,
-                  ease:     'linear',
+                  delay: i * 0.35,
+                  repeat: Infinity,
+                  ease: "linear",
                 }}
                 style={{ cy: 16 }}
               />
@@ -197,10 +224,10 @@ export default function SkillsBus() {
   const { isHardware, engineMode } = useTheme();
 
   // Default active gate based on mode
-  const defaultGate = isHardware ? 'hardware' : 'web';
+  const defaultGate = isHardware ? "hardware" : "web";
   const [activeGate, setActiveGate] = useState(defaultGate);
 
-  const gate = SKILL_GATES.find(g => g.id === activeGate);
+  const gate = SKILL_GATES.find((g) => g.id === activeGate);
   const isMobile = useIsMobile();
 
   return (
@@ -213,27 +240,24 @@ export default function SkillsBus() {
       variants={staggerContainer}
     >
       <div className="max-w-7xl mx-auto">
-
         {/* Section header */}
         <motion.div
           variants={isMobile ? mobileFadeIn : fadeIn}
           className="mb-12"
         >
-          <div className="section-label">05 / SYSTEM BUS</div>
+          <div className="section-label">{SKILLS_SECTION?.sectionLabel}</div>
           <h2 className="font-display text-hero-sm text-theme leading-none mt-2">
-            SKILL GATES
+            {SKILLS_SECTION?.heading}
           </h2>
           <p className="text-sm text-theme-muted mt-3 max-w-md">
             {isHardware
-              ? 'Hardware + Software capabilities organized by signal path. Select a gate to inspect throughput.'
-              : 'Full-stack competencies grouped by layer. Select a gate to inspect depth.'
-            }
+              ? "Hardware + Software capabilities organized by signal path. Select a gate to inspect throughput."
+              : "Full-stack competencies grouped by layer. Select a gate to inspect depth."}
           </p>
         </motion.div>
 
         {/* Main grid: gate selector + skill bars */}
         <div className="grid grid-cols-1 lg:grid-cols-[280px,1fr] gap-6">
-
           {/* ── Gate selector column ───────────────────────────────────── */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
@@ -242,7 +266,7 @@ export default function SkillsBus() {
             transition={{ duration: 0.6 }}
             className="flex flex-col gap-3"
           >
-            {SKILL_GATES.map(g => (
+            {SKILL_GATES.map((g) => (
               <GateHeader
                 key={g.id}
                 gate={g}
@@ -256,16 +280,18 @@ export default function SkillsBus() {
             <div
               className="mt-2 p-3 rounded-lg border text-center"
               style={{
-                background:  'var(--color-surface)',
-                borderColor: 'var(--color-border)',
+                background: "var(--color-surface)",
+                borderColor: "var(--color-border)",
               }}
             >
-              <div className="text-[9px] font-mono text-theme-faint tracking-widest mb-1">ACTIVE MODE</div>
+              <div className="text-[9px] font-mono text-theme-faint tracking-widest mb-1">
+                ACTIVE MODE
+              </div>
               <div
                 className="text-xs font-mono tracking-wider"
-                style={{ color: 'var(--color-accent)' }}
+                style={{ color: "var(--color-accent)" }}
               >
-                {isHardware ? '⟨ HARDWARE ⟩' : '⟨ SOFTWARE ⟩'}
+                {isHardware ? "⟨ HARDWARE ⟩" : "⟨ SOFTWARE ⟩"}
               </div>
             </div>
           </motion.div>
@@ -278,9 +304,11 @@ export default function SkillsBus() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="rounded-xl border p-6"
             style={{
-              background:  'var(--color-bg-card)',
-              borderColor: 'var(--color-border)',
-              boxShadow:   isHardware ? `0 0 24px ${gate?.color}15` : 'var(--shadow-card-sw)',
+              background: "var(--color-bg-card)",
+              borderColor: "var(--color-border)",
+              boxShadow: isHardware
+                ? `0 0 24px ${gate?.color}15`
+                : "var(--shadow-card-sw)",
             }}
           >
             {/* Panel header */}
@@ -314,7 +342,10 @@ export default function SkillsBus() {
             </div>
 
             {/* Bus line */}
-            <BusVisualization activeGateId={activeGate} isHardware={isHardware} />
+            <BusVisualization
+              activeGateId={activeGate}
+              isHardware={isHardware}
+            />
 
             {/* Skills grid */}
             <AnimatePresence mode="wait">
@@ -322,7 +353,7 @@ export default function SkillsBus() {
                 key={activeGate}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{    opacity: 0 }}
+                exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
                 className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4"
               >
@@ -338,7 +369,6 @@ export default function SkillsBus() {
                 ))}
               </motion.div>
             </AnimatePresence>
-
           </motion.div>
         </div>
 
@@ -350,20 +380,29 @@ export default function SkillsBus() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-8 p-4 rounded-xl border"
           style={{
-            background:  'var(--color-surface)',
-            borderColor: 'var(--color-border)',
+            background: "var(--color-surface)",
+            borderColor: "var(--color-border)",
           }}
         >
           <div className="text-[10px] font-mono text-theme-faint tracking-widest mb-3">
             ALSO IN STACK
           </div>
           <div className="flex flex-wrap gap-2">
-            {['Git', 'Eclipse', 'Pandas (learning)', 'NumPy (learning)', 'MVC Architecture', 'Responsive Design', 'Eclipse IDE'].map(t => (
-              <span key={t} className="tag text-[10px]">{t}</span>
+            {[
+              "Git",
+              "Eclipse",
+              "Pandas (learning)",
+              "NumPy (learning)",
+              "MVC Architecture",
+              "Responsive Design",
+              "Eclipse IDE",
+            ].map((t) => (
+              <span key={t} className="tag text-[10px]">
+                {t}
+              </span>
             ))}
           </div>
         </motion.div>
-
       </div>
     </motion.section>
   );

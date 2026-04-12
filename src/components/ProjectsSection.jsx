@@ -1,23 +1,25 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
-import { PROJECTS } from '../data/portfolio';
-import XRayCard from './XRayCard';
-import { staggerContainer, fadeIn, slideInLeft, slideInRight, mobileFadeIn, mobileSlideInLeft, mobileSlideInRight, useIsMobile } from '../hooks/animations';
-
-const FILTERS = [
-  { id: 'all',      label: 'All'      },
-  { id: 'sw',       label: 'Software' },
-  { id: 'hw',       label: 'Hardware' },
-];
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "../context/ThemeContext";
+import { PROJECTS, PROJECTS_SECTION } from "../data/portfolio";
+import XRayCard from "./XRayCard";
+import {
+  staggerContainer,
+  fadeIn,
+  slideInLeft,
+  slideInRight,
+  mobileFadeIn,
+  mobileSlideInLeft,
+  mobileSlideInRight,
+  useIsMobile,
+} from "../hooks/animations";
 
 export default function ProjectsSection() {
   const { isHardware } = useTheme();
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState("all");
 
-  const filtered = filter === 'all'
-    ? PROJECTS
-    : PROJECTS.filter(p => p.mode === filter);
+  const filtered =
+    filter === "all" ? PROJECTS : PROJECTS?.filter((p) => p.mode === filter);
 
   const isMobile = useIsMobile();
   return (
@@ -30,39 +32,48 @@ export default function ProjectsSection() {
       variants={staggerContainer}
     >
       <div className="max-w-7xl mx-auto">
-
         {/* Header */}
         <motion.div
           variants={isMobile ? mobileFadeIn : fadeIn}
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10"
         >
           <div>
-            <div className="section-label">03 / PROJECTS</div>
+            <div className="section-label">
+              {PROJECTS_SECTION?.sectionLabel}
+            </div>
             <h2 className="font-display text-hero-sm text-theme leading-none mt-2">
-              WHAT I BUILT
+              {PROJECTS_SECTION?.heading}
             </h2>
             <p className="text-sm text-theme-muted mt-3 max-w-md">
-              Hover any card to X-Ray the architecture. The skeleton reveals the technical blueprint beneath.
+              {PROJECTS_SECTION?.description}
             </p>
           </div>
 
           {/* Filter buttons */}
           <div className="flex gap-2">
-            {FILTERS.map(f => (
+            {PROJECTS_SECTION?.filters?.map((f) => (
               <button
                 key={f.id}
                 onClick={() => setFilter(f.id)}
                 className={`
                   px-4 py-2 rounded text-xs font-mono tracking-wider border transition-all duration-200
-                  ${filter === f.id
-                    ? 'text-theme-bg border-accent bg-accent'
-                    : 'text-theme-muted border-theme hover:border-accent hover:text-accent'
+                  ${
+                    filter === f.id
+                      ? "text-theme-bg border-accent bg-accent"
+                      : "text-theme-muted border-theme hover:border-accent hover:text-accent"
                   }
                 `}
                 style={{
-                  background:  filter === f.id ? 'var(--color-accent)' : 'transparent',
-                  borderColor: filter === f.id ? 'var(--color-accent)' : 'var(--color-border)',
-                  color:       filter === f.id ? 'var(--color-bg)' : 'var(--color-text-muted)',
+                  background:
+                    filter === f.id ? "var(--color-accent)" : "transparent",
+                  borderColor:
+                    filter === f.id
+                      ? "var(--color-accent)"
+                      : "var(--color-border)",
+                  color:
+                    filter === f.id
+                      ? "var(--color-bg)"
+                      : "var(--color-text-muted)",
                 }}
               >
                 {f.label}
@@ -88,11 +99,17 @@ export default function ProjectsSection() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ amount: 0.3, once: false }}
-                variants={isMobile ? mobileFadeIn : (i % 2 === 0 ? slideInLeft : slideInRight)}
+                variants={
+                  isMobile
+                    ? mobileFadeIn
+                    : i % 2 === 0
+                      ? slideInLeft
+                      : slideInRight
+                }
                 transition={{
                   delay: i * (isHardware ? 0.08 : 0.1),
                   duration: isHardware ? 0.25 : 0.5,
-                  ease: isHardware ? [0,0,1,1] : [0.16,1,0.3,1],
+                  ease: isHardware ? [0, 0, 1, 1] : [0.16, 1, 0.3, 1],
                 }}
               >
                 <XRayCard project={project} />
@@ -100,7 +117,6 @@ export default function ProjectsSection() {
             ))}
           </motion.div>
         </AnimatePresence>
-
       </div>
     </motion.section>
   );

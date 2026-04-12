@@ -8,7 +8,7 @@ import {
   useScroll,
 } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
-import { PERSONAL, FOOTBALL } from "../data/portfolio";
+import { PERSONAL, FOOTBALL, HERO } from "../data/portfolio";
 import {
   fadeIn,
   slideUp,
@@ -262,7 +262,11 @@ export default function Hero() {
       {/* ── Main content ─────────────────────────────────────────────────── */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
         <motion.div
-          style={{ rotateX: safeRotateX, rotateY: safeRotateY, transformStyle: "preserve-3d" }}
+          style={{
+            rotateX: safeRotateX,
+            rotateY: safeRotateY,
+            transformStyle: "preserve-3d",
+          }}
           className="will-change-transform"
           initial="hidden"
           whileInView="visible"
@@ -352,21 +356,16 @@ export default function Hero() {
             variants={textVariants}
             className="flex flex-wrap gap-3 mt-8"
           >
-            <a href="#projects" className="btn-primary">
-              <span>View Projects</span>
-              <span className="text-xs opacity-70">→</span>
-            </a>
-            <a href={`mailto:${PERSONAL.email}`} className="btn-outline">
-              <span>Get in Touch</span>
-            </a>
-            <a
-              href={PERSONAL.github}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-outline"
-            >
-              <span className="font-mono text-xs">GitHub ↗</span>
-            </a>
+            {HERO?.cta?.primary && (
+              <a href={HERO.cta.primary.href} className="btn-primary">
+                <span>{HERO.cta.primary.label}</span>
+              </a>
+            )}
+            {HERO?.cta?.secondary && (
+              <a href={HERO.cta.secondary.href} className="btn-outline">
+                <span>{HERO.cta.secondary.label}</span>
+              </a>
+            )}
           </motion.div>
         </motion.div>
 

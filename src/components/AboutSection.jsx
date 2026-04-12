@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
-import { PERSONAL, EDUCATION, FOOTBALL } from "../data/portfolio";
+import {
+  PERSONAL,
+  EDUCATION,
+  EDUCATION_SECTION,
+  FOOTBALL,
+} from "../data/portfolio";
 import {
   staggerContainer,
   slideInLeft,
@@ -170,16 +175,14 @@ export default function AboutSection() {
             variants={isMobile ? mobileFadeIn : fadeIn}
             className="section-label"
           >
-            02 / ABOUT
+            {EDUCATION_SECTION?.sectionLabel || "02 / ABOUT"}
           </motion.div>
 
           <motion.h2
             variants={isMobile ? mobileSlideUp : slideUp}
             className="font-display text-hero-sm text-theme leading-none mt-2"
           >
-            DUAL-CORE
-            <br />
-            ENGINEER
+            {EDUCATION_SECTION?.heading || "DUAL-CORE\nENGINEER"}
           </motion.h2>
         </motion.div>
 

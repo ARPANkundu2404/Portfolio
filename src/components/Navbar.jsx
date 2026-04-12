@@ -6,16 +6,9 @@ import {
   useTransform,
 } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
+import { NAV_LINKS, NAVBAR_BRANDING, PERSONAL } from "../data/portfolio";
 import ModeToggle from "./ModeToggle";
 import { fadeIn, useIsMobile, mobileFadeIn } from "../hooks/animations";
-
-const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Contact", href: "#contact" },
-];
 
 export default function Navbar() {
   const { isHardware, isDark } = useTheme();
@@ -29,14 +22,13 @@ export default function Navbar() {
     const handleScrollSpy = () => {
       let current = "";
 
-      NAV_LINKS.forEach(({ href }) => {
+      NAV_LINKS?.forEach(({ href }) => {
         const section = document.querySelector(href);
         if (!section) return;
 
         const rect = section.getBoundingClientRect();
         const offset = window.innerHeight / 3;
 
-        // Adjust this offset for navbar height
         if (rect.top <= offset && rect.bottom >= offset) {
           current = href;
         }
@@ -69,7 +61,7 @@ export default function Navbar() {
         }}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* ── Logo ────────────────────────────────────────────────── */}
+          {/* Logo */}
           <a href="#hero" className="group flex items-center gap-2.5">
             <div
               className="w-7 h-7 rounded flex items-center justify-center text-xs font-mono font-bold transition-all duration-300"
@@ -79,16 +71,18 @@ export default function Navbar() {
                 boxShadow: "0 0 8px var(--color-accent-glow)",
               }}
             >
-              AK
+              {NAVBAR_BRANDING?.logoAcronym || "AK"}
             </div>
             <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.2em] whitespace-nowrap text-theme-muted group-hover:text-accent transition-colors">
-              {isHardware ? "ECE·ENGINEER" : "DEV·PORTFOLIO"}
+              {isHardware
+                ? NAVBAR_BRANDING?.taglineHW
+                : NAVBAR_BRANDING?.taglineSW}
             </span>
           </a>
 
-          {/* ── Desktop nav links ────────────────────────────────────── */}
+          {/* Desktop nav links */}
           <nav className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map(({ label, href }) => (
+            {NAV_LINKS?.map(({ label, href }) => (
               <a
                 key={href}
                 href={href}

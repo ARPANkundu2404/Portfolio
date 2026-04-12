@@ -1,6 +1,13 @@
 // ─── Portfolio Data ─────────────────────────────────────────────────────────
-// Single source of truth for all content rendered in the portfolio.
+// SINGLE SOURCE OF TRUTH
+// All content (personal info, projects, skills, achievements, education, navigation)
+// is defined here. Components import and render this data dynamically.
+//
+// ✓ No hardcoded text in components
+// ✓ All changes require editing ONLY this file
+// ✓ Use optional chaining (?.) for optional fields
 
+// ─── PERSONAL ────────────────────────────────────────────────────────────────
 export const PERSONAL = {
   name: "Arpan Kundu",
   title: "Full Stack & ECE Engineer",
@@ -14,38 +21,58 @@ export const PERSONAL = {
   ],
 };
 
-export const EDUCATION = [
-  {
-    degree: "B.Tech — Electronics & Communication Engineering",
-    institution: "Academy of Technology",
-    year: "2023 – Present",
-    score: null,
-    icon: "◈",
-    highlight: true,
-  },
-  {
-    degree: "Higher Secondary (WBCHSE)",
-    institution: "Kalna Maharaja's High School",
-    year: "2021 – 2022",
-    score: "95%",
-    icon: "◉",
-    highlight: false,
-  },
-  {
-    degree: "Secondary (WBBSE)",
-    institution: "Kalna Maharaja's High School",
-    year: "2019 – 2020",
-    score: "95%",
-    icon: "◎",
-    highlight: false,
-  },
+// ─── NAVIGATION LINKS ─────────────────────────────────────────────────────────
+export const NAV_LINKS = [
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
+  { label: "Skills", href: "#skills" },
+  { label: "Achievements", href: "#achievements" },
+  { label: "Contact", href: "#contact" },
 ];
 
-// ─── Projects ────────────────────────────────────────────────────────────────
+// ─── NAVBAR BRANDING ─────────────────────────────────────────────────────────
+export const NAVBAR_BRANDING = {
+  logoAcronym: "AK", // Personal initials
+  taglineSW: "DEV·PORTFOLIO",
+  taglineHW: "ECE·ENGINEER",
+};
+
+// ─── HERO SECTION ────────────────────────────────────────────────────────────
+export const HERO = {
+  sectionLabel: "01 / HELLO",
+  headline: "I BUILD",
+  headlineOutline: "SYSTEMS.",
+  subtitle: "Full-stack software engineer & IoT enthusiast.",
+  cta: {
+    primary: { label: "View Work →", href: "#projects" },
+    secondary: { label: "Get in Touch →", href: "#contact" },
+  },
+};
+
+// ─── ABOUT SECTION ───────────────────────────────────────────────────────────
+export const ABOUT = {
+  sectionLabel: "02 / ABOUT",
+  heading: "BIO",
+  // Bio paragraphs from PERSONAL.bio are used here
+};
+
+// ─── PROJECTS SECTION ────────────────────────────────────────────────────────
+export const PROJECTS_SECTION = {
+  sectionLabel: "03 / PROJECTS",
+  heading: "WHAT I BUILT",
+  description:
+    "Hover any card to X-Ray the architecture. The skeleton reveals the technical blueprint beneath.",
+  filters: [
+    { id: "all", label: "All" },
+    { id: "sw", label: "Software" },
+    { id: "hw", label: "Hardware" },
+  ],
+};
+
 export const PROJECTS = [
   {
     id: "alor-shohor",
-    mode: "sw", // primarily a SW-mode showcase
+    mode: "sw",
     type: "Full Stack · Cultural Tech",
     title: "Alor Shohor",
     subtitle: "Puja Navigator",
@@ -62,13 +89,11 @@ export const PROJECTS = [
       { label: "GitHub", url: "https://github.com/ARPANkundu2404" },
       { label: "Live", url: "#" },
     ],
-    // Skin mockup colors
     skin: {
       bg: "#0A1A0A",
       bgAlt: "#EEF4FF",
       accent: "#22C55E",
     },
-    // Skeleton architecture nodes
     skeleton: {
       nodes: [
         {
@@ -131,7 +156,7 @@ export const PROJECTS = [
   },
   {
     id: "smart-parking",
-    mode: "hw", // primarily a HW-mode showcase
+    mode: "hw",
     type: "IoT · Final Year Project",
     title: "Smart Parking",
     subtitle: "IoT Slot Booking",
@@ -292,14 +317,19 @@ export const PROJECTS = [
   },
 ];
 
-// ─── Skills ───────────────────────────────────────────────────────────────────
+// ─── SKILLS SECTION ──────────────────────────────────────────────────────────
+export const SKILLS_SECTION = {
+  sectionLabel: "04 / SKILLS",
+  heading: "TECH STACK",
+};
+
 export const SKILL_GATES = [
   {
     id: "web",
     label: "Web Gate",
     icon: "⟨/⟩",
     color: "#3B82F6",
-    mode: "sw", // highlighted in SW mode
+    mode: "sw",
     skills: [
       { name: "React.js", level: 90 },
       { name: "Next.js", level: 75 },
@@ -331,7 +361,7 @@ export const SKILL_GATES = [
     label: "Hardware Gate",
     icon: "◈",
     color: "#22C55E",
-    mode: "hw", // highlighted in HW mode
+    mode: "hw",
     skills: [
       { name: "C", level: 80 },
       { name: "Python", level: 75 },
@@ -345,7 +375,12 @@ export const SKILL_GATES = [
   },
 ];
 
-// ─── Achievements ─────────────────────────────────────────────────────────────
+// ─── ACHIEVEMENTS SECTION ────────────────────────────────────────────────────
+export const ACHIEVEMENTS_SECTION = {
+  sectionLabel: "05 / ACHIEVEMENTS",
+  heading: "GROWTH TIMELINE",
+};
+
 export const ACHIEVEMENTS = [
   {
     id: 1,
@@ -452,7 +487,112 @@ export const ACHIEVEMENTS = [
   },
 ];
 
-// ─── Football Easter Egg data ─────────────────────────────────────────────────
+// ─── EDUCATION SECTION ───────────────────────────────────────────────────────
+export const EDUCATION_SECTION = {
+  sectionLabel: "05 / EDUCATION",
+  heading: "ACADEMIC BACKGROUND",
+};
+
+export const EDUCATION = [
+  {
+    degree: "B.Tech — Electronics & Communication Engineering",
+    institution: "Academy of Technology",
+    year: "2023 – Present",
+    score: null,
+    icon: "◈",
+    highlight: true,
+  },
+  {
+    degree: "Higher Secondary (WBCHSE)",
+    institution: "Kalna Maharaja's High School",
+    year: "2021 – 2022",
+    score: "95%",
+    icon: "◉",
+    highlight: false,
+  },
+  {
+    degree: "Secondary (WBBSE)",
+    institution: "Kalna Maharaja's High School",
+    year: "2019 – 2020",
+    score: "95%",
+    icon: "◎",
+    highlight: false,
+  },
+];
+
+// ─── FOOTER / CONTACT SECTION ────────────────────────────────────────────────
+export const FOOTER = {
+  sectionLabel: "06 / CONTACT",
+  headline: "LET'S BUILD",
+  headlineOutline: "SOMETHING.",
+  description:
+    "Open to full-stack roles, IoT projects, hackathons, and interesting collaborations.",
+  cta: {
+    primary: { label: "Say Hello →", href: `mailto:${PERSONAL.email}` },
+    secondary: { label: "GitHub ↗", href: PERSONAL.github, external: true },
+  },
+  copyright: {
+    author: "ARPAN KUNDU",
+    location: "WEST BENGAL, INDIA",
+    taglineSW: "JAVA · REACT · DOCKER",
+    taglineHW: "ECE · IoT · EMBEDDED",
+    year: 2024,
+    closing: "i hope to hear from you.",
+  },
+};
+
+// ─── CONTACT FORM CONFIGURATION ──────────────────────────────────────────────
+export const CONTACT_FORM = {
+  fields: [
+    {
+      id: "user_title",
+      name: "user_title",
+      type: "text",
+      label: "Subject",
+      placeholder: "What is this about?",
+      required: true,
+    },
+    {
+      id: "user_name",
+      name: "user_name",
+      type: "text",
+      label: "Name",
+      placeholder: "Your name",
+      required: true,
+    },
+    {
+      id: "user_email",
+      name: "user_email",
+      type: "email",
+      label: "Email",
+      placeholder: "your.email@example.com",
+      required: true,
+    },
+    {
+      id: "message",
+      name: "message",
+      type: "textarea",
+      label: "Message",
+      placeholder: "Your message here...",
+      rows: 5,
+      required: true,
+    },
+  ],
+  emailjs: {
+    publicKey: "YOUR_PUBLIC_KEY",
+    serviceId: "service_cvosvwc",
+    contactTemplateId: "template_ll3ny6r",
+    autoReplyTemplateId: "template_ar0omjk",
+  },
+  messages: {
+    success: "✓ Message sent successfully! I'll get back to you soon.",
+    error: "✗ Failed to send message. Please try again or email directly.",
+    sending: "Sending...",
+    submit: "Send Message",
+  },
+};
+
+// ─── FOOTBALL EASTER EGG ─────────────────────────────────────────────────────
 export const FOOTBALL = {
   passion: "Football Enthusiast ⚽",
   clubs: ["Real Madrid"],

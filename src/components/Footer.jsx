@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { useTheme } from "../context/ThemeContext";
-import { PERSONAL } from "../data/portfolio";
+import { FOOTER, CONTACT_FORM, PERSONAL } from "../data/portfolio";
 import {
   fadeIn,
   mobileFadeIn,
@@ -20,7 +20,7 @@ export default function Footer() {
 
   // Initialize EmailJS
   useEffect(() => {
-    emailjs.init("YOUR_PUBLIC_KEY");
+    emailjs.init(CONTACT_FORM?.emailjs?.publicKey || "YOUR_PUBLIC_KEY");
   }, []);
 
   const handleSubmit = async (e) => {
@@ -32,18 +32,18 @@ export default function Footer() {
     try {
       // Send main contact email
       await emailjs.sendForm(
-        "SERVICE_ID",
-        "CONTACT_TEMPLATE_ID",
+        CONTACT_FORM?.emailjs?.serviceId || "SERVICE_ID",
+        CONTACT_FORM?.emailjs?.contactTemplateId || "CONTACT_TEMPLATE_ID",
         formRef.current,
-        "YOUR_PUBLIC_KEY",
+        CONTACT_FORM?.emailjs?.publicKey || "YOUR_PUBLIC_KEY",
       );
 
       // Send auto-reply email
       await emailjs.sendForm(
-        "SERVICE_ID",
-        "AUTO_REPLY_TEMPLATE_ID",
+        CONTACT_FORM?.emailjs?.serviceId || "SERVICE_ID",
+        CONTACT_FORM?.emailjs?.autoReplyTemplateId || "AUTO_REPLY_TEMPLATE_ID",
         formRef.current,
-        "YOUR_PUBLIC_KEY",
+        CONTACT_FORM?.emailjs?.publicKey || "YOUR_PUBLIC_KEY",
       );
 
       setSuccess(true);
@@ -76,9 +76,9 @@ export default function Footer() {
           variants={isMobile ? mobileFadeIn : fadeIn}
           className="text-center mb-16"
         >
-          <div className="section-label mb-4">06 / CONTACT</div>
+          <div className="section-label mb-4">{FOOTER?.sectionLabel}</div>
           <h2 className="font-display text-hero-lg text-theme leading-none">
-            LET'S BUILD
+            {FOOTER?.headline}
           </h2>
           <h2
             className="font-display text-hero-lg leading-none"
@@ -87,11 +87,10 @@ export default function Footer() {
               color: "transparent",
             }}
           >
-            SOMETHING.
+            {FOOTER?.headlineOutline}
           </h2>
           <p className="text-sm text-theme-muted mt-6 max-w-sm mx-auto">
-            Open to full-stack roles, IoT projects, hackathons, and interesting
-            collaborations.
+            {FOOTER?.description}
           </p>
         </motion.div>
 
@@ -101,101 +100,47 @@ export default function Footer() {
           className="max-w-2xl mx-auto mb-16"
         >
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-            {/* Name Field */}
-            <div>
-              <label
-                htmlFor="user_name"
-                className="block text-sm font-mono text-theme-muted mb-2"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                id="user_name"
-                name="user_name"
-                required
-                disabled={loading}
-                className="w-full px-4 py-2 bg-theme-bg border rounded text-theme placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50"
-                style={{
-                  borderColor: "var(--color-border)",
-                  backgroundColor: "var(--color-bg-secondary)",
-                  color: "var(--color-text)",
-                }}
-                placeholder="Your name"
-              />
-            </div>
-
-            {/* Email Field */}
-            <div>
-              <label
-                htmlFor="user_email"
-                className="block text-sm font-mono text-theme-muted mb-2"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="user_email"
-                name="user_email"
-                required
-                disabled={loading}
-                className="w-full px-4 py-2 bg-theme-bg border rounded text-theme placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50"
-                style={{
-                  borderColor: "var(--color-border)",
-                  backgroundColor: "var(--color-bg-secondary)",
-                  color: "var(--color-text)",
-                }}
-                placeholder="your.email@example.com"
-              />
-            </div>
-
-            {/* Subject Field */}
-            <div>
-              <label
-                htmlFor="user_title"
-                className="block text-sm font-mono text-theme-muted mb-2"
-              >
-                Subject
-              </label>
-              <input
-                type="text"
-                id="user_title"
-                name="user_title"
-                required
-                disabled={loading}
-                className="w-full px-4 py-2 bg-theme-bg border rounded text-theme placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50"
-                style={{
-                  borderColor: "var(--color-border)",
-                  backgroundColor: "var(--color-bg-secondary)",
-                  color: "var(--color-text)",
-                }}
-                placeholder="What is this about?"
-              />
-            </div>
-
-            {/* Message Field */}
-            <div>
-              <label
-                htmlFor="message"
-                className="block text-sm font-mono text-theme-muted mb-2"
-              >
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                disabled={loading}
-                rows="5"
-                className="w-full px-4 py-2 bg-theme-bg border rounded text-theme placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 resize-none"
-                style={{
-                  borderColor: "var(--color-border)",
-                  backgroundColor: "var(--color-bg-secondary)",
-                  color: "var(--color-text)",
-                }}
-                placeholder="Your message here..."
-              />
-            </div>
+            {CONTACT_FORM?.fields?.map((field, idx) => (
+              <div key={field.id}>
+                <label
+                  htmlFor={field.id}
+                  className="block text-sm font-mono text-theme-muted mb-2"
+                >
+                  {field.label}
+                </label>
+                {field.type === "textarea" ? (
+                  <textarea
+                    id={field.id}
+                    name={field.name}
+                    required={field.required}
+                    disabled={loading}
+                    rows={field.rows || 5}
+                    className="w-full px-4 py-2 bg-theme-bg border rounded text-theme placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 resize-none"
+                    style={{
+                      borderColor: "var(--color-border)",
+                      backgroundColor: "var(--color-bg-secondary)",
+                      color: "var(--color-text)",
+                    }}
+                    placeholder={field.placeholder}
+                  />
+                ) : (
+                  <input
+                    type={field.type}
+                    id={field.id}
+                    name={field.name}
+                    required={field.required}
+                    disabled={loading}
+                    className="w-full px-4 py-2 bg-theme-bg border rounded text-theme placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50"
+                    style={{
+                      borderColor: "var(--color-border)",
+                      backgroundColor: "var(--color-bg-secondary)",
+                      color: "var(--color-text)",
+                    }}
+                    placeholder={field.placeholder}
+                  />
+                )}
+              </div>
+            ))}
 
             {/* Status Messages */}
             {success && (
@@ -209,7 +154,7 @@ export default function Footer() {
                   borderColor: "#22c55e",
                 }}
               >
-                ✓ Message sent successfully! I'll get back to you soon.
+                {CONTACT_FORM?.messages?.success}
               </motion.div>
             )}
 
@@ -224,7 +169,7 @@ export default function Footer() {
                   borderColor: "#ef4444",
                 }}
               >
-                ✗ Failed to send message. Please try again or email directly.
+                {CONTACT_FORM?.messages?.error}
               </motion.div>
             )}
 
@@ -238,22 +183,26 @@ export default function Footer() {
                 color: "var(--color-bg)",
               }}
             >
-              {loading ? "Sending..." : "Send Message"}
+              {loading
+                ? CONTACT_FORM?.messages?.sending
+                : CONTACT_FORM?.messages?.submit}
             </button>
           </form>
 
           {/* Alternative Contact Options */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <a href={`mailto:${PERSONAL.email}`} className="btn-primary">
-              Say Hello →
+            <a href={FOOTER?.cta?.primary?.href} className="btn-primary">
+              {FOOTER?.cta?.primary?.label}
             </a>
             <a
-              href={PERSONAL.github}
-              target="_blank"
-              rel="noreferrer"
+              href={FOOTER?.cta?.secondary?.href}
+              target={FOOTER?.cta?.secondary?.external ? "_blank" : undefined}
+              rel={FOOTER?.cta?.secondary?.external ? "noreferrer" : undefined}
               className="btn-outline"
             >
-              <span className="font-mono text-xs">GitHub ↗</span>
+              <span className="font-mono text-xs">
+                {FOOTER?.cta?.secondary?.label}
+              </span>
             </a>
           </div>
         </motion.div>
@@ -264,14 +213,16 @@ export default function Footer() {
           style={{ borderColor: "var(--color-border)" }}
         >
           <div className="text-[10px] font-mono text-theme-faint tracking-widest">
-            ARPAN KUNDU · WEST BENGAL, INDIA
+            {FOOTER?.copyright?.author} · {FOOTER?.copyright?.location}
           </div>
           <div className="text-[10px] font-mono text-theme-faint tracking-widest">
-            {isHardware ? "ECE · IoT · EMBEDDED" : "JAVA · REACT · DOCKER"} ·
-            2024
+            {isHardware
+              ? FOOTER?.copyright?.taglineHW
+              : FOOTER?.copyright?.taglineSW}{" "}
+            · {FOOTER?.copyright?.year}
           </div>
           <div className="text-[10px] font-mono text-theme-faint">
-            i hope to hear from you.
+            {FOOTER?.copyright?.closing}
           </div>
         </div>
       </div>

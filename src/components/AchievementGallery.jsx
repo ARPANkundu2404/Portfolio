@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ACHIEVEMENTS } from "../data/portfolio";
+import { ACHIEVEMENTS, ACHIEVEMENTS_SECTION } from "../data/portfolio";
 import { useTheme } from "../context/ThemeContext";
 import AchievementModal from "./AchievementModal";
 
@@ -450,19 +450,18 @@ export default function AchievementGallery() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
+        <div className="section-label mb-4">
+          {ACHIEVEMENTS_SECTION?.sectionLabel}
+        </div>
         <h2
-          className="text-4xl md:text-5xl font-bold mb-3"
+          className="font-display text-hero-sm text-theme leading-none"
           style={{
-            color: isDark ? (isHardware ? "#22C55E" : "#10B981") : "#111827",
+            color: "var(--color-text)",
           }}
         >
-          Wall of
-          <span className="" style={{ color: "var(--color-accent)" }}>
-            {" "}
-            Fame
-          </span>
+          {ACHIEVEMENTS_SECTION?.heading}
         </h2>
-        <p className="text-theme-muted max-w-2xl">
+        <p className="text-theme-muted max-w-2xl mt-3">
           Hackathons won, teams led, and innovations shipped. Each achievement
           represents growth and collaboration.
         </p>

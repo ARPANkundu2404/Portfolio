@@ -1,16 +1,164 @@
-# React + Vite
+# 👨‍💻 Arpan Kundu – Full Stack Developer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to my personal developer portfolio!  
+This project showcases my skills, projects, achievements, and experience as a **Full Stack Developer specializing in Java, Spring Boot, React, and modern web technologies**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 About Me
 
-## React Compiler
+I am a passionate **Full Stack Developer** and **Electronics & Communication Engineering student** with strong expertise in building scalable web applications.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 💻 Skilled in **Java, Spring Boot, React.js, MySQL**
+- ⚙️ Experienced in **REST APIs, JWT Authentication, Docker**
+- 🌱 Currently exploring **Data Science & Machine Learning**
+- 🧠 Strong foundation in **backend architecture & system design**
 
-## Expanding the ESLint configuration
+📄 Based on my professional experience and background :contentReference[oaicite:0]{index=0}
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack
+
+### 💡 Languages
+
+- Java
+- JavaScript
+- Python
+- C
+
+### 🎨 Frontend
+
+- React.js
+- Next.js
+- Tailwind CSS
+- HTML5, CSS3
+
+### ⚙️ Backend
+
+- Spring Boot
+- Flask
+
+### 🗄️ Database
+
+- MySQL
+- PostgreSQL
+
+### 🔧 Tools & DevOps
+
+- Git & GitHub
+- Docker
+- Eclipse
+
+### 📚 Concepts
+
+- REST API Development
+- MVC Architecture
+- JWT Authentication
+- Responsive Design
+
+---
+
+## 🌟 Featured Projects
+
+### 🏮 Durga Puja Pandel Hopping
+
+**Full Stack Cultural Navigation Platform**
+
+- Explore Durga Puja pandals with location & metro routes
+- Backend built using **Spring Boot + PostgreSQL**
+- Implemented **JWT-based role authentication**
+- Responsive UI with **React + Tailwind CSS**
+- Dockerized & deployed on cloud
+
+🔗 GitHub:  
+https://github.com/ARPANkundu2404/Durga-Puja-Pandel-Hopping
+
+🔗 Live:  
+https://durga-puja-pandel-hopping-app.onrender.com/
+
+---
+
+### 📋 TaskFlow
+
+**Full Stack Task Management System**
+
+- Task & workflow management platform
+- Secure backend using **Spring Boot REST APIs**
+- Authentication & authorization with **JWT**
+- Structured database using **MySQL**
+
+---
+
+### 🚗 Smart Parking System (Final Year Project)
+
+**IoT-Integrated Parking Solution**
+
+- Real-time parking slot booking system
+- IoT integration using **ESP32 sensors**
+- Backend with **Python services**
+- Frontend using **Next.js**
+- Live data synchronization for slot availability
+
+📄 Inspired by my IoT and hardware experience :contentReference[oaicite:1]{index=1}
+
+---
+
+## 🏆 Achievements
+
+- 🥇 Winner – ClashDevs (Frontend Competition)
+- 🥇 Winner – Itrocity IoT Hackathon
+- 🏅 Finalist – Hack4Her Hackathon
+- 🏅 Top 3 – Amiphoria React Competition
+- 💻 Participant – DevNexus Hackathon
+- 👨‍💼 Tech Co-Lead – SCECE
+
+---
+
+## 🎓 Education
+
+**B.Tech – Electronics & Communication Engineering**  
+Academy of Technology (2023 – Present)
+
+- Strong focus on **IoT, Embedded Systems, and Software Development**
+
+---
+
+## 📬 Contact Me
+
+- 📧 Email: kunduarpan2404@gmail.com
+- 🌍 Location: West Bengal, India
+- 💻 GitHub: https://github.com/ARPANkundu2404
+
+---
+
+## 📌 Portfolio Features
+
+- ✨ Modern responsive UI
+- 🌙 Dark/Light mode support
+- 📄 Project showcase with detailed descriptions
+- 📬 Contact form integration (EmailJS)
+- ⚡ Optimized performance & smooth animations
+
+---
+
+## 🧠 Future Improvements
+
+- Add blog section
+- Integrate AI-based chatbot
+- Improve accessibility & SEO
+- Add project filtering & search
+
+---
+
+## ⭐ Support
+
+If you like this portfolio, feel free to:
+
+- ⭐ Star the repo
+- 🍴 Fork it
+- 🤝 Connect with me
+
+---
+
+> “Building scalable systems, one project at a time.”
