@@ -173,7 +173,13 @@
     transition: background-color 0.5s var(--transition-curve),
                 color 0.4s var(--transition-curve);
     overflow-x: hidden;
-    cursor: none;
+  }
+
+  /* ─── Hide default cursor on desktop only ───────────────────────────────── */
+  @media (pointer: fine) {
+    body {
+      cursor: none;
+    }
   }
 
   ::selection {
@@ -456,6 +462,13 @@
   background-image: var(--pcb-grid-image);
 }
 
-/* ─── Cursor hide (custom cursor handles it) ───────────────────────────────── */
-* { cursor: none !important; }
-a, button, [role="button"] { cursor: none !important; }
+/* ─── Cursor hide on desktop (custom cursor handles it) ───────────────────── */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+
+  a, button, [role="button"] {
+    cursor: none !important;
+  }
+}
