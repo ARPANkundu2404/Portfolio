@@ -67,12 +67,13 @@ export const HERO_STATS = [
 export const TICKER_ITEMS = {
   sw: [
     "React.js",
-    "Spring Boot",
     "Next.js",
+    "Spring Boot",
+    "MYSQL",
     "PostgreSQL",
     "Docker",
     "JWT Auth",
-    "MySQL",
+    "REST APIs",
     "Tailwind CSS",
   ],
   hw: [
@@ -126,7 +127,10 @@ export const PROJECTS = [
     ],
     links: [
       { label: "GitHub", url: "https://github.com/ARPANkundu2404" },
-      { label: "Live", url: "#" },
+      {
+        label: "Live",
+        url: "https://durga-puja-pandel-hopping-app.onrender.com/",
+      },
     ],
     skin: {
       bg: "#0A1A0A",
@@ -201,7 +205,7 @@ export const PROJECTS = [
     subtitle: "IoT Slot Booking",
     desc: "IoT-enabled parking management using ESP32 sensor nodes to detect vehicle occupancy, syncing live data to Firebase for real-time slot booking via Next.js.",
     tags: ["ESP32", "IoT", "Next.js", "Python", "Firebase", "DHT11"],
-    links: [{ label: "GitHub", url: "#" }],
+    links: [{ label: "GitHub", url: "https://github.com/ARPANkundu2404/Final-Year-Project" }],
     skin: {
       bg: "#060A06",
       bgAlt: "#F0FFF0",
@@ -262,7 +266,9 @@ export const PROJECTS = [
     subtitle: "Workflow Manager",
     desc: "Task and workflow management system with Spring Boot REST APIs, JWT role-based access control, and structured MySQL database architecture.",
     tags: ["Spring Boot", "React.js", "MySQL", "JWT", "REST API"],
-    links: [{ label: "GitHub", url: "#" }],
+    links: [
+      { label: "GitHub", url: "https://github.com/ARPANkundu2404/Taskflow" },
+    ],
     skin: {
       bg: "#06060A",
       bgAlt: "#F5F5FF",
@@ -319,7 +325,7 @@ export const PROJECTS = [
     subtitle: "Real-Time IoT System",
     desc: "IoT-based weather monitoring using ESP32 + DHT11. Transmits sensor data to Firebase, visualized on a React dashboard. Winner — Itrocity IoT Hackathon.",
     tags: ["ESP32", "DHT11", "Firebase", "React.js", "IoT"],
-    links: [{ label: "GitHub", url: "#" }],
+    links: [{ label: "GitHub", url: "https://github.com/ARPANkundu2404/my_weather_app" }],
     skin: {
       bg: "#030A0A",
       bgAlt: "#E8F8FF",
@@ -373,6 +379,7 @@ export const SKILL_GATES = [
       { name: "React.js", level: 90 },
       { name: "Next.js", level: 75 },
       { name: "Tailwind CSS", level: 88 },
+      { name: "Framer Motion", level: 75 },
       { name: "HTML", level: 95 },
       { name: "CSS", level: 88 },
       { name: "JavaScript", level: 85 },
@@ -390,9 +397,9 @@ export const SKILL_GATES = [
       { name: "Flask", level: 70 },
       { name: "REST APIs", level: 90 },
       { name: "JWT Auth", level: 82 },
-      { name: "Docker", level: 78 },
       { name: "MySQL", level: 85 },
       { name: "PostgreSQL", level: 78 },
+      { name: "Docker", level: 78 },
     ],
   },
   {
@@ -426,16 +433,26 @@ export const ACHIEVEMENTS = [
     title: "Weather Monitor IoT System",
     role: "Winner",
     event: "Itrocity IoT Hackathon",
-    year: 2024,
-    timestamp: "2024-02-08T14:22:00",
+    year: 2025,
+    timestamp: "2025-09-03T14:22:00",
     techStack: ["ESP32", "DHT11", "Firebase", "React.js", "IoT"],
     description:
       "Real-time weather monitoring system using ESP32 microcontroller with DHT11 sensor. Transmits sensor data to Firebase and visualizes on a responsive React dashboard. Won for innovation in IoT-frontend integration.",
     badges: ["WINNER"],
     links: [
-      { label: "GitHub", url: "#" },
-      { label: "Demo", url: "#" },
+      {
+        label: "GitHub",
+        url: "https://github.com/ARPANkundu2404/my_weather_app",
+      },
+      // { label: "Demo", url: "#" },
     ],
+    media: {
+      certificate:
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776063012/Iotricity_duyyfg.jpg",
+      images: [
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776067117/IMG-20250903-WA0059_bp4z6e.jpg",
+      ],
+    },
   },
   {
     id: 2,
@@ -443,86 +460,200 @@ export const ACHIEVEMENTS = [
     role: "Winner",
     event: "ClashDevs",
     year: 2024,
-    timestamp: "2024-03-14T09:01:00",
-    techStack: ["React.js", "Tailwind CSS", "Framer Motion", "JavaScript"],
+    timestamp: "2024-04-09T09:01:00",
+    techStack: ["HTML", "CSS", "JavaScript"],
     description:
       "Competitive coding and frontend development challenge. Built a pixel-perfect, animated UI component system under time constraints. Awarded for code quality, UX design, and performance optimization.",
     badges: ["WINNER"],
-    links: [
-      { label: "GitHub", url: "#" },
-      { label: "Live", url: "#" },
-    ],
+    // links: [
+    //   { label: "GitHub", url: "#" },
+    //   { label: "Live", url: "#" },
+    // ],
+    media: {
+      certificate:
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776063023/ClashDevs_lqq68n.jpg",
+      images: [
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776067117/IMG-20240421-WA0120_qrqucx.jpg",
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776067119/20240409_181328_rczg5e.jpg",
+      ],
+    },
   },
   {
     id: 3,
     title: "Women Empowerment Marketplace",
-    role: "Finalist",
+    role: "Runner-Up",
     event: "Hack4Her Hackathon",
-    year: 2024,
-    timestamp: "2024-01-19T11:45:00",
-    techStack: ["React.js", "Spring Boot", "PostgreSQL", "JWT", "Tailwind CSS"],
+    year: 2025,
+    timestamp: "2025-04-26T11:45:00",
+    techStack: ["React.js", "Flask", "PostgreSQL", "JWT", "Tailwind CSS"],
     description:
       "Full-stack e-commerce platform designed to empower women entrepreneurs. Built a marketplace with seller authentication, product catalog, and integrated payment gateway. Reached finalist stage for social impact and technical implementation.",
-    badges: ["FINALIST"],
+    badges: ["RUNNER-UP"],
     links: [
-      { label: "GitHub", url: "#" },
-      { label: "Pitch", url: "#" },
+      { label: "GitHub", url: "https://github.com/ARPANkundu2404/RuralDev" },
     ],
+    media: {
+      certificate:
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776062917/hack4Her_u8imqt.jpg",
+      images: [
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776068889/IMG-20250426-WA0019_iccrwc.jpg",
+      ],
+    },
   },
   {
     id: 4,
     title: "Advanced React Component Library",
     role: "Top 3 Finalist",
     event: "Amiphoria",
-    year: 2023,
-    timestamp: "2023-12-05T16:10:00",
+    year: 2024,
+    timestamp: "2024-03-07T16:10:00",
     techStack: ["React.js", "Storybook", "TypeScript", "Component Design"],
     description:
       "Developed a reusable, well-documented React component library. Showcased advanced patterns including hooks, context, and compound components. Ranked in top 3 for code organization and documentation quality.",
     badges: ["TOP 3"],
-    links: [
-      { label: "Storybook", url: "#" },
-      { label: "GitHub", url: "#" },
-    ],
+    // links: [
+    //   { label: "Storybook", url: "#" },
+    //   { label: "GitHub", url: "#" },
+    // ],
+    media: {
+      certificate:
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776063014/Amiphoria_mf8qsx.jpg",
+      images: [
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776067991/IMG-20250308-WA0025_zntdvq.jpg",
+      ],
+    },
   },
   {
     id: 5,
-    title: "Real-Time Collaborative Platform",
+    title: "Real-Time Frontend Development Challenge",
     role: "Final Round",
     event: "DevWrap Hackathon",
-    year: 2023,
-    timestamp: "2023-11-22T09:30:00",
-    techStack: ["WebSockets", "Node.js", "React.js", "MongoDB"],
+    year: 2024,
+    timestamp: "2024-03-09T09:30:00",
+    techStack: ["HTML", "CSS", "JavaScript", "Firebase"],
     description:
       "Built a real-time collaborative workspace with live cursors, document editing, and instant messaging. Demonstrated expertise in WebSocket communication and state synchronization across clients.",
     badges: ["FINALIST"],
-    links: [{ label: "GitHub", url: "#" }],
+    links: [
+      {
+        label: "GitHub",
+        url: "https://github.com/ARPANkundu2404/Electrocoders_EC102B",
+      },
+    ],
+    media: {
+      certificate:
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776068752/Arpan_Kundu_DevWrap_SCECE_Certificate_kpwimn.jpg",
+      images: [
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776067116/IMG-20240309-WA0044_rvrcgt.jpg",
+      ],
+    },
   },
   {
     id: 6,
-    title: "IoT Sensor Integration",
+    title: "SafeBite",
     role: "Participant",
-    event: "DevNexus Hackathon",
-    year: 2023,
-    timestamp: "2023-10-14T13:00:00",
-    techStack: ["ESP32", "MQTT", "Python", "Data Visualization"],
+    event: "HexaFalls Hackathon",
+    year: 2024,
+    timestamp: "2024-07-01T10:00:00",
+    techStack: [
+      "React.js",
+      "Flask",
+      "Firebase",
+      "Machine Learning",
+      "REST API",
+    ],
     description:
-      "Participated in IoT-focused hackathon. Worked on multi-sensor data collection and real-time visualization. Explored MQTT protocol for IoT communication and edge computing concepts.",
+      "Developed SafeBite, a health-focused application designed to help users make safer food choices by analyzing ingredients and detecting potential health risks. Built a full-stack solution with a responsive React frontend and backend APIs for processing food data. Integrated intelligent analysis to identify harmful components and provide real-time recommendations, promoting better dietary awareness and preventive healthcare.",
     badges: ["PARTICIPANT"],
-    links: [{ label: "GitHub", url: "#" }],
+    links: [
+      { label: "Devfolio", url: "https://devfolio.co/projects/safebite-6361" },
+      { label: "GitHub", url: "https://github.com/ARPANkundu2404/hexa-falls" },
+    ],
+    media: {
+      certificate:
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776062975/Hexafalls_bfjkff.jpg",
+      images: [
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776067992/IMG-20250701-WA0030_td2z81.jpg",
+      ],
+    },
   },
   {
     id: 7,
+    title: "MicroBreak Notifier",
+    role: "Participant",
+    event: "StatusCode 2 Hackathon",
+    year: 2025,
+    timestamp: "2025-08-24T12:00:00",
+    techStack: [
+      "React.js",
+      "JavaScript",
+      "Web Notifications API",
+      "Python",
+      "Flask",
+    ],
+    description:
+      "Developed MicroBreak Notifier, a productivity-focused web application designed to promote healthier work habits by reminding users to take short breaks during long screen sessions. Implemented smart interval-based notifications using the Web Notifications API, combined with a minimal and intuitive React-based UI. Focused on improving user well-being, reducing screen fatigue, and enhancing productivity through lightweight, real-time reminders.",
+    badges: ["PARTICIPANT"],
+    links: [
+      {
+        label: "Devfolio",
+        url: "https://devfolio.co/projects/microbreak-notifier-8326",
+      },
+      // { label: "GitHub", url: "#" },
+    ],
+    media: {
+      certificate:
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776063014/StatusCode_zpx9iv.jpg",
+      images: [
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776067116/IMG-20250824-WA0081_xcbb35.jpg",
+      ],
+    },
+  },
+  {
+    id: 8,
+    title: "LeafLink",
+    role: "Participant",
+    event: "DevNexus Hackathon",
+    year: 2024,
+    timestamp: "2024-09-23T11:45:00",
+    techStack: ["HTML", "CSS", "JavaScript", "XML", "Sass"],
+    description:
+      "Developed LeafLink, a green web hosting marketplace that enables users to discover and compare eco-friendly hosting providers based on sustainability metrics such as renewable energy usage and carbon footprint. Focused on promoting environmentally responsible technology choices by integrating sustainability insights with a user-friendly platform.",
+    badges: ["PARTICIPANT"],
+    links: [
+      {
+        label: "Devfolio",
+        url: "https://devfolio.co/projects/leaflink-a-green-web-hosting-marketplace-4e49",
+      },
+      { label: "GitHub", url: "https://github.com/ARPANkundu2404/leafLink" },
+    ],
+    media: {
+      certificate:
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776062917/DevNexus_jg4lam.jpg",
+      images: [
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776067116/IMG-20240922-WA0008_wiowpm.jpg",
+      ],
+    },
+  },
+  {
+    id: 9,
     title: "Technical Leadership",
     role: "Tech Co-Lead",
     event: "SCECE",
-    year: 2023,
-    timestamp: "2023-09-01T08:00:00",
+    year: 2024,
+    timestamp: "2024-12-16T08:00:00",
     techStack: ["Team Management", "Technical Planning", "Mentorship"],
     description:
       "Served as Technical Co-Lead for SCECE. Mentored a team of developers, organized workshops, and led technical decision-making. Focused on fostering a collaborative engineering culture.",
     badges: ["LEADERSHIP"],
-    links: [{ label: "Organization", url: "#" }],
+    // links: [{ label: "Organization", url: "#" }],
+    media: {
+      certificate:
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776069148/SCECE_ff2uen.jpg",
+      images: [
+        "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1776068666/1000540373_b2cctj.jpg",
+      ],
+    },
   },
 ];
 
@@ -563,7 +694,11 @@ export const TERMINAL_CONFIG = {
 };
 
 // ─── ACHIEVEMENT FEATURED ROLES (for highlighting featured achievements) ─────
-export const ACHIEVEMENT_FEATURED_ROLES = ["Winner", "Top 3 Finalist"];
+export const ACHIEVEMENT_FEATURED_ROLES = [
+  "Winner",
+  "Runner-Up",
+  "Top 3 Finalist",
+];
 
 // ─── EDUCATION SECTION ───────────────────────────────────────────────────────
 export const EDUCATION_SECTION = {
@@ -658,9 +793,9 @@ export const CONTACT_FORM = {
   ],
   emailjs: {
     publicKey: "YOUR_PUBLIC_KEY",
-    serviceId: "service_cvosvwc",
-    contactTemplateId: "template_ll3ny6r",
-    autoReplyTemplateId: "template_ar0omjk",
+    serviceId: "YOUR_SERVICE_ID",
+    contactTemplateId: "CONTACT_TEMPLATE_ID",
+    autoReplyTemplateId: "AUTO_REPLY_TEMPLATE_ID",
   },
   messages: {
     success: "✓ Message sent successfully! I'll get back to you soon.",

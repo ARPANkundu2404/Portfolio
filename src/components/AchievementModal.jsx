@@ -1,9 +1,13 @@
 import { motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ImageLightbox from "./ImageLightbox";
 
 export default function AchievementModal({ achievement, onClose }) {
   const { isHardware, isDark } = useTheme();
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [certificateOpen, setCertificateOpen] = useState(false);
 
   // Handle ESC key to close modal
   useEffect(() => {
@@ -376,6 +380,124 @@ export default function AchievementModal({ achievement, onClose }) {
             </motion.div>
           )}
 
+          {/* Image Gallery Section */}
+          {achievement.media?.images && achievement.media.images.length > 0 && (
+            <motion.div variants={itemVariants} className="mb-8">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-theme-muted mb-4">
+                Gallery ({achievement.media.images.length})
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {achievement.media.images.map((image, idx) => (
+                  <motion.div
+                    key={idx}
+                    onClick={() => {
+                      setLightboxIndex(idx);
+                      setLightboxOpen(true);
+                    }}
+                    className="relative h-32 rounded-lg overflow-hidden border cursor-pointer group"
+                    style={{
+                      borderColor: isDark
+                        ? isHardware
+                          ? "rgba(34, 197, 94, 0.3)"
+                          : "rgba(20, 184, 166, 0.3)"
+                        : "rgba(0, 0, 0, 0.1)",
+                      backgroundColor: isDark
+                        ? "rgba(0, 0, 0, 0.2)"
+                        : "rgba(0, 0, 0, 0.05)",
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.08 }}
+                  >
+                    <img
+                      src={image}
+                      alt={`Achievement ${idx + 1}`}
+                      className="w-full h-full object-cover group-hover:brightness-150 transition-all"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/40 transition-all">
+                      <svg
+                        className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-all"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"
+                        />
+                      </svg>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Certificate Section */}
+          {achievement.media?.certificate && (
+            <motion.div variants={itemVariants} className="mb-8">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-theme-muted mb-4">
+                Certificate
+              </h3>
+              <motion.button
+                onClick={() => setCertificateOpen(true)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all border-2"
+                style={{
+                  borderColor: isHardware
+                    ? "#22C55E"
+                    : isDark
+                      ? "#14B8A6"
+                      : "#16A34A",
+                  color: isHardware
+                    ? "#4ADE80"
+                    : isDark
+                      ? "#06B6D4"
+                      : "#16A34A",
+                  backgroundColor: isHardware
+                    ? "rgba(34, 197, 94, 0.1)"
+                    : isDark
+                      ? "rgba(20, 184, 166, 0.1)"
+                      : "rgba(22, 163, 74, 0.1)",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = isHardware
+                    ? "rgba(34, 197, 94, 0.2)"
+                    : isDark
+                      ? "rgba(20, 184, 166, 0.2)"
+                      : "rgba(22, 163, 74, 0.15)";
+                  e.currentTarget.style.boxShadow = isHardware
+                    ? "0 0 20px rgba(34, 197, 94, 0.3)"
+                    : isDark
+                      ? "0 0 20px rgba(20, 184, 166, 0.3)"
+                      : "0 0 20px rgba(22, 163, 74, 0.2)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = isHardware
+                    ? "rgba(34, 197, 94, 0.1)"
+                    : isDark
+                      ? "rgba(20, 184, 166, 0.1)"
+                      : "rgba(22, 163, 74, 0.1)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                </svg>
+                View Certificate
+              </motion.button>
+            </motion.div>
+          )}
+
           {/* Additional Info */}
           <motion.div
             variants={itemVariants}
@@ -410,6 +532,26 @@ export default function AchievementModal({ achievement, onClose }) {
           </motion.p>
         </motion.div>
       </motion.div>
+
+      {/* Lightbox for image preview */}
+      {achievement.media?.images && achievement.media.images.length > 0 && (
+        <ImageLightbox
+          isOpen={lightboxOpen}
+          images={achievement.media.images}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxOpen(false)}
+        />
+      )}
+
+      {/* Lightbox for certificate preview */}
+      {achievement.media?.certificate && (
+        <ImageLightbox
+          isOpen={certificateOpen}
+          images={[achievement.media.certificate]}
+          initialIndex={0}
+          onClose={() => setCertificateOpen(false)}
+        />
+      )}
     </motion.div>
   );
 }

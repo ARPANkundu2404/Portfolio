@@ -306,6 +306,47 @@ function AchievementCard({ achievement, onClick, isHardware, isDark }) {
           {achievement.year}
         </div>
 
+        {/* Image Thumbnail */}
+        {achievement.media?.images && achievement.media.images.length > 0 && (
+          <motion.div
+            className="relative w-full h-40 rounded-lg overflow-hidden mb-4 border"
+            style={{
+              borderColor: isDark
+                ? isHardware
+                  ? "rgba(34, 197, 94, 0.2)"
+                  : "rgba(20, 184, 166, 0.2)"
+                : "rgba(0, 0, 0, 0.08)",
+              backgroundColor: isDark
+                ? "rgba(0, 0, 0, 0.3)"
+                : "rgba(0, 0, 0, 0.02)",
+            }}
+            whileHover={{ scale: 1.02 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            viewport={{ once: true }}
+          >
+            <img
+              src={achievement.media.images[0]}
+              alt={achievement.title}
+              className="w-full h-full object-cover"
+            />
+            {achievement.media.images.length > 1 && (
+              <div
+                className="absolute top-2 right-2 px-2 py-1 text-xs font-bold rounded-lg backdrop-blur-sm"
+                style={{
+                  backgroundColor: isDark
+                    ? "rgba(0, 0, 0, 0.6)"
+                    : "rgba(255, 255, 255, 0.8)",
+                  color: isDark ? "#fff" : "#111827",
+                }}
+              >
+                +{achievement.media.images.length - 1}
+              </div>
+            )}
+          </motion.div>
+        )}
+
         {/* Title */}
         <h3 className="text-lg font-bold text-theme mb-2 group-hover:text-accent transition-colors line-clamp-2">
           {achievement.title}
