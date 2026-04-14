@@ -22,7 +22,7 @@ function SkillBar({ name, level, color, isHardware, index }) {
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ amount: 0.3, once: false }}
+      viewport={{ amount: 0.1, once: true }}
       variants={isMobile ? mobileSlideInLeft : slideInLeft}
       transition={{
         delay: index * (isHardware ? 0.06 : 0.04),
@@ -236,7 +236,7 @@ export default function SkillsBus() {
       className="py-24 px-6"
       initial="hidden"
       whileInView="visible"
-      viewport={{ amount: 0.3, once: false }}
+      viewport={{ amount: 0.1, once: true }}
       variants={staggerContainer}
     >
       <div className="max-w-7xl mx-auto">

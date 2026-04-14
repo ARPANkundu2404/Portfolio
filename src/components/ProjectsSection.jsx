@@ -26,10 +26,10 @@ export default function ProjectsSection() {
     <motion.section
       id="projects"
       className="py-24 px-6"
-      initial="hidden"
+      initial={isMobile ? "visible" : "hidden"}
       whileInView="visible"
-      viewport={{ amount: 0.3, once: false }}
-      variants={staggerContainer}
+      viewport={{ amount: 0.1, once: true }}
+      variants={isMobile ? {} : staggerContainer}
     >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -98,7 +98,7 @@ export default function ProjectsSection() {
                 key={project.id}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ amount: 0.3, once: false }}
+                viewport={{ amount: 0.1, once: true }}
                 variants={
                   isMobile
                     ? mobileFadeIn

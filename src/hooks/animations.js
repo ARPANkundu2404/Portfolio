@@ -35,7 +35,7 @@ export const scaleIn = {
 };
 
 export const staggerContainer = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
     opacity: 1,
     transition: {

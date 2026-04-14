@@ -33,7 +33,7 @@ function EducationCard({ item, index }) {
       initial="hidden"
       whileInView="visible"
       whileHover={{ scale: 1.02 }}
-      viewport={{ amount: 0.3, once: false }}
+      viewport={{ amount: 0.1, once: true }}
       variants={slideRight}
       transition={{
         delay: index * 0.08,
@@ -99,7 +99,7 @@ function FootballSection() {
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ amount: 0.3, once: false }}
+      viewport={{ amount: 0.1, once: true }}
       variants={isMobile ? mobileFadeIn : fadeIn}
       transition={{ duration: 0.6, delay: 0.3 }}
       className="p-5 rounded-xl border relative overflow-hidden"
@@ -169,7 +169,7 @@ export default function AboutSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ amount: 0.3, once: false }}
+          viewport={{ amount: 0.1, once: true }}
           variants={staggerContainer}
           className="mb-12 overflow-hidden"
         >
@@ -194,7 +194,7 @@ export default function AboutSection() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ amount: 0.3, once: false }}
+              viewport={{ amount: 0.1, once: true }}
               variants={staggerContainer}
             >
               {PERSONAL.bio.map((para, i) => (
@@ -212,7 +212,7 @@ export default function AboutSection() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ amount: 0.3, once: false }}
+              viewport={{ amount: 0.1, once: true }}
               variants={isMobile ? mobileSlideInLeft : slideInLeft}
               className="mt-6 space-y-2"
             >
@@ -268,7 +268,7 @@ export default function AboutSection() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ amount: 0.3, once: false }}
+              viewport={{ amount: 0.1, once: true }}
               variants={staggerContainer}
             >
               <div className="space-y-4">
@@ -282,7 +282,7 @@ export default function AboutSection() {
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ amount: 0.3, once: false }}
+              viewport={{ amount: 0.1, once: true }}
               variants={isMobile ? mobileFadeIn : fadeIn}
               transition={{ duration: 0.5, delay: 0.4 }}
               className="mt-6 p-4 rounded-xl border"

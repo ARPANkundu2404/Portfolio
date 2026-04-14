@@ -67,7 +67,7 @@ export default function Footer() {
       style={{ borderColor: "var(--color-border)" }}
       initial="hidden"
       whileInView="visible"
-      viewport={{ amount: 0.3, once: false }}
+      viewport={{ amount: 0.1, once: true }}
       variants={staggerContainer}
     >
       <div className="max-w-7xl mx-auto">

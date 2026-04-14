@@ -221,6 +221,16 @@
   .glow-accent-lg     { box-shadow: 0 0 56px var(--color-accent-glow); }
   .text-glow          { text-shadow: 0 0 32px var(--color-accent-glow); }
 
+  /* 3D flip card utilities */
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
   /* Transition using theme curve */
   .transition-theme {
     transition-timing-function: var(--transition-curve);

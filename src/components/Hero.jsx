@@ -213,7 +213,7 @@ export default function Hero() {
       style={{ zIndex: 1, y: safeY }}
       initial="hidden"
       whileInView="visible"
-      viewport={{ amount: 0.3, once: false }}
+      viewport={{ amount: 0.1, once: true }}
       variants={isMobile ? mobileFadeIn : fadeIn}
     >
       {/* ── Hardware background grid ────────────────────────────────────── */}
