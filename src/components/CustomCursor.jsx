@@ -19,11 +19,6 @@ export default function CustomCursor() {
   const { isHardware, isDark } = useTheme();
   const isMobile = useIsMobile();
 
-  // Don't render custom cursor on mobile devices
-  if (isMobile) {
-    return null;
-  }
-
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
@@ -40,6 +35,8 @@ export default function CustomCursor() {
   const dotRef = useRef(null);
 
   useEffect(() => {
+    if (isMobile) return;
+
     const updatePos = (e) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -70,7 +67,9 @@ export default function CustomCursor() {
     return () => {
       window.removeEventListener("mousemove", updatePos);
     };
-  }, [mouseX, mouseY]);
+  }, [isMobile, mouseX, mouseY]);
+
+  if (isMobile) return null;
 
   const accentColor = isDark
     ? isHardware

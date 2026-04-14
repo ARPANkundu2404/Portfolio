@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ACHIEVEMENTS,
@@ -143,99 +143,64 @@ function TimelineSection({ selectedYear, setSelectedYear }) {
 }
 
 /* ─── Achievement Card with 3D Tilt ────────────────────────────────────── */
-function AchievementCard({ achievement, onClick, isHardware, isDark }) {
-  const cardRef = useRef(null);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
+const AchievementCard = forwardRef(
+  ({ achievement, onClick, isHardware, isDark }, ref) => {
+    const cardRef = useRef(null);
+    const [rotateX, setRotateX] = useState(0);
+    const [rotateY, setRotateY] = useState(0);
 
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+    const handleMouseMove = (e) => {
+      if (!cardRef.current) return;
 
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+      const rect = cardRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-    const rotateXVal = ((y - rect.height / 2) / rect.height) * 15;
-    const rotateYVal = ((x - rect.width / 2) / rect.width) * -15;
+      const rotateXVal = ((y - rect.height / 2) / rect.height) * 15;
+      const rotateYVal = ((x - rect.width / 2) / rect.width) * -15;
 
-    setRotateX(rotateXVal);
-    setRotateY(rotateYVal);
-  };
+      setRotateX(rotateXVal);
+      setRotateY(rotateYVal);
+    };
 
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-  };
+    const handleMouseLeave = () => {
+      setRotateX(0);
+      setRotateY(0);
+    };
 
-  const isWinner = achievement.role === "Winner";
-  const isFavorite =
-    ACHIEVEMENT_FEATURED_ROLES?.includes(achievement.role) || false;
+    const isWinner = achievement.role === "Winner";
+    const isFavorite =
+      ACHIEVEMENT_FEATURED_ROLES?.includes(achievement.role) || false;
 
-  return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onClick={onClick}
-      className="cursor-pointer perspective h-full"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.3 }}
-      viewport={{ once: true }}
-      style={{
-        transformStyle: "preserve-3d",
-        transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-      }}
-    >
+    return (
       <motion.div
-        className="relative h-full p-5 rounded-lg border-2 transition-all duration-300 group"
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={onClick}
+        className="cursor-pointer perspective h-full"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.02 }}
+        transition={{ duration: 0.3 }}
+        viewport={{ once: true }}
         style={{
           transformStyle: "preserve-3d",
-          backgroundColor: isDark
-            ? isWinner || isFavorite
-              ? isHardware
-                ? "rgba(0, 0, 0, 0.4)"
-                : "rgba(0, 0, 0, 0.2)"
-              : "rgba(0, 0, 0, 0.2)"
-            : "#FFFFFF",
-          borderColor: isDark
-            ? isWinner || isFavorite
-              ? isHardware
-                ? "rgba(34, 197, 94, 0.6)"
-                : "rgba(20, 184, 166, 0.6)"
-              : isHardware
-                ? "rgba(34, 197, 94, 0.2)"
-                : "rgba(20, 184, 166, 0.2)"
-            : isWinner || isFavorite
-              ? "#16A34A"
-              : "rgba(0, 0, 0, 0.08)",
-          boxShadow:
-            isWinner || isFavorite
-              ? isDark
+          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+        }}
+      >
+        <motion.div
+          className="relative h-full p-5 rounded-lg border-2 transition-all duration-300 group"
+          style={{
+            transformStyle: "preserve-3d",
+            backgroundColor: isDark
+              ? isWinner || isFavorite
                 ? isHardware
-                  ? "0 10px 24px rgba(34, 197, 94, 0.2)"
-                  : "0 10px 24px rgba(20, 184, 166, 0.2)"
-                : "0 4px 12px rgba(0, 0, 0, 0.1)"
-              : "none",
-        }}
-        onMouseEnter={(e) => {
-          if (e.currentTarget) {
-            e.currentTarget.style.borderColor = isDark
-              ? isHardware
-                ? "#4ADE80"
-                : "#06B6D4"
-              : "#16A34A";
-            e.currentTarget.style.backgroundColor = isDark
-              ? isHardware
-                ? "rgba(34, 197, 94, 0.1)"
-                : "rgba(20, 184, 166, 0.1)"
-              : "rgba(0, 0, 0, 0.02)";
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (e.currentTarget) {
-            e.currentTarget.style.borderColor = isDark
+                  ? "rgba(0, 0, 0, 0.4)"
+                  : "rgba(0, 0, 0, 0.2)"
+                : "rgba(0, 0, 0, 0.2)"
+              : "#FFFFFF",
+            borderColor: isDark
               ? isWinner || isFavorite
                 ? isHardware
                   ? "rgba(34, 197, 94, 0.6)"
@@ -245,230 +210,271 @@ function AchievementCard({ achievement, onClick, isHardware, isDark }) {
                   : "rgba(20, 184, 166, 0.2)"
               : isWinner || isFavorite
                 ? "#16A34A"
-                : "rgba(0, 0, 0, 0.08)";
-            e.currentTarget.style.backgroundColor = isDark
-              ? isWinner || isFavorite
-                ? isHardware
-                  ? "rgba(0, 0, 0, 0.4)"
-                  : "rgba(0, 0, 0, 0.2)"
-                : "rgba(0, 0, 0, 0.2)"
-              : "#FFFFFF";
-          }
-        }}
-      >
-        {/* Winner Badge */}
-        {isWinner && (
-          <motion.div
-            className="absolute -top-3 right-4 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full border"
-            style={{
-              backgroundColor: isDark
-                ? isHardware
-                  ? "rgba(34, 197, 94, 0.3)"
-                  : "rgba(20, 184, 166, 0.3)"
-                : "rgba(22, 163, 74, 0.1)",
-              borderColor: isDark
-                ? isHardware
-                  ? "#22C55E"
-                  : "#14B8A6"
-                : "#16A34A",
-              color: isDark ? (isHardware ? "#4ADE80" : "#06B6D4") : "#16A34A",
-              boxShadow: isDark
-                ? isHardware
-                  ? "0 10px 24px rgba(34, 197, 94, 0.4)"
-                  : "0 10px 24px rgba(20, 184, 166, 0.4)"
-                : "none",
-            }}
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
-            ★ {achievement.role.toUpperCase()}
-          </motion.div>
-        )}
-
-        {/* Year badge */}
-        <div
-          className="inline-block px-2 py-1 text-xs font-mono mb-3 rounded border"
-          style={{
-            backgroundColor: isDark
-              ? isHardware
-                ? "rgba(34, 197, 94, 0.15)"
-                : "rgba(20, 184, 166, 0.15)"
-              : "rgba(0, 0, 0, 0.05)",
-            color: isDark ? (isHardware ? "#4ADE80" : "#06B6D4") : "#111827",
-            borderColor: isDark
-              ? isHardware
-                ? "rgba(34, 197, 94, 0.3)"
-                : "rgba(20, 184, 166, 0.3)"
-              : "rgba(0, 0, 0, 0.08)",
-          }}
-        >
-          {achievement.year}
-        </div>
-
-        {/* Image Thumbnail */}
-        {achievement.media?.images && achievement.media.images.length > 0 && (
-          <motion.div
-            className="relative w-full h-40 rounded-lg overflow-hidden mb-4 border"
-            style={{
-              borderColor: isDark
-                ? isHardware
-                  ? "rgba(34, 197, 94, 0.2)"
-                  : "rgba(20, 184, 166, 0.2)"
                 : "rgba(0, 0, 0, 0.08)",
-              backgroundColor: isDark
-                ? "rgba(0, 0, 0, 0.3)"
-                : "rgba(0, 0, 0, 0.02)",
-            }}
-            whileHover={{ scale: 1.02 }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            viewport={{ once: true }}
-          >
-            <img
-              src={achievement.media.images[0]}
-              alt={achievement.title}
-              className="w-full h-full object-cover"
-            />
-            {achievement.media.images.length > 1 && (
-              <div
-                className="absolute top-2 right-2 px-2 py-1 text-xs font-bold rounded-lg backdrop-blur-sm"
-                style={{
-                  backgroundColor: isDark
-                    ? "rgba(0, 0, 0, 0.6)"
-                    : "rgba(255, 255, 255, 0.8)",
-                  color: isDark ? "#fff" : "#111827",
-                }}
-              >
-                +{achievement.media.images.length - 1}
-              </div>
-            )}
-          </motion.div>
-        )}
-
-        {/* Title */}
-        <h3 className="text-lg font-bold text-theme mb-2 group-hover:text-accent transition-colors line-clamp-2">
-          {achievement.title}
-        </h3>
-
-        {/* Event */}
-        <p className="text-sm text-theme-muted mb-3">{achievement.event}</p>
-
-        {/* Role Badge */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {achievement.badges.map((badge) => {
-            let bgColor, textColor;
-            if (badge === "WINNER") {
-              bgColor = isDark
-                ? isHardware
-                  ? "rgba(34, 197, 94, 0.2)"
-                  : "rgba(20, 184, 166, 0.2)"
-                : "rgba(22, 163, 74, 0.1)";
-              textColor = isDark
+            boxShadow:
+              isWinner || isFavorite
+                ? isDark
+                  ? isHardware
+                    ? "0 10px 24px rgba(34, 197, 94, 0.2)"
+                    : "0 10px 24px rgba(20, 184, 166, 0.2)"
+                  : "0 4px 12px rgba(0, 0, 0, 0.1)"
+                : "none",
+          }}
+          onMouseEnter={(e) => {
+            if (e.currentTarget) {
+              e.currentTarget.style.borderColor = isDark
                 ? isHardware
                   ? "#4ADE80"
                   : "#06B6D4"
                 : "#16A34A";
-            } else if (badge === "FINALIST" || badge === "TOP 3") {
-              bgColor = isDark
-                ? isHardware
-                  ? "rgba(59, 130, 246, 0.2)"
-                  : "rgba(34, 211, 238, 0.2)"
-                : "rgba(37, 99, 235, 0.1)";
-              textColor = isDark
-                ? isHardware
-                  ? "#60A5FA"
-                  : "#22D3EE"
-                : "#2563EB";
-            } else {
-              bgColor = isDark
+              e.currentTarget.style.backgroundColor = isDark
                 ? isHardware
                   ? "rgba(34, 197, 94, 0.1)"
                   : "rgba(20, 184, 166, 0.1)"
-                : "rgba(0, 0, 0, 0.05)";
-              textColor = isDark
-                ? isHardware
-                  ? "rgba(74, 222, 128, 0.6)"
-                  : "rgba(6, 182, 212, 0.6)"
-                : "#111827";
+                : "rgba(0, 0, 0, 0.02)";
             }
-            return (
-              <span
-                key={badge}
-                className="text-xs font-bold px-2 py-1 rounded-full"
-                style={{
-                  backgroundColor: bgColor,
-                  color: textColor,
-                  boxShadow:
-                    badge === "WINNER"
-                      ? isDark
-                        ? isHardware
-                          ? "0 0 12px rgba(34, 197, 94, 0.3)"
-                          : "0 0 12px rgba(20, 184, 166, 0.3)"
-                        : "none"
-                      : "none",
-                }}
-              >
-                {badge}
-              </span>
-            );
-          })}
-        </div>
-
-        {/* Tech Stack */}
-        <div className="flex flex-wrap gap-1 mb-4">
-          {achievement.techStack.slice(0, 3).map((tech, idx) => (
-            <motion.span
-              key={tech}
-              className="text-xs px-2 py-0.5 rounded-xs border"
-              style={{
-                backgroundColor: isHardware
-                  ? "rgba(34, 197, 94, 0.1)"
-                  : "rgba(20, 184, 166, 0.1)",
-                color: isHardware
-                  ? "rgba(74, 222, 128, 0.8)"
-                  : "rgba(6, 182, 212, 0.8)",
-                borderColor: isHardware
-                  ? "rgba(34, 197, 94, 0.2)"
-                  : "rgba(20, 184, 166, 0.2)",
-              }}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: idx * 0.05 }}
-            >
-              {tech}
-            </motion.span>
-          ))}
-          {achievement.techStack.length > 3 && (
-            <span className="text-xs text-theme-faint">
-              +{achievement.techStack.length - 3}
-            </span>
-          )}
-        </div>
-
-        {/* Description */}
-        <p className="text-sm text-theme-faint line-clamp-3 mb-4">
-          {achievement.description}
-        </p>
-
-        {/* Click to view */}
-        <div
-          className="text-xs font-mono uppercase tracking-wider transition-all"
-          style={{
-            color: isDark
-              ? isHardware
-                ? "rgba(34, 197, 94, 0.6)"
-                : "rgba(20, 184, 166, 0.6)"
-              : "#111827",
+          }}
+          onMouseLeave={(e) => {
+            if (e.currentTarget) {
+              e.currentTarget.style.borderColor = isDark
+                ? isWinner || isFavorite
+                  ? isHardware
+                    ? "rgba(34, 197, 94, 0.6)"
+                    : "rgba(20, 184, 166, 0.6)"
+                  : isHardware
+                    ? "rgba(34, 197, 94, 0.2)"
+                    : "rgba(20, 184, 166, 0.2)"
+                : isWinner || isFavorite
+                  ? "#16A34A"
+                  : "rgba(0, 0, 0, 0.08)";
+              e.currentTarget.style.backgroundColor = isDark
+                ? isWinner || isFavorite
+                  ? isHardware
+                    ? "rgba(0, 0, 0, 0.4)"
+                    : "rgba(0, 0, 0, 0.2)"
+                  : "rgba(0, 0, 0, 0.2)"
+                : "#FFFFFF";
+            }
           }}
         >
-          ▶ View Details
-        </div>
+          {/* Winner Badge */}
+          {isWinner && (
+            <motion.div
+              className="absolute -top-3 right-4 px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full border"
+              style={{
+                backgroundColor: isDark
+                  ? isHardware
+                    ? "rgba(34, 197, 94, 0.3)"
+                    : "rgba(20, 184, 166, 0.3)"
+                  : "rgba(22, 163, 74, 0.1)",
+                borderColor: isDark
+                  ? isHardware
+                    ? "#22C55E"
+                    : "#14B8A6"
+                  : "#16A34A",
+                color: isDark
+                  ? isHardware
+                    ? "#4ADE80"
+                    : "#06B6D4"
+                  : "#16A34A",
+                boxShadow: isDark
+                  ? isHardware
+                    ? "0 10px 24px rgba(34, 197, 94, 0.4)"
+                    : "0 10px 24px rgba(20, 184, 166, 0.4)"
+                  : "none",
+              }}
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              ★ {achievement.role.toUpperCase()}
+            </motion.div>
+          )}
+
+          {/* Year badge */}
+          <div
+            className="inline-block px-2 py-1 text-xs font-mono mb-3 rounded border"
+            style={{
+              backgroundColor: isDark
+                ? isHardware
+                  ? "rgba(34, 197, 94, 0.15)"
+                  : "rgba(20, 184, 166, 0.15)"
+                : "rgba(0, 0, 0, 0.05)",
+              color: isDark ? (isHardware ? "#4ADE80" : "#06B6D4") : "#111827",
+              borderColor: isDark
+                ? isHardware
+                  ? "rgba(34, 197, 94, 0.3)"
+                  : "rgba(20, 184, 166, 0.3)"
+                : "rgba(0, 0, 0, 0.08)",
+            }}
+          >
+            {achievement.year}
+          </div>
+
+          {/* Image Thumbnail */}
+          {achievement.media?.images && achievement.media.images.length > 0 && (
+            <motion.div
+              className="relative w-full h-40 rounded-lg overflow-hidden mb-4 border"
+              style={{
+                borderColor: isDark
+                  ? isHardware
+                    ? "rgba(34, 197, 94, 0.2)"
+                    : "rgba(20, 184, 166, 0.2)"
+                  : "rgba(0, 0, 0, 0.08)",
+                backgroundColor: isDark
+                  ? "rgba(0, 0, 0, 0.3)"
+                  : "rgba(0, 0, 0, 0.02)",
+              }}
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <img
+                src={achievement.media.images[0]}
+                alt={achievement.title}
+                className="w-full h-full object-cover"
+              />
+              {achievement.media.images.length > 1 && (
+                <div
+                  className="absolute top-2 right-2 px-2 py-1 text-xs font-bold rounded-lg backdrop-blur-sm"
+                  style={{
+                    backgroundColor: isDark
+                      ? "rgba(0, 0, 0, 0.6)"
+                      : "rgba(255, 255, 255, 0.8)",
+                    color: isDark ? "#fff" : "#111827",
+                  }}
+                >
+                  +{achievement.media.images.length - 1}
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* Title */}
+          <h3 className="text-lg font-bold text-theme mb-2 group-hover:text-accent transition-colors line-clamp-2">
+            {achievement.title}
+          </h3>
+
+          {/* Event */}
+          <p className="text-sm text-theme-muted mb-3">{achievement.event}</p>
+
+          {/* Role Badge */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {achievement.badges.map((badge) => {
+              let bgColor, textColor;
+              if (badge === "WINNER") {
+                bgColor = isDark
+                  ? isHardware
+                    ? "rgba(34, 197, 94, 0.2)"
+                    : "rgba(20, 184, 166, 0.2)"
+                  : "rgba(22, 163, 74, 0.1)";
+                textColor = isDark
+                  ? isHardware
+                    ? "#4ADE80"
+                    : "#06B6D4"
+                  : "#16A34A";
+              } else if (badge === "FINALIST" || badge === "TOP 3") {
+                bgColor = isDark
+                  ? isHardware
+                    ? "rgba(59, 130, 246, 0.2)"
+                    : "rgba(34, 211, 238, 0.2)"
+                  : "rgba(37, 99, 235, 0.1)";
+                textColor = isDark
+                  ? isHardware
+                    ? "#60A5FA"
+                    : "#22D3EE"
+                  : "#2563EB";
+              } else {
+                bgColor = isDark
+                  ? isHardware
+                    ? "rgba(34, 197, 94, 0.1)"
+                    : "rgba(20, 184, 166, 0.1)"
+                  : "rgba(0, 0, 0, 0.05)";
+                textColor = isDark
+                  ? isHardware
+                    ? "rgba(74, 222, 128, 0.6)"
+                    : "rgba(6, 182, 212, 0.6)"
+                  : "#111827";
+              }
+              return (
+                <span
+                  key={badge}
+                  className="text-xs font-bold px-2 py-1 rounded-full"
+                  style={{
+                    backgroundColor: bgColor,
+                    color: textColor,
+                    boxShadow:
+                      badge === "WINNER"
+                        ? isDark
+                          ? isHardware
+                            ? "0 0 12px rgba(34, 197, 94, 0.3)"
+                            : "0 0 12px rgba(20, 184, 166, 0.3)"
+                          : "none"
+                        : "none",
+                  }}
+                >
+                  {badge}
+                </span>
+              );
+            })}
+          </div>
+
+          {/* Tech Stack */}
+          <div className="flex flex-wrap gap-1 mb-4">
+            {achievement.techStack.slice(0, 3).map((tech, idx) => (
+              <motion.span
+                key={tech}
+                className="text-xs px-2 py-0.5 rounded-xs border"
+                style={{
+                  backgroundColor: isHardware
+                    ? "rgba(34, 197, 94, 0.1)"
+                    : "rgba(20, 184, 166, 0.1)",
+                  color: isHardware
+                    ? "rgba(74, 222, 128, 0.8)"
+                    : "rgba(6, 182, 212, 0.8)",
+                  borderColor: isHardware
+                    ? "rgba(34, 197, 94, 0.2)"
+                    : "rgba(20, 184, 166, 0.2)",
+                }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: idx * 0.05 }}
+              >
+                {tech}
+              </motion.span>
+            ))}
+            {achievement.techStack.length > 3 && (
+              <span className="text-xs text-theme-faint">
+                +{achievement.techStack.length - 3}
+              </span>
+            )}
+          </div>
+
+          {/* Description */}
+          <p className="text-sm text-theme-faint line-clamp-3 mb-4">
+            {achievement.description}
+          </p>
+
+          {/* Click to view */}
+          <div
+            className="text-xs font-mono uppercase tracking-wider transition-all"
+            style={{
+              color: isDark
+                ? isHardware
+                  ? "rgba(34, 197, 94, 0.6)"
+                  : "rgba(20, 184, 166, 0.6)"
+                : "#111827",
+            }}
+          >
+            ▶ View Details
+          </div>
+        </motion.div>
       </motion.div>
-    </motion.div>
-  );
-}
+    );
+  },
+);
 
 /* ─── Main Gallery Component ────────────────────────────────────────────── */
 export default function AchievementGallery() {
