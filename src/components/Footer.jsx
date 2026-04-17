@@ -114,14 +114,14 @@ export default function Footer() {
         {/* Contact Form */}
         <motion.div
           variants={isMobile ? mobileFadeIn : fadeIn}
-          className="max-w-2xl mx-auto mb-16"
+          className="max-w-2xl mx-auto px-4 sm:px-0 mb-16"
         >
           <form onSubmit={handleSubmit} className="space-y-4">
             {CONTACT_FORM?.fields?.map((field, idx) => (
               <div key={field.id}>
                 <label
                   htmlFor={field.id}
-                  className="block text-sm font-mono text-theme-muted mb-2"
+                  className="block text-xs sm:text-sm font-mono text-theme-muted mb-2"
                 >
                   {field.label}
                 </label>
@@ -134,7 +134,7 @@ export default function Footer() {
                     required={field.required}
                     disabled={loading}
                     rows={field.rows || 5}
-                    className="w-full px-4 py-2 bg-theme-bg border rounded text-theme placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 resize-none"
+                    className="w-full px-3 sm:px-4 py-2 bg-theme-bg border rounded text-theme text-xs sm:text-base placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 resize-none"
                     style={{
                       borderColor: "var(--color-border)",
                       backgroundColor: "var(--color-bg-secondary)",
@@ -151,7 +151,7 @@ export default function Footer() {
                     onChange={handleInputChange}
                     required={field.required}
                     disabled={loading}
-                    className="w-full px-4 py-2 bg-theme-bg border rounded text-theme placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50"
+                    className="w-full px-3 sm:px-4 py-2 bg-theme-bg border rounded text-theme text-xs sm:text-base placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50"
                     style={{
                       borderColor: "var(--color-border)",
                       backgroundColor: "var(--color-bg-secondary)",
@@ -168,7 +168,7 @@ export default function Footer() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-3 rounded text-sm font-mono text-center"
+                className="p-3 rounded text-xs sm:text-sm font-mono text-center"
                 style={{
                   backgroundColor: "rgba(34, 197, 94, 0.1)",
                   color: "#22c55e",
@@ -183,7 +183,7 @@ export default function Footer() {
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-3 rounded text-sm font-mono text-center"
+                className="p-3 rounded text-xs sm:text-sm font-mono text-center"
                 style={{
                   backgroundColor: "rgba(239, 68, 68, 0.1)",
                   color: "#ef4444",
@@ -198,7 +198,7 @@ export default function Footer() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 font-mono text-sm font-semibold rounded transition-all disabled:opacity-50 cursor-pointer hover:opacity-80"
+              className="w-full py-2 px-4 font-mono text-xs sm:text-sm font-semibold rounded transition-all disabled:opacity-50 cursor-pointer hover:opacity-80"
               style={{
                 backgroundColor: "var(--color-text)",
                 color: "var(--color-bg)",

@@ -195,12 +195,20 @@ Location: ${PERSONAL.location}`;
     [cmdInput],
   );
 
-  // Floating button style - positioned bottom-right
+  // Floating button style - positioned bottom-right on desktop, centered on mobile
   const floatingButtonStyle = {
     position: "fixed",
-    bottom: "2rem",
-    right: "2rem",
     zIndex: 40,
+  };
+
+  // Responsive positioning
+  const getButtonStyle = () => {
+    if (typeof window !== "undefined" && window.innerWidth < 640) {
+      // Mobile: bottom-4
+      return { ...floatingButtonStyle, bottom: "1rem", right: "1rem" };
+    }
+    // Desktop: bottom-6 right-6
+    return { ...floatingButtonStyle, bottom: "1.5rem", right: "1.5rem" };
   };
 
   return (
@@ -214,14 +222,14 @@ Location: ${PERSONAL.location}`;
             exit={{ opacity: 0, scale: 0 }}
             transition={{ duration: 0.3 }}
             onClick={() => setIsOpen(!isOpen)}
-            style={floatingButtonStyle}
+            style={getButtonStyle()}
             className="group relative"
           >
             {/* Glassmorphism circle */}
             <motion.div
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="w-14 h-14 rounded-full flex items-center justify-center cursor-pointer"
+              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center cursor-pointer"
               style={{
                 background: `var(--color-surface-overlay)`,
                 border: `2px solid var(--color-border)`,
@@ -232,7 +240,7 @@ Location: ${PERSONAL.location}`;
               }}
             >
               <span
-                className="text-xl font-mono font-bold"
+                className="text-lg sm:text-xl font-mono font-bold"
                 style={{ color: "var(--color-text)" }}
               >
                 {">_"}
@@ -254,7 +262,7 @@ Location: ${PERSONAL.location}`;
         )}
       </AnimatePresence>
 
-      {/* Terminal Window - positioned bottom-right */}
+      {/* Terminal Window - positioned bottom-right, responsive */}
       <AnimatePresence>
         {isOpen && isInContact && (
           <motion.div
@@ -262,11 +270,17 @@ Location: ${PERSONAL.location}`;
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            style={floatingButtonStyle}
-            className="fixed bottom-24 right-4 w-full max-w-md md:max-w-sm z-50"
+            style={{
+              position: "fixed",
+              bottom: "5rem",
+              right: "1rem",
+              left: "auto",
+              zIndex: 50,
+            }}
+            className="w-[95%] sm:w-[90%] md:max-w-md lg:max-w-lg mx-auto sm:mx-0 max-h-[65vh] sm:max-h-[70vh] md:max-h-[80vh]"
           >
             <div
-              className="rounded-lg border overflow-hidden shadow-2xl"
+              className="rounded-lg border overflow-hidden shadow-2xl flex flex-col h-full"
               style={{
                 background: "var(--color-surface)",
                 borderColor: "var(--color-border)",
@@ -277,7 +291,7 @@ Location: ${PERSONAL.location}`;
             >
               {/* Header */}
               <div
-                className="flex items-center justify-between px-4 py-3 border-b"
+                className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 border-b flex-shrink-0"
                 style={{
                   borderColor: "var(--color-border)",
                   background: "var(--color-surface-secondary)",
@@ -289,7 +303,7 @@ Location: ${PERSONAL.location}`;
                     style={{ background: "var(--color-accent)" }}
                   />
                   <span
-                    className="font-mono text-xs font-bold"
+                    className="font-mono text-[10px] sm:text-xs font-bold"
                     style={{ color: "var(--color-text)" }}
                   >
                     {isHardware ? "FAQ.sh" : "faq.terminal"}
@@ -307,11 +321,12 @@ Location: ${PERSONAL.location}`;
               {/* Terminal Body */}
               <div
                 ref={bodyRef}
-                className="p-4 min-h-64 max-h-80 overflow-y-auto font-mono text-xs"
+                className="flex-1 overflow-y-auto px-3 sm:px-4 py-2 sm:py-4 font-mono text-xs sm:text-sm"
                 style={{
                   color: "var(--color-text)",
                   background: "var(--color-surface)",
                   scrollbarWidth: "thin",
+                  minHeight: "150px",
                 }}
               >
                 {/* Scanline overlay for hardware mode */}
@@ -343,7 +358,7 @@ Location: ${PERSONAL.location}`;
 
               {/* Input Line */}
               <div
-                className="px-4 py-3 border-t flex items-center gap-2 font-mono text-xs"
+                className="sticky bottom-0 px-3 sm:px-4 py-2 sm:py-3 border-t flex items-center gap-2 font-mono text-xs sm:text-sm flex-shrink-0"
                 style={{
                   borderColor: "var(--color-border)",
                   background: "var(--color-surface-secondary)",
@@ -357,7 +372,7 @@ Location: ${PERSONAL.location}`;
                   onChange={(e) => setCmdInput(e.target.value)}
                   onKeyDown={handleCmd}
                   placeholder="Type a command..."
-                  className="flex-1 bg-transparent outline-none"
+                  className="flex-1 bg-transparent outline-none text-xs sm:text-sm"
                   style={{
                     color: "var(--color-text)",
                   }}
@@ -367,7 +382,7 @@ Location: ${PERSONAL.location}`;
 
               {/* Hint */}
               <div
-                className="px-4 py-2 text-[10px] text-center"
+                className="px-3 sm:px-4 py-1 sm:py-2 text-[10px] sm:text-xs text-center flex-shrink-0"
                 style={{
                   color: "var(--color-text-muted)",
                   background: "var(--color-surface-secondary)",

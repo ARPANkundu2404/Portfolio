@@ -107,7 +107,7 @@ export default function AchievementModal({ achievement, onClose }) {
               ? "0 20px 64px rgba(20, 184, 166, 0.3)"
               : "0 20px 64px rgba(0, 0, 0, 0.1)",
         }}
-        className="relative w-full max-w-2xl max-h-[calc(100vh-6rem)] rounded-lg overflow-hidden border-2"
+        className="relative w-[95%] sm:max-w-2xl max-h-[90vh] rounded-lg overflow-hidden border-2 flex flex-col"
       >
         {/* Close Button */}
         <motion.button
@@ -144,7 +144,7 @@ export default function AchievementModal({ achievement, onClose }) {
           variants={contentVariants}
           initial="hidden"
           animate="visible"
-          className="p-8 overflow-y-auto max-h-[calc(100vh-6rem)]"
+          className="p-4 sm:p-6 md:p-8 overflow-y-auto flex-1"
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="mb-6">

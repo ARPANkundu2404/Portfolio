@@ -555,7 +555,7 @@ export default function AchievementGallery() {
 
       {/* Stats */}
       <motion.div
-        className="grid grid-cols-3 gap-4 text-center text-sm"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center text-xs sm:text-sm"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
