@@ -205,7 +205,12 @@ export const PROJECTS = [
     subtitle: "IoT Slot Booking",
     desc: "IoT-enabled parking management using ESP32 sensor nodes to detect vehicle occupancy, syncing live data to Firebase for real-time slot booking via Next.js.",
     tags: ["ESP32", "IoT", "Next.js", "Python", "Firebase", "DHT11"],
-    links: [{ label: "GitHub", url: "https://github.com/ARPANkundu2404/Final-Year-Project" }],
+    links: [
+      {
+        label: "GitHub",
+        url: "https://github.com/ARPANkundu2404/Final-Year-Project",
+      },
+    ],
     skin: {
       bg: "#060A06",
       bgAlt: "#F0FFF0",
@@ -325,7 +330,12 @@ export const PROJECTS = [
     subtitle: "Real-Time IoT System",
     desc: "IoT-based weather monitoring using ESP32 + DHT11. Transmits sensor data to Firebase, visualized on a React dashboard. Winner — Itrocity IoT Hackathon.",
     tags: ["ESP32", "DHT11", "Firebase", "React.js", "IoT"],
-    links: [{ label: "GitHub", url: "https://github.com/ARPANkundu2404/my_weather_app" }],
+    links: [
+      {
+        label: "GitHub",
+        url: "https://github.com/ARPANkundu2404/my_weather_app",
+      },
+    ],
     skin: {
       bg: "#030A0A",
       bgAlt: "#E8F8FF",
@@ -791,11 +801,9 @@ export const CONTACT_FORM = {
       required: true,
     },
   ],
-  emailjs: {
-    publicKey: "YOUR_PUBLIC_KEY",
-    serviceId: "YOUR_SERVICE_ID",
-    contactTemplateId: "CONTACT_TEMPLATE_ID",
-    autoReplyTemplateId: "AUTO_REPLY_TEMPLATE_ID",
+  api: {
+    baseUrl: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000",
+    endpoint: "/send-email",
   },
   messages: {
     success: "✓ Message sent successfully! I'll get back to you soon.",

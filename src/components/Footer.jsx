@@ -1,6 +1,5 @@
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import emailjs from "@emailjs/browser";
 import { useTheme } from "../context/ThemeContext";
 import { FOOTER, CONTACT_FORM, PERSONAL } from "../data/portfolio";
 import {
@@ -13,15 +12,23 @@ import {
 export default function Footer() {
   const { isHardware } = useTheme();
   const isMobile = useIsMobile();
-  const formRef = useRef(null);
+  const [formData, setFormData] = useState({
+    user_name: "",
+    user_email: "",
+    user_title: "",
+    message: "",
+  });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init(CONTACT_FORM?.emailjs?.publicKey || "YOUR_PUBLIC_KEY");
-  }, []);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,29 +37,39 @@ export default function Footer() {
     setError(false);
 
     try {
-      // Send main contact email
-      await emailjs.sendForm(
-        CONTACT_FORM?.emailjs?.serviceId || "SERVICE_ID",
-        CONTACT_FORM?.emailjs?.contactTemplateId || "CONTACT_TEMPLATE_ID",
-        formRef.current,
-        CONTACT_FORM?.emailjs?.publicKey || "YOUR_PUBLIC_KEY",
-      );
+      const apiUrl = `${CONTACT_FORM?.api?.baseUrl}${CONTACT_FORM?.api?.endpoint}`;
+      const payload = {
+        name: formData.user_name,
+        email: formData.user_email,
+        subject: formData.user_title,
+        message: formData.message,
+      };
 
-      // Send auto-reply email
-      await emailjs.sendForm(
-        CONTACT_FORM?.emailjs?.serviceId || "SERVICE_ID",
-        CONTACT_FORM?.emailjs?.autoReplyTemplateId || "AUTO_REPLY_TEMPLATE_ID",
-        formRef.current,
-        CONTACT_FORM?.emailjs?.publicKey || "YOUR_PUBLIC_KEY",
-      );
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Server error: ${response.status}`);
+      }
 
       setSuccess(true);
-      formRef.current.reset();
+      setFormData({
+        user_name: "",
+        user_email: "",
+        user_title: "",
+        message: "",
+      });
 
       // Hide success message after 5 seconds
       setTimeout(() => setSuccess(false), 5000);
     } catch (err) {
-      console.error("Email send error:", err);
+      console.error("Contact form submission error:", err.message);
       setError(true);
       setTimeout(() => setError(false), 5000);
     } finally {
@@ -99,7 +116,7 @@ export default function Footer() {
           variants={isMobile ? mobileFadeIn : fadeIn}
           className="max-w-2xl mx-auto mb-16"
         >
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {CONTACT_FORM?.fields?.map((field, idx) => (
               <div key={field.id}>
                 <label
@@ -112,6 +129,8 @@ export default function Footer() {
                   <textarea
                     id={field.id}
                     name={field.name}
+                    value={formData[field.name] || ""}
+                    onChange={handleInputChange}
                     required={field.required}
                     disabled={loading}
                     rows={field.rows || 5}
@@ -128,6 +147,8 @@ export default function Footer() {
                     type={field.type}
                     id={field.id}
                     name={field.name}
+                    value={formData[field.name] || ""}
+                    onChange={handleInputChange}
                     required={field.required}
                     disabled={loading}
                     className="w-full px-4 py-2 bg-theme-bg border rounded text-theme placeholder-theme-muted focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50"
