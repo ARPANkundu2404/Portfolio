@@ -67,7 +67,7 @@ def verify_captcha(token):
             timeout=5
         )
         result = response.json()
-        return result.get("success", False) and result.get("score", 0) > 0.5
+        return result.get("success", False)
     except Exception as e:
         print(f"reCAPTCHA verification error: {e}")
         return False
