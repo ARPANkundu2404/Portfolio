@@ -19,9 +19,11 @@ CORS(
                 "http://localhost:3000",
                 "http://127.0.0.1:5173",
                 "http://127.0.0.1:3000",
+                "https://arpankundu24.onrender.com/",
+                VITE_BACKEND_URL := os.getenv("VITE_API_BASE_URL", "http://localhost:5000"),
             ],
             "methods": ["POST", "OPTIONS"],
-            "allow_headers": ["Content-Type"],
+            "allow_headers": ["Content-Type", "Authorization"],
             "supports_credentials": False,
         }
     },
@@ -30,11 +32,11 @@ CORS(
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("EMAIL_PASSWORD")
 
-@app.route("/send-email", methods=["POST", "OPTIONS"])
+@app.route("/send-email", methods=["POST"])
 def send_email():
     # Handle CORS preflight requests
-    if request.method == "OPTIONS":
-        return "", 204
+    # if request.method == "OPTIONS":
+    #     return "", 204
 
     try:
         data = request.json
