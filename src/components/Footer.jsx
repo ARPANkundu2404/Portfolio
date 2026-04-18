@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useTheme } from "../context/ThemeContext";
 import { FOOTER, CONTACT_FORM, PERSONAL } from "../data/portfolio";
 import {
@@ -12,15 +13,18 @@ import {
 export default function Footer() {
   const { isHardware } = useTheme();
   const isMobile = useIsMobile();
+  const recaptchaRef = useRef();
   const [formData, setFormData] = useState({
     user_name: "",
     user_email: "",
     user_title: "",
     message: "",
   });
+  const [captchaToken, setCaptchaToken] = useState(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [captchaError, setCaptchaError] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,11 +34,24 @@ export default function Footer() {
     }));
   };
 
+  const handleCaptchaChange = (token) => {
+    setCaptchaToken(token);
+    setCaptchaError(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
     setError(false);
+    setCaptchaError(false);
+
+    // Validate reCAPTCHA
+    if (!captchaToken) {
+      setCaptchaError(true);
+      setLoading(false);
+      return;
+    }
 
     try {
       const apiUrl = `${CONTACT_FORM?.api?.baseUrl}${CONTACT_FORM?.api?.endpoint}`;
@@ -43,6 +60,7 @@ export default function Footer() {
         email: formData.user_email,
         subject: formData.user_title,
         message: formData.message,
+        captcha: captchaToken,
       };
 
       const response = await fetch(apiUrl, {
@@ -65,6 +83,10 @@ export default function Footer() {
         user_title: "",
         message: "",
       });
+      setCaptchaToken(null);
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
 
       // Hide success message after 5 seconds
       setTimeout(() => setSuccess(false), 5000);
@@ -162,6 +184,34 @@ export default function Footer() {
                 )}
               </div>
             ))}
+
+            {/* Google reCAPTCHA v2 */}
+            <div className="flex justify-center py-2">
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                onChange={handleCaptchaChange}
+                theme={
+                  import.meta.env.VITE_THEME_MODE === "dark" ? "dark" : "light"
+                }
+              />
+            </div>
+
+            {/* reCAPTCHA Error Message */}
+            {captchaError && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-3 rounded text-xs sm:text-sm font-mono text-center"
+                style={{
+                  backgroundColor: "rgba(239, 68, 68, 0.1)",
+                  color: "#ef4444",
+                  borderColor: "#ef4444",
+                }}
+              >
+                ✗ Please complete the reCAPTCHA verification
+              </motion.div>
+            )}
 
             {/* Status Messages */}
             {success && (
