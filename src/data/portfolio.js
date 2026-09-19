@@ -26,6 +26,7 @@ export const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
+  { label: "Experience", href: "#experience" },
   { label: "Achievements", href: "#achievements" },
   { label: "Contact", href: "#contact" },
 ];
@@ -78,14 +79,17 @@ export const TICKER_ITEMS = {
   ],
   hw: [
     "ESP32",
+    "ESP8266",
+    "Nuvoton 8051",
+    "Arduino",
     "IoT Systems",
+    "Embedded C",
+    "PCB Design",
+    "SMD",
     "DHT11",
-    "Firebase",
-    "Next.js",
-    "Python",
-    "C",
-    "MatLab",
-    "Embedded Systems",
+    "DRV8825",
+    "Motor Control",
+    "Hardware Testing",
   ],
 };
 
@@ -136,6 +140,146 @@ export const PROJECTS = [
       bg: "#0A1A0A",
       bgAlt: "#EEF4FF",
       accent: "#22C55E",
+
+      visual: {
+        grid: {
+          rows: 6,
+          columns: 10,
+          startX: 20,
+          startY: 25,
+          gapX: 35,
+          gapY: 28,
+          radius: 1,
+          color: "accent",
+          opacity: 0.08,
+        },
+
+        elements: [
+          {
+            type: "rect",
+            x: 0,
+            y: 0,
+            width: 400,
+            height: 27,
+            fill: "panel",
+          },
+
+          {
+            type: "text",
+            x: 15,
+            y: 17,
+            value: "ALOR SHOHOR",
+            size: 7,
+            color: "accent",
+            letterSpacing: 1.5,
+          },
+
+          {
+            type: "rect",
+            x: 0,
+            y: 27,
+            width: 105,
+            height: 173,
+            fill: "panelSoft",
+            stroke: "border",
+            strokeWidth: 0.7,
+          },
+
+          {
+            type: "text",
+            x: 12,
+            y: 45,
+            value: "PANDALS",
+            size: 7,
+            color: "accent",
+            letterSpacing: 1,
+          },
+
+          {
+            type: "pill",
+            x: 10,
+            y: 52,
+            width: 80,
+            height: 15,
+            value: "Shyambazar",
+            color: "muted",
+          },
+
+          {
+            type: "pill",
+            x: 10,
+            y: 72,
+            width: 80,
+            height: 15,
+            value: "Kumartuli",
+            color: "accent",
+            border: "accent",
+          },
+
+          {
+            type: "pill",
+            x: 10,
+            y: 92,
+            width: 80,
+            height: 15,
+            value: "Bagbazar",
+            color: "muted",
+          },
+
+          {
+            type: "pill",
+            x: 10,
+            y: 112,
+            width: 80,
+            height: 15,
+            value: "Coll. Street",
+            color: "muted",
+          },
+
+          {
+            type: "circle",
+            x: 180,
+            y: 70,
+            radius: 6,
+            fill: "green",
+          },
+
+          {
+            type: "circle",
+            x: 260,
+            y: 55,
+            radius: 6,
+            fill: "yellow",
+          },
+
+          {
+            type: "circle",
+            x: 320,
+            y: 120,
+            radius: 6,
+            fill: "red",
+          },
+
+          {
+            type: "circle",
+            x: 225,
+            y: 145,
+            radius: 6,
+            fill: "green",
+          },
+
+          {
+            type: "pill",
+            x: 300,
+            y: 35,
+            width: 70,
+            height: 15,
+            value: "LIVE MAP",
+            color: "accent",
+            border: "accent",
+          },
+        ],
+      },
     },
     skeleton: {
       nodes: [
@@ -202,9 +346,16 @@ export const PROJECTS = [
     mode: "hw",
     type: "IoT · Final Year Project",
     title: "Smart Parking",
-    subtitle: "IoT Slot Booking",
-    desc: "IoT-enabled parking management using ESP32 sensor nodes to detect vehicle occupancy, syncing live data to Firebase for real-time slot booking via Next.js.",
-    tags: ["ESP32", "IoT", "Next.js", "Python", "Firebase", "DHT11"],
+    subtitle: "IoT-Enabled Parking Solution",
+    desc: "Developing an IoT-enabled parking management system using ESP32-based sensor nodes for real-time vehicle occupancy detection, slot availability monitoring and cloud-connected parking visualization.",
+    tags: [
+      "ESP32",
+      "IR Sensors",
+      "IoT",
+      "Sensor Interfacing",
+      "Embedded Systems",
+      "Real-Time Monitoring",
+    ],
     links: [
       {
         label: "GitHub",
@@ -215,50 +366,133 @@ export const PROJECTS = [
       bg: "#060A06",
       bgAlt: "#F0FFF0",
       accent: "#22C55E",
+
+      visual: {
+        elements: [
+          {
+            type: "text",
+            x: 15,
+            y: 18,
+            value: "PARKING GRID — LIVE",
+            size: 7.5,
+            color: "accent",
+            letterSpacing: 1.5,
+          },
+
+          {
+            type: "grid",
+            x: 15,
+            y: 28,
+            columns: 5,
+            rows: 2,
+            cellWidth: 70,
+            cellHeight: 28,
+            gap: 5,
+            occupied: [1, 3, 5, 7],
+            occupiedFill: "red",
+            occupiedBorder: "red",
+            occupiedText: "red",
+            occupiedLabel: "■",
+            freeFill: "panelSoft",
+            freeBorder: "green",
+            freeText: "green",
+            freeLabel: "P",
+          },
+
+          {
+            type: "pill",
+            x: 15,
+            y: 95,
+            width: 105,
+            height: 25,
+            value: "FREE  6",
+            color: "green",
+            border: "green",
+          },
+
+          {
+            type: "pill",
+            x: 145,
+            y: 95,
+            width: 105,
+            height: 25,
+            value: "OCC.  4",
+            color: "red",
+            border: "red",
+          },
+
+          {
+            type: "pill",
+            x: 275,
+            y: 95,
+            width: 105,
+            height: 25,
+            value: "ESP32  ●",
+            color: "accent",
+            border: "accent",
+          },
+
+          {
+            type: "text",
+            x: 200,
+            y: 155,
+            value: "REAL-TIME SLOT OCCUPANCY",
+            size: 7,
+            anchor: "middle",
+            color: "muted",
+            letterSpacing: 1.5,
+          },
+        ],
+      },
     },
     skeleton: {
       nodes: [
-        { id: "esp32", label: "ESP32", x: 20, y: 90, color: "#E74C3C", w: 72 },
-        { id: "dht", label: "DHT11", x: 20, y: 130, color: "#F39C12", w: 72 },
         {
-          id: "ir",
-          label: "IR Sensor",
+          id: "esp32",
+          label: "ESP32",
           x: 20,
-          y: 170,
-          color: "#9B59B6",
+          y: 90,
+          color: "#E74C3C",
           w: 72,
         },
         {
-          id: "firebase",
-          label: "Firebase",
-          x: 155,
-          y: 120,
-          color: "#FFCA28",
-          w: 80,
+          id: "ir",
+          label: "IR Sensors",
+          x: 20,
+          y: 140,
+          color: "#9B59B6",
+          w: 82,
         },
         {
-          id: "python",
-          label: "Python API",
+          id: "sensor",
+          label: "Occupancy",
+          x: 155,
+          y: 115,
+          color: "#F39C12",
+          w: 82,
+        },
+        {
+          id: "cloud",
+          label: "Cloud Data",
           x: 290,
           y: 95,
-          color: "#3776AB",
-          w: 80,
+          color: "#FFCA28",
+          w: 82,
         },
         {
-          id: "nextjs",
-          label: "Next.js UI",
+          id: "web",
+          label: "Web App",
           x: 290,
-          y: 143,
-          color: "#EEEEEE",
-          w: 80,
+          y: 145,
+          color: "#61DAFB",
+          w: 82,
         },
       ],
       edges: [
-        { from: "esp32", to: "firebase" },
-        { from: "dht", to: "firebase" },
-        { from: "ir", to: "firebase" },
-        { from: "firebase", to: "python" },
-        { from: "firebase", to: "nextjs" },
+        { from: "esp32", to: "sensor" },
+        { from: "ir", to: "sensor" },
+        { from: "sensor", to: "cloud" },
+        { from: "cloud", to: "web" },
       ],
       label: "SMART PARKING / IOT ARCH",
     },
@@ -278,6 +512,185 @@ export const PROJECTS = [
       bg: "#06060A",
       bgAlt: "#F5F5FF",
       accent: "#3B82F6",
+
+      visual: {
+        elements: [
+          {
+            type: "text",
+            x: 15,
+            y: 17,
+            value: "TASKFLOW — KANBAN",
+            size: 7.5,
+            color: "accent",
+            letterSpacing: 1.5,
+          },
+
+          {
+            type: "text",
+            x: 20,
+            y: 35,
+            value: "TO DO",
+            size: 7,
+            color: "accent",
+          },
+
+          {
+            type: "text",
+            x: 145,
+            y: 35,
+            value: "IN PROGRESS",
+            size: 7,
+            color: "accent",
+          },
+
+          {
+            type: "text",
+            x: 290,
+            y: 35,
+            value: "DONE",
+            size: 7,
+            color: "accent",
+          },
+
+          {
+            type: "rect",
+            x: 15,
+            y: 42,
+            width: 105,
+            height: 42,
+            radius: 3,
+            fill: "panelSoft",
+            stroke: "border",
+            strokeWidth: 0.7,
+          },
+
+          {
+            type: "rect",
+            x: 15,
+            y: 90,
+            width: 105,
+            height: 42,
+            radius: 3,
+            fill: "panelSoft",
+            stroke: "border",
+            strokeWidth: 0.7,
+          },
+
+          {
+            type: "rect",
+            x: 140,
+            y: 42,
+            width: 105,
+            height: 42,
+            radius: 3,
+            fill: "panelSoft",
+            stroke: "border",
+            strokeWidth: 0.7,
+          },
+
+          {
+            type: "rect",
+            x: 140,
+            y: 90,
+            width: 105,
+            height: 42,
+            radius: 3,
+            fill: "panelSoft",
+            stroke: "border",
+            strokeWidth: 0.7,
+          },
+
+          {
+            type: "rect",
+            x: 285,
+            y: 42,
+            width: 100,
+            height: 42,
+            radius: 3,
+            fill: "panelSoft",
+            stroke: "border",
+            strokeWidth: 0.7,
+          },
+
+          {
+            type: "rect",
+            x: 285,
+            y: 90,
+            width: 100,
+            height: 42,
+            radius: 3,
+            fill: "panelSoft",
+            stroke: "border",
+            strokeWidth: 0.7,
+          },
+
+          {
+            type: "rect",
+            x: 22,
+            y: 52,
+            width: 65,
+            height: 4,
+            radius: 2,
+            fill: "accent",
+            opacity: 0.55,
+          },
+
+          {
+            type: "rect",
+            x: 22,
+            y: 100,
+            width: 78,
+            height: 4,
+            radius: 2,
+            fill: "accent",
+            opacity: 0.55,
+          },
+
+          {
+            type: "rect",
+            x: 147,
+            y: 52,
+            width: 72,
+            height: 4,
+            radius: 2,
+            fill: "accent",
+            opacity: 0.55,
+          },
+
+          {
+            type: "rect",
+            x: 147,
+            y: 100,
+            width: 85,
+            height: 4,
+            radius: 2,
+            fill: "accent",
+            opacity: 0.55,
+          },
+
+          {
+            type: "rect",
+            x: 292,
+            y: 52,
+            width: 88,
+            height: 4,
+            radius: 2,
+            fill: "accent",
+            opacity: 0.55,
+          },
+
+          {
+            type: "rect",
+            x: 292,
+            y: 100,
+            width: 75,
+            height: 4,
+            radius: 2,
+            fill: "accent",
+            opacity: 0.55,
+          },
+        ],
+      },
     },
     skeleton: {
       nodes: [
@@ -326,10 +739,17 @@ export const PROJECTS = [
     id: "weather-iot",
     mode: "hw",
     type: "IoT · Hackathon Winner",
-    title: "Weather Monitor",
-    subtitle: "Real-Time IoT System",
-    desc: "IoT-based weather monitoring using ESP32 + DHT11. Transmits sensor data to Firebase, visualized on a React dashboard. Winner — Itrocity IoT Hackathon.",
-    tags: ["ESP32", "DHT11", "Firebase", "React.js", "IoT"],
+    title: "IoTricity",
+    subtitle: "Real-Time Weather Monitoring System",
+    desc: "IoT-based weather monitoring system using ESP32 and DHT11 for real-time temperature and humidity acquisition. Sensor data is transmitted to Firebase for live monitoring and visualized through a React dashboard. Winner of the IoTricity IoT Hackathon.",
+    tags: [
+      "ESP32",
+      "DHT11",
+      "Firebase",
+      "React.js",
+      "IoT",
+      "Sensor Interfacing",
+    ],
     links: [
       {
         label: "GitHub",
@@ -340,11 +760,220 @@ export const PROJECTS = [
       bg: "#030A0A",
       bgAlt: "#E8F8FF",
       accent: "#38BDF8",
+
+      visual: {
+        elements: [
+          {
+            type: "text",
+            x: 15,
+            y: 17,
+            value: "WEATHER MONITOR",
+            size: 7.5,
+            color: "accent",
+            letterSpacing: 1.5,
+          },
+
+          {
+            type: "rect",
+            x: 15,
+            y: 27,
+            width: 175,
+            height: 48,
+            radius: 4,
+            fill: "panelSoft",
+            stroke: "blue",
+            strokeWidth: 0.7,
+          },
+
+          {
+            type: "rect",
+            x: 205,
+            y: 27,
+            width: 175,
+            height: 48,
+            radius: 4,
+            fill: "panelSoft",
+            stroke: "blue",
+            strokeWidth: 0.7,
+          },
+
+          {
+            type: "text",
+            x: 27,
+            y: 41,
+            value: "🌡 TEMP",
+            size: 6.5,
+            color: "muted",
+          },
+
+          {
+            type: "text",
+            x: 27,
+            y: 62,
+            value: "28.4°C",
+            size: 15,
+            color: "accent",
+            weight: "bold",
+          },
+
+          {
+            type: "text",
+            x: 217,
+            y: 41,
+            value: "💧 HUMIDITY",
+            size: 6.5,
+            color: "muted",
+          },
+
+          {
+            type: "text",
+            x: 217,
+            y: 62,
+            value: "67%",
+            size: 15,
+            color: "accent",
+            weight: "bold",
+          },
+
+          {
+            type: "bar",
+            x: 20,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 22,
+            color: "blue",
+          },
+
+          {
+            type: "bar",
+            x: 52,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 30,
+            color: "blue",
+            opacity: 0.55,
+          },
+
+          {
+            type: "bar",
+            x: 84,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 26,
+            color: "blue",
+            opacity: 0.55,
+          },
+
+          {
+            type: "bar",
+            x: 116,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 38,
+            color: "blue",
+            opacity: 0.55,
+          },
+
+          {
+            type: "bar",
+            x: 148,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 33,
+            color: "blue",
+            opacity: 0.55,
+          },
+
+          {
+            type: "bar",
+            x: 180,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 29,
+            color: "blue",
+            opacity: 0.55,
+          },
+
+          {
+            type: "bar",
+            x: 212,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 41,
+            color: "blue",
+            opacity: 0.55,
+          },
+
+          {
+            type: "bar",
+            x: 244,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 28,
+            color: "blue",
+            opacity: 0.55,
+          },
+
+          {
+            type: "bar",
+            x: 276,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 36,
+            color: "blue",
+            opacity: 0.55,
+          },
+
+          {
+            type: "bar",
+            x: 308,
+            y: 82,
+            width: 28,
+            height: 55,
+            value: 39,
+            color: "blue",
+          },
+
+          {
+            type: "text",
+            x: 200,
+            y: 155,
+            value: "LAST 10 READINGS · ESP32",
+            size: 7,
+            anchor: "middle",
+            color: "muted",
+            letterSpacing: 1.2,
+          },
+        ],
+      },
     },
     skeleton: {
       nodes: [
-        { id: "esp32", label: "ESP32", x: 20, y: 100, color: "#E74C3C", w: 72 },
-        { id: "dht", label: "DHT11", x: 20, y: 145, color: "#F39C12", w: 72 },
+        {
+          id: "esp32",
+          label: "ESP32",
+          x: 20,
+          y: 100,
+          color: "#E74C3C",
+          w: 72,
+        },
+        {
+          id: "dht",
+          label: "DHT11",
+          x: 20,
+          y: 145,
+          color: "#F39C12",
+          w: 72,
+        },
         {
           id: "firebase",
           label: "Firebase",
@@ -367,7 +996,456 @@ export const PROJECTS = [
         { from: "dht", to: "firebase" },
         { from: "firebase", to: "react" },
       ],
-      label: "WEATHER MONITOR / IOT ARCH",
+      label: "IOTRICITY / WEATHER MONITOR",
+    },
+  },
+  {
+    id: "rc-car",
+    mode: "hw",
+    type: "Embedded Systems · TechFest",
+    title: "RC Car",
+    subtitle: "ESP32 BLDC Motor Control",
+    desc: "Designed and built an RC car using an ESP32 microcontroller, BLDC motor and electronic speed controller for a college TechFest racing event.",
+    tags: ["ESP32", "BLDC Motor", "ESC", "Motor Control", "Embedded Systems"],
+    links: [],
+    skin: {
+      bg: "#080A05",
+      bgAlt: "#F3F8E8",
+      accent: "#84CC16",
+
+      visual: {
+        elements: [
+          {
+            type: "text",
+            x: 15,
+            y: 17,
+            value: "RC CAR — MOTOR CONTROL",
+            size: 7.5,
+            color: "accent",
+            letterSpacing: 1.5,
+          },
+
+          /* Chassis */
+          {
+            type: "rect",
+            x: 25,
+            y: 48,
+            width: 205,
+            height: 78,
+            radius: 6,
+            fill: "panelSoft",
+            stroke: "border",
+            strokeWidth: 0.8,
+          },
+
+          /* Wheels */
+          {
+            type: "rect",
+            x: 42,
+            y: 57,
+            width: 22,
+            height: 55,
+            radius: 7,
+            fill: "panel",
+            stroke: "accent",
+            strokeWidth: 2,
+          },
+
+          {
+            type: "rect",
+            x: 190,
+            y: 57,
+            width: 22,
+            height: 55,
+            radius: 7,
+            fill: "panel",
+            stroke: "accent",
+            strokeWidth: 2,
+          },
+
+          /* Controller body */
+          {
+            type: "rect",
+            x: 90,
+            y: 69,
+            width: 95,
+            height: 38,
+            radius: 5,
+            fill: "panel",
+            stroke: "accent",
+            strokeWidth: 1,
+          },
+
+          {
+            type: "text",
+            x: 137,
+            y: 84,
+            value: "ESP32",
+            size: 7,
+            anchor: "middle",
+            color: "accent",
+          },
+
+          {
+            type: "pill",
+            x: 102,
+            y: 91,
+            width: 32,
+            height: 12,
+            value: "MCU",
+            color: "accent",
+            border: "accent",
+          },
+
+          {
+            type: "pill",
+            x: 141,
+            y: 91,
+            width: 32,
+            height: 12,
+            value: "ESC",
+            color: "blue",
+            border: "blue",
+          },
+
+          /* Telemetry */
+          {
+            type: "pill",
+            x: 245,
+            y: 40,
+            width: 140,
+            height: 20,
+            value: "MOTOR  BLDC",
+            color: "accent",
+            border: "accent",
+          },
+
+          {
+            type: "pill",
+            x: 245,
+            y: 65,
+            width: 140,
+            height: 20,
+            value: "ESC  ACTIVE",
+            color: "blue",
+            border: "blue",
+          },
+
+          {
+            type: "pill",
+            x: 245,
+            y: 90,
+            width: 140,
+            height: 20,
+            value: "THROTTLE  72%",
+            color: "yellow",
+            border: "yellow",
+          },
+
+          {
+            type: "pill",
+            x: 245,
+            y: 115,
+            width: 140,
+            height: 20,
+            value: "DIRECTION  FWD",
+            color: "green",
+            border: "green",
+          },
+
+          {
+            type: "text",
+            x: 200,
+            y: 158,
+            value: "ESP32 · BLDC · ESC · MOTOR CONTROL",
+            size: 7,
+            anchor: "middle",
+            color: "muted",
+            letterSpacing: 1.2,
+          },
+        ],
+      },
+    },
+    skeleton: {
+      nodes: [
+        {
+          id: "esp32",
+          label: "ESP32",
+          x: 20,
+          y: 115,
+          color: "#E74C3C",
+          w: 72,
+        },
+        {
+          id: "esc",
+          label: "ESC",
+          x: 155,
+          y: 95,
+          color: "#F59E0B",
+          w: 72,
+        },
+        {
+          id: "motor",
+          label: "BLDC Motor",
+          x: 290,
+          y: 95,
+          color: "#22C55E",
+          w: 90,
+        },
+        {
+          id: "control",
+          label: "Speed Control",
+          x: 155,
+          y: 145,
+          color: "#3B82F6",
+          w: 90,
+        },
+      ],
+      edges: [
+        { from: "esp32", to: "esc" },
+        { from: "esc", to: "motor" },
+        { from: "esp32", to: "control" },
+        { from: "control", to: "esc" },
+      ],
+      label: "RC CAR / MOTOR CONTROL",
+    },
+  },
+  {
+    id: "smart-india-hackathon-itms",
+    mode: "hw",
+    type: "Hardware · SIH 2025",
+    title: "Indigenous Contactless ITMS",
+    subtitle: "Indian Railways Track Monitoring",
+    desc: "Proposed a hardware-focused Indigenous Contactless Integrated Track Monitoring System (ITMS) for Indian Railways, targeting safer and faster track monitoring through modular onboard sensing architecture.",
+    tags: [
+      "LiDAR",
+      "IMU",
+      "GNSS",
+      "Encoder",
+      "Accelerometer",
+      "Railway Monitoring",
+    ],
+    links: [],
+    skin: {
+      bg: "#090705",
+      bgAlt: "#FFF7ED",
+      accent: "#F97316",
+
+      visual: {
+        elements: [
+          {
+            type: "text",
+            x: 15,
+            y: 17,
+            value: "CONTACTLESS ITMS — RAIL MONITOR",
+            size: 7.5,
+            color: "accent",
+            letterSpacing: 1.3,
+          },
+
+          /* Railway sleepers */
+          ...Array.from({ length: 10 }, (_, index) => ({
+            type: "rect",
+            x: 30 + index * 35,
+            y: 45,
+            width: 4,
+            height: 82,
+            fill: "muted",
+            opacity: 0.45,
+          })),
+
+          /* Rails */
+          {
+            type: "line",
+            x1: 20,
+            y1: 62,
+            x2: 380,
+            y2: 62,
+            color: "accent",
+            width: 2,
+          },
+
+          {
+            type: "line",
+            x1: 20,
+            y1: 105,
+            x2: 380,
+            y2: 105,
+            color: "accent",
+            width: 2,
+          },
+
+          /* Monitoring unit */
+          {
+            type: "rect",
+            x: 145,
+            y: 70,
+            width: 110,
+            height: 30,
+            radius: 4,
+            fill: "panel",
+            stroke: "accent",
+            strokeWidth: 1,
+          },
+
+          {
+            type: "text",
+            x: 200,
+            y: 82,
+            value: "CONTACTLESS UNIT",
+            size: 6.5,
+            anchor: "middle",
+            color: "accent",
+          },
+
+          {
+            type: "pill",
+            x: 151,
+            y: 85,
+            width: 30,
+            height: 10,
+            value: "LiDAR",
+            size: 5,
+            color: "orange",
+            border: "orange",
+          },
+
+          {
+            type: "pill",
+            x: 185,
+            y: 85,
+            width: 25,
+            height: 10,
+            value: "IMU",
+            size: 5,
+            color: "purple",
+            border: "purple",
+          },
+
+          {
+            type: "pill",
+            x: 214,
+            y: 85,
+            width: 32,
+            height: 10,
+            value: "GNSS",
+            size: 5,
+            color: "blue",
+            border: "blue",
+          },
+
+          /* Sensor status */
+          {
+            type: "pill",
+            x: 15,
+            y: 145,
+            width: 85,
+            height: 18,
+            value: "LiDAR  SCAN",
+            size: 5.5,
+            color: "orange",
+            border: "orange",
+          },
+
+          {
+            type: "pill",
+            x: 108,
+            y: 145,
+            width: 75,
+            height: 18,
+            value: "IMU  OK",
+            size: 5.5,
+            color: "blue",
+            border: "blue",
+          },
+
+          {
+            type: "pill",
+            x: 191,
+            y: 145,
+            width: 85,
+            height: 18,
+            value: "GNSS  LOCK",
+            size: 5.5,
+            color: "green",
+            border: "green",
+          },
+
+          {
+            type: "pill",
+            x: 284,
+            y: 145,
+            width: 100,
+            height: 18,
+            value: "ENCODER  SYNC",
+            size: 5.5,
+            color: "yellow",
+            border: "yellow",
+          },
+
+          {
+            type: "text",
+            x: 200,
+            y: 185,
+            value: "REAL-TIME TRACK CONDITION MONITORING · PS 25020",
+            size: 6,
+            anchor: "middle",
+            color: "muted",
+            letterSpacing: 0.8,
+          },
+        ],
+      },
+    },
+    skeleton: {
+      nodes: [
+        {
+          id: "lidar",
+          label: "LiDAR",
+          x: 20,
+          y: 95,
+          color: "#F97316",
+          w: 72,
+        },
+        {
+          id: "imu",
+          label: "IMU",
+          x: 20,
+          y: 145,
+          color: "#8B5CF6",
+          w: 72,
+        },
+        {
+          id: "gnss",
+          label: "GNSS",
+          x: 155,
+          y: 95,
+          color: "#3B82F6",
+          w: 72,
+        },
+        {
+          id: "encoder",
+          label: "Encoder",
+          x: 155,
+          y: 145,
+          color: "#22C55E",
+          w: 78,
+        },
+        {
+          id: "itms",
+          label: "ITMS",
+          x: 295,
+          y: 120,
+          color: "#EAB308",
+          w: 72,
+        },
+      ],
+      edges: [
+        { from: "lidar", to: "itms" },
+        { from: "imu", to: "itms" },
+        { from: "gnss", to: "itms" },
+        { from: "encoder", to: "itms" },
+      ],
+      label: "SIH 2025 / INDIGENOUS ITMS",
     },
   },
 ];
@@ -419,21 +1497,122 @@ export const SKILL_GATES = [
     color: "#22C55E",
     mode: "hw",
     skills: [
-      { name: "C", level: 80 },
-      { name: "Python", level: 75 },
+      { name: "Embedded C", level: 80 },
       { name: "ESP32", level: 82 },
-      { name: "IoT Systems", level: 78 },
-      { name: "DHT11", level: 85 },
-      { name: "Firebase", level: 72 },
-      { name: "MatLab", level: 65 },
-      { name: "Git", level: 88 },
+      { name: "Nuvoton 8051", level: 78 },
+      { name: "IoT Systems", level: 82 },
+      { name: "PCB Design", level: 78 },
+      { name: "SMD & Soldering", level: 80 },
+      { name: "Sensor Interfacing", level: 82 },
+      { name: "Hardware Testing", level: 80 },
     ],
+  },
+];
+
+// ─── INTERNSHIP CERTIFICATE ──────────────────────────────────────────────────
+export const CERTIFICATES = [
+  {
+    id: "synchro-electronics-certificate",
+    company: "Synchro Electronics",
+    title: "Engineering Internship Certificate",
+    role: "Engineering Intern",
+    duration: "17 Aug 2026 – 03 Sep 2026",
+    issuedDate: "03 Sep 2026",
+
+    image:
+      "https://res.cloudinary.com/dyr6oh3vg/image/upload/v1789813174/Synchro_Electronics_certificate_jwi9ku.jpg",
+  },
+];
+
+export const getCertificateById = (id) =>
+  CERTIFICATES.find((certificate) => certificate.id === id) ?? null;
+
+// ─── WORK EXPERIENCE SECTION ─────────────────────────────────────────────────
+export const EXPERIENCE_SECTION = {
+  sectionLabel: "05 / EXPERIENCE",
+  heading: "WORK EXPERIENCE",
+  description:
+    "Industry exposure across Software Development, IoT & Embedded Systems.",
+};
+
+/**
+ * EXPERIENCE
+ *
+ * Add a new object to this array to add a new role — no component changes needed.
+ *
+ * Shape:
+ *   id             string   unique slug (used as React key)
+ *   mode           'sw'|'hw' which engine mode this role belongs to (drives the filter chips)
+ *   role           string   job title
+ *   company        string   organisation name
+ *   type           string   e.g. "Engineering Internship"
+ *   duration       string   e.g. "17 Aug 2026 – 03 Sep 2026"
+ *   location       string   optional
+ *   description    string   one concise professional summary line
+ *   responsibilities string[]  concise bullets (keep them short)
+ *   technologies   string[]  rendered as chips
+ *   certificateId  string|null  must match an `id` in CERTIFICATES below
+ *   placeholder    boolean  when true the entry is SKIPPED at render time
+ */
+export const EXPERIENCE = [
+  // ── TODO: SOFTWARE DEVELOPMENT INTERNSHIP ────────────────────────────────
+  // This entry is intentionally NOT rendered (placeholder: true).
+  // Fill in the real values below and change `placeholder` to false to publish it.
+  {
+    id: "software-internship",
+    placeholder: true,
+    mode: "sw",
+    role: "TODO — role title",
+    company: "TODO — company name",
+    type: "Software Development Internship",
+    duration: "TODO — start date – end date",
+    location: "TODO — city, state",
+    description: "TODO — one-line professional summary of the internship.",
+    responsibilities: [
+      "TODO — key responsibility 1",
+      "TODO — key responsibility 2",
+    ],
+    technologies: [],
+    certificateId: null,
+  },
+
+  // ── VERIFIED: SYNCHRO ELECTRONICS ────────────────────────────────────────
+  {
+    id: "synchro-electronics",
+    placeholder: false,
+    mode: "hw",
+    role: "Engineering Intern",
+    company: "Synchro Electronics",
+    type: "Engineering Internship",
+    duration: "17 Aug 2026 – 03 Sep 2026",
+    location: "Kolkata, West Bengal",
+    description:
+      "Hands-on embedded systems and hardware engineering internship covering microcontroller-based motor control, PCB work and hardware testing.",
+    responsibilities: [
+      "Worked on the design and development of a Stepper Motor Controller using a Nuvoton 8051-family microcontroller and DRV8825 driver.",
+      "Worked with STEP/DIR/ENABLE control and hardware assembly.",
+      "Gained hands-on exposure to PCB design related to transformer/voltage-section components of an Automated Test Equipment (ATE) system.",
+      "Learned SMD component handling, soldering, desoldering and PCB assembly.",
+      "Gained exposure to hardware testing including relay and Digital Output cards, BLDC fan PCB testing, AC voltage-meter calibration and ELD systems.",
+    ],
+    technologies: [
+      "Nuvoton 8051",
+      "DRV8825",
+      "Microcontrollers",
+      "PCB Design",
+      "SMD",
+      "Soldering",
+      "Hardware Testing",
+      "ATE Systems",
+      "Embedded Systems",
+    ],
+    certificateId: "synchro-electronics-certificate",
   },
 ];
 
 // ─── ACHIEVEMENTS SECTION ────────────────────────────────────────────────────
 export const ACHIEVEMENTS_SECTION = {
-  sectionLabel: "05 / ACHIEVEMENTS",
+  sectionLabel: "06 / ACHIEVEMENTS",
   heading: "GROWTH TIMELINE",
 };
 
@@ -745,7 +1924,7 @@ export const EDUCATION = [
 
 // ─── FOOTER / CONTACT SECTION ────────────────────────────────────────────────
 export const FOOTER = {
-  sectionLabel: "06 / CONTACT",
+  sectionLabel: "08 / CONTACT",
   headline: "LET'S BUILD",
   headlineOutline: "SOMETHING.",
   description:

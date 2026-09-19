@@ -9,6 +9,7 @@ import Hero from "./components/Hero";
 import AboutSection from "./components/AboutSection";
 import ProjectsSection from "./components/ProjectsSection";
 import SkillsBus from "./components/SkillsBus";
+import ExperienceSection from "./components/ExperienceSection";
 import AchievementGallery from "./components/AchievementGallery";
 import Footer from "./components/Footer";
 import FloatingScroll from "./components/FloatingScroll";
@@ -70,6 +71,7 @@ export default function App() {
           <AboutSection />
           <ProjectsSection />
           <SkillsBus />
+          <ExperienceSection />
           <AchievementGallery />
           <Footer />
         </main>
